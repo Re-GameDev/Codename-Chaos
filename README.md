@@ -24,4 +24,4 @@ We are using the latest Long Term Support (LTS) version of unity which is **vers
 
 # Space Otter
 
-![Space Otter](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityHubScreenshotForReadme.jpeg?raw=true)
+![Space Otter](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/Space%20Otter%201.jpeg?raw=true)
