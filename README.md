@@ -6,7 +6,7 @@ To get added as a contributor you can contact Ben or Sam and also add your name 
 # Unity Information
 We are using the latest Long Term Support (LTS) version of unity which is **version 2020.3.22f1**.
 
-![Unity Hub Screenshot](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/Space%20Otter%201.jpeg?raw=true)
+![Unity Hub Screenshot](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityHubScreenshotForReadme.png?raw=true)
 
 # Git Information
 
