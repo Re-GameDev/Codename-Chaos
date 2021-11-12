@@ -5,35 +5,89 @@ using UnityEngine.Assertions;
 
 public class BasicPlayer : MonoBehaviour
 {
-    public float MoveForce = 1.0f;
+    public float MoveSpeed = 6.0f;
+    public float JumpSpeed = 4.0f;
+    public float SlopeLimit = 45; //degrees
 
     private Rigidbody body;
+    private CapsuleCollider collider;
+
+    private bool isGrounded = false;
+    private bool doJump = false;
 
     // Start is called before the first frame update
     void Start()
     {
+    }
+
+    private void Awake()
+    {
         body = this.GetComponent<Rigidbody>();
         Assert.IsNotNull(body);
+        collider = this.GetComponent<CapsuleCollider>();
+        Assert.IsNotNull(collider);
+    } 
+
+    private void CheckGrounded()
+    {
+        this.isGrounded = false;
+        float capsuleHeight = Mathf.Max(collider.radius * 2, collider.height);
+        Vector3 capsuleBottom = transform.TransformPoint(collider.center + (Vector3.down * (capsuleHeight / 2)));
+        float radius = transform.TransformVector(collider.radius, 0, 0).magnitude;
+
+        Ray ray = new Ray(capsuleBottom + transform.up * 0.01f, -transform.up);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, radius * 5))
+        {
+            float normalAngle = Vector3.Angle(hit.normal, transform.up);
+            if (normalAngle < SlopeLimit)
+            {
+                float maxDist = radius / Mathf.Cos(Mathf.Deg2Rad * normalAngle) - radius + 0.02f;
+                if (hit.distance < maxDist)
+                {
+                    isGrounded = true;
+                }
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            doJump = true;
+        }
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        Vector3 moveVec = Vector3.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            body.AddForce(new Vector3(0, 0, 1) * MoveForce);
+            moveVec += new Vector3(0, 0, 1) * MoveSpeed;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            body.AddForce(new Vector3(0, 0, -1) * MoveForce);
+            moveVec += new Vector3(0, 0, -1) * MoveSpeed;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            body.AddForce(new Vector3(1, 0, 0) * MoveForce);
+            moveVec += new Vector3(1, 0, 0) * MoveSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            body.AddForce(new Vector3(-1, 0, 0) * MoveForce);
+            moveVec += new Vector3(-1, 0, 0) * MoveSpeed;
+        }
+
+        body.MovePosition(transform.position + (moveVec * Time.fixedDeltaTime));
+
+        CheckGrounded();
+
+        if (doJump)
+        {
+            body.AddForce(new Vector3(0, 1, 0) * JumpSpeed, ForceMode.VelocityChange);
+            doJump = false;
         }
     }
 }
