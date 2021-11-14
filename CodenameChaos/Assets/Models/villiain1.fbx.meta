@@ -1,19 +1,9 @@
 fileFormatVersion: 2
-guid: cb5388acf21b8c241bca906064cbf353
+guid: 4b8ea6af6b7470d46a5ccf3f730e6560
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Laptop
-    second: {fileID: 2100000, guid: 19a26c82e860bd545b4a168246097a54, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Screen
-    second: {fileID: 2100000, guid: 7d0d055822a247147a10fbb902ba81a0, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
