@@ -25,7 +25,7 @@ We are using the latest Long Term Support (LTS) version of unity which is **vers
 # Posting a WebGL Build
 Push a build into the folder: /Build/
   
-A WebGL build hosted here should be autohosted (may take a couple minutes to be live after repo checkin.
+A WebGL build hosted here should be autohosted, but may take a couple minutes to be live after repo checkin.
   
 You can then see it live at the following URL: https://re-gamedev.github.io/Codename-Chaos/
 
