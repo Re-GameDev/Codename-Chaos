@@ -1,2 +1,2 @@
 # Build
-Post a Unity WebGL build here, and access it at: re-gamedev.github.io/Codename-Chaos/
+Post a Unity WebGL build here, and access it at: https://re-gamedev.github.io/Codename-Chaos/
