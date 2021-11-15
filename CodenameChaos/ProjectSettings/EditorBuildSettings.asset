@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Runner2dOtter.unity
+    guid: fd2190a70166c6e4b94c69dc18823c8c
   m_configObjects: {}
