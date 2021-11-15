@@ -23,7 +23,7 @@ We are using the latest Long Term Support (LTS) version of unity which is **vers
 10. If all goes well this should have created a folder called CodenameChaos in the folder you chose. Go ahead and open the folder in File Explorer and find the Unity project inside.
 
 # Posting a WebGL Build
-Push a build into the folder: <root>/Build/
+Push a build into the folder: /Build/
   
 A WebGL build hosted here should be autohosted (may take a couple minutes to be live after repo checkin.
   
