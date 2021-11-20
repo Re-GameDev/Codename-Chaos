@@ -29,6 +29,9 @@ A WebGL build hosted here should be autohosted, but may take a couple minutes to
   
 You can then see it live at the following URL: https://re-gamedev.github.io/Codename-Chaos/
 
+# Discord
+This repo is connected to our Discord server, and will post to the #💻codename-chaos-commits channel
+
 # Space Otter
 
 ![Space Otter](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/Space%20Otter%201.jpeg?raw=true)
