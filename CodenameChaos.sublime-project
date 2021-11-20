@@ -1,0 +1,30 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"folder_exclude_patterns":
+			[
+				"CodenameChaos/.vs",
+				"CodenameChaos/Build_Local",
+				"CodenameChaos/Library",
+				"CodenameChaos/Logs",
+				"CodenameChaos/obj",
+				"CodenameChaos/Temp",
+				"CodenameChaos/UserSettings",
+			],
+			"file_exclude_patterns":
+			[
+				"*.csproj",
+				"*.sln",
+				"*.vsconfig",
+				"*.meta",
+				"*.mat",
+				"*.renderTexture",
+				"*.prefab",
+				"*.unity",
+				"*.asset",
+			],
+		}
+	]
+}

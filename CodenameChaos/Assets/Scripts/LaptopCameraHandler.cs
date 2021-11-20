@@ -39,7 +39,8 @@ public class LaptopCameraHandler : MonoBehaviour
             Camera.enabled = false;
         }
         originalLidRotation = ScreenTransform.localRotation;
-        lidColRelativeTransform.position = LidCollisionTransform.position - LidTransform.position;
+        //lidColRelativeTransform = new Transform();
+        //lidColRelativeTransform.position = LidCollisionTransform.position - LidTransform.position;
         //lidColRelativeTransform.rotation = Quaternion. LidCollisionTransform.rotation. - LidTransform.rotation;
     }
 
@@ -93,7 +94,9 @@ public class LaptopCameraHandler : MonoBehaviour
         Vector3 screenRotation = new Vector3(0, 270 + (openProgress * 90), 0);
         ScreenTransform.localRotation = originalLidRotation * Quaternion.Euler(screenRotation);
         LidTransform.localRotation = originalLidRotation * Quaternion.Euler(screenRotation);
+        //LidCollisionTransform.rotation = LidTransform.rotation;
+        //LidCollisionTransform.position = LidTransform.position + lidColRelativeTransform.position;
+        LidCollisionTransform.position = LidTransform.position;
         LidCollisionTransform.rotation = LidTransform.rotation;
-        LidCollisionTransform.position = LidTransform.position + lidColRelativeTransform.position;
     }
 }

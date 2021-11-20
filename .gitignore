@@ -6,6 +6,7 @@
 /CodenameChaos/[Tt]emp/
 /CodenameChaos/[Oo]bj/
 /CodenameChaos/[Bb]uild/
+/CodenameChaos/[Bb]uild_Local/
 /CodenameChaos/[Bb]uilds/
 /CodenameChaos/[Ll]ogs/
 /CodenameChaos/[Mm]emoryCaptures/
@@ -58,3 +59,5 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Sublime Text
+*.sublime-workspace
