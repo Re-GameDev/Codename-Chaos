@@ -22,6 +22,13 @@ We are using the latest Long Term Support (LTS) version of unity which is **vers
 9. It will ask you for a github username and password. Enter your email for username and the authentication token (the one we generated in step 3) for password. (The password might not show anything as you are typing for security reasons but you are actually typing and whatever you type before hitting enter will be recorded/used)
 10. If all goes well this should have created a folder called CodenameChaos in the folder you chose. Go ahead and open the folder in File Explorer and find the Unity project inside.
 
+# Posting a WebGL Build
+Push a build into the folder: /Build/
+  
+A WebGL build hosted here should be autohosted, but may take a couple minutes to be live after repo checkin.
+  
+You can then see it live at the following URL: https://re-gamedev.github.io/Codename-Chaos/
+
 # Space Otter
 
 ![Space Otter](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/Space%20Otter%201.jpeg?raw=true)
