@@ -37,6 +37,7 @@ public class StartMenuHandler : MonoBehaviour
             StartMenuOpen = false;
             Time.timeScale = oldTimeScale;
             SceneManager.LoadScene(0, LoadSceneMode.Single);
+            
         }
     }
 }

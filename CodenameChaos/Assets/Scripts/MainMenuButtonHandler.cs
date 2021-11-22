@@ -7,6 +7,7 @@ public class MainMenuButtonHandler : MonoBehaviour
 {
     public int SceneIndex_3dPlatformer = 0;
     public int SceneIndex_2dRunner = 0;
+    public int SceneIndex_Planet2d = 0;
 
     public void On3dPlatformerButtonClick()
     {
@@ -18,5 +19,11 @@ public class MainMenuButtonHandler : MonoBehaviour
     {
         Debug.Log("Clicked on 2D Runner");
         SceneManager.LoadScene(SceneIndex_2dRunner, LoadSceneMode.Single);
+    }
+
+    public void OnPlanet2dButtonClick()
+    {
+        Debug.Log("Clicked on Planet 2D");
+        SceneManager.LoadScene(SceneIndex_Planet2d, LoadSceneMode.Single);
     }
 }
