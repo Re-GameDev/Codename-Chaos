@@ -49,7 +49,7 @@ public class Magnetized : MonoBehaviour
 			if (!currentAttractor.AttractedObjects.Contains(m_collider)) currentAttractor = null;
 			RotateToCenter();
 		}
-		if (Input.GetKeyDown(KeyCode.UpArrow))
+		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
 		{
 			jumpPressed = true;
 			//print("Jump");
@@ -69,13 +69,13 @@ public class Magnetized : MonoBehaviour
 		float WalkVelocity = Vector2.Dot(m_rigidbody.velocity, rightHandRule);
 		float FallVelocity = Vector2.Dot(m_rigidbody.velocity, upDir);
 		bool CurrentlyWalking = false;
-        if (Input.GetKey(KeyCode.LeftArrow) && WalkVelocity > -WalkSpeed) // check for max velocity
+        if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && WalkVelocity > -WalkSpeed) // check for max velocity
 		{
 			WalkVelocity -= WalkAcceleration * Time.fixedDeltaTime;
 			CurrentlyWalking = true;
 			FacingLeft = true;
 		}
-        if (Input.GetKey(KeyCode.RightArrow) && WalkVelocity < WalkSpeed)
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && WalkVelocity < WalkSpeed)
 		{
 			WalkVelocity += WalkAcceleration * Time.fixedDeltaTime;
 			CurrentlyWalking = true;
