@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Variant: 0
   BranchSprites:
-  - {fileID: 21300000, guid: b5ea7caf345ae7741a095997aec589ad, type: 3}
+  - {fileID: 21300000, guid: d445eb1c99ec5c044b6a534943a11991, type: 3}
+  - {fileID: 21300000, guid: 6cbe4259d2e208a42bfdf5c2f69d96be, type: 3}
   PlanetLayer:
     serializedVersion: 2
     m_Bits: 64

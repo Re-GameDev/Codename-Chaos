@@ -55,24 +55,64 @@ public class TreeScript : MonoBehaviour
             print($"Planet is at ({closestPlanet.transform.position.x}, {closestPlanet.transform.position.x}) we are at ({transform.position.x}, {transform.position.y}) angle is {rootAngle}");
         }
 
-        rootBranch = AddBranch(null, rootAngle, Random.Range(1.0f, 2.5f));
+        rootBranch = AddBranch(null, rootAngle, Random.Range(4.0f, 6.0f));
 
         int numBranches = Random.Range(40, 120);
 		for (int i = 0; i < numBranches; i++)
 		{
 			AddRandomBranch();
 		}
+		foreach(Branch branch in branches)
+		{
+			if (branch.children.Count == 0)
+			{
+				SpriteRenderer spriteRenderer = branch.obj.GetComponent<SpriteRenderer>();
+				spriteRenderer.sprite = BranchSprites[(int)Variant + 1];
+				spriteRenderer.sortingOrder = 2;
+				//AddLeaf(null, rootAngle, Random.Range(4.0f, 6.0f));
+			}
+		}
 	}
+	
+	/*private void AddLeaf(Branch Parent, float rotation, float length)
+	{		
+		GameObject Leaf = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
+		SpriteRenderer spriteRenderer = newBranch.obj.AddComponent<SpriteRenderer>();
+		Assert.IsTrue((int)Variant < BranchSprites.Length);
+		spriteRenderer.sprite = BranchSprites[(int)Variant];
+		spriteRenderer.sortingOrder = 1;
+
+        newBranch.obj.transform.parent = this.transform;
+        newBranch.obj.transform.position = parent?.obj.transform.position ?? this.transform.position;
+		float scale = newBranch.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * newBranch.growth;
+		newBranch.obj.transform.localScale = new Vector3(scale, scale, scale);
+		newBranch.obj.transform.rotation = Quaternion.AngleAxis(newBranch.angle - 90, Vector3.forward);
+		
+		branches.Add(newBranch); 
+		if (parent != null) { parent.children.Add(newBranch); }
+		
+		return newBranch;
+	}*/
 	
 	private void AddRandomBranch()
 	{
 		int branchIndex = Random.Range(0, branches.Count);
         float parentAngle = branches[branchIndex].accumAngle;
-        float angleRangeBase = branches[branchIndex].accumAngle - 30;
-        float angleRange = 60;
-        if (angleRangeBase < rootBranch.angle - 90) { angleRangeBase = rootBranch.angle - 90; }
-        if (angleRangeBase > rootBranch.angle + 90 - angleRange) { angleRangeBase = rootBranch.angle + 90 - angleRange; }
-        AddBranch(branches[branchIndex], Random.Range(angleRangeBase - parentAngle, angleRange), Random.Range(0.5f,4.0f));
+        float angleRange = 92.0f;
+		float lowerBound = rootBranch.angle - angleRange;
+		float upperBound = rootBranch.angle + angleRange;
+		float lowerRand = parentAngle - angleRange;
+		float upperRand = parentAngle + angleRange;
+		print($"bound of {lowerBound} to {upperBound} with a rand of {lowerRand} to {upperRand}");
+        if (lowerRand < lowerBound) { lowerRand = Mathf.Abs(lowerRand - lowerBound) - angleRange; }
+		else {lowerRand = -angleRange;}
+        if (upperRand > upperBound) { upperRand = angleRange - Mathf.Abs(upperRand - upperBound); }
+		else {upperRand = angleRange;}
+		float newAngle = Random.Range(lowerRand, upperRand);
+		print($"submitting {lowerRand} to {upperRand} result {newAngle}");
+		if (newAngle > 180.0f) { newAngle = newAngle - 360.0f;}
+		if (newAngle < -180.0f) { newAngle = 360.0f - newAngle;}
+        AddBranch(branches[branchIndex], newAngle, Random.Range(1.0f,4.0f));
 	}
 	
 	private Branch AddBranch(Branch parent, float rotation, float length)
