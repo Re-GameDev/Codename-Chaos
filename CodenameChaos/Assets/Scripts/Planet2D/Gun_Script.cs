@@ -56,7 +56,7 @@ public class Gun_Script : MonoBehaviour
 			else if (GunMode == 1)
 			{
 					int CurrAmmo = TheAmmo.GetComponent<HUDScript>().SeedAmmo;
-					print($"ammo left {CurrAmmo}");
+					//print($"ammo left {CurrAmmo}");
 					if (CurrAmmo > 0)
 					{
 						TheAmmo.GetComponent<HUDScript>().SeedShot();

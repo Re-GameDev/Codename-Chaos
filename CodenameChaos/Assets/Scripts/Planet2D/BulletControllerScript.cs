@@ -58,17 +58,23 @@ public class BulletControllerScript : MonoBehaviour
 		}
 	}
 	
+	public void OnTriggerEnter2D(Collider2D ThingHit)
+	{
+		//print("I am dying!");
+		if (ThingHit.gameObject.layer == 9)
+		{
+			//print("I hit a plant");
+            ThingHit.gameObject.GetComponentInParent<TreeScript>().GetWatered();
+		}
+		Destroy(gameObject);
+	}
+	
 	public void OnCollisionEnter2D(Collision2D ThingHit)
 	{
 		//print("I am dying!");
 		if (PlantToGrow != null)
 		{
 			GameObject bulletShot = Instantiate(PlantToGrow, transform.position, transform.rotation);
-		}
-		else if (ThingHit.gameObject.layer == 9)
-		{
-			//print("I hit a plant");
-            ThingHit.gameObject.GetComponent<TreeScript>().GetWatered();
 		}
 		Destroy(gameObject);
 	}

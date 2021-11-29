@@ -10,6 +10,7 @@ public class Magnetized : MonoBehaviour
     public float FallSpeed = 20;
     public float JumpStrength = 75;
 	public float CurrDistToPlanet = 0;
+	public GameObject TheAmmo;
 	
 	Vector3 RestartPos;
 	bool foundFloor = false;	
@@ -33,7 +34,7 @@ public class Magnetized : MonoBehaviour
 	
 	private void Update()
 	{
-		RaycastHit2D FeetPlanted = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 0.6f, LayerMask.GetMask("Planet"));
+		RaycastHit2D FeetPlanted = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("Planet"));
 		if (FeetPlanted.collider != null)
 		{
 			doubleJumped = false;
@@ -143,5 +144,15 @@ public class Magnetized : MonoBehaviour
 		Vector2 distanceVector = (Vector2)currentAttractor.planetTransform.position - (Vector2)m_transform.position;
 		float angle = Mathf.Atan2(distanceVector.y, distanceVector.x) * Mathf.Rad2Deg;
 		m_transform.rotation = Quaternion.AngleAxis(angle + 90, Vector3.forward);
+	}
+	
+	public void OnTriggerEnter2D(Collider2D ThingHit)
+	{
+		if (ThingHit.gameObject.layer == 10)
+		{
+			//print("I hit a fruit");
+            ThingHit.gameObject.GetComponentInParent<TreeScript>().GatherFruit(ThingHit.gameObject);
+			TheAmmo.GetComponent<HUDScript>().SeedAmmoPickup();
+		}
 	}
 }

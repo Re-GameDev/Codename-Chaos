@@ -23,6 +23,11 @@ public class HUDScript : MonoBehaviour
 		}
 	}
 	
+	public void SeedAmmoPickup()
+	{
+		SeedAmmo++;
+	}
+	
 	private void Update()
 	{
 		MyText.text = $"{SeedAmmo}";

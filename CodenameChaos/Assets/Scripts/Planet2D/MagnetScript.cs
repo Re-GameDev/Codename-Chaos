@@ -48,7 +48,10 @@ public class MagnetScript : MonoBehaviour
         }
         for (int i = 0; i < AttractedBullets.Count; i++)
         {
-            AttractedBullets[i].GetComponent<BulletControllerScript>().Attract(this);
+			if (AttractedBullets[i].gameObject.activeInHierarchy)
+			{
+				AttractedBullets[i].GetComponent<BulletControllerScript>().Attract(this);
+			}
         }
     }
 }

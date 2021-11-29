@@ -39,7 +39,7 @@ public class TreeScript : MonoBehaviour
 	int numberOfBranches = 0;
 	bool luckySuperPlant = false;
 	bool fullyGrown = false;
-    float PlantLifeSpan = 1000;
+    float PlantLifeSpan = 1200;
 	float MaxLife;
 	int CurrentlyWatered = 0;
 	
@@ -70,10 +70,11 @@ public class TreeScript : MonoBehaviour
 	
 		List<Collider2D> PlantsInRange = Physics2D.OverlapCircleAll(transform.position, growRadius, PlantLayer).ToList();
 
-		if (PlantsInRange.Count > 1)
+		if (PlantsInRange.Count > 0)
 		{
-			print($"found {PlantsInRange.Count} plants nearby so I cannot grow!");
+			//print($"found {PlantsInRange.Count} plants nearby so I cannot grow!");
 			Destroy(gameObject);
+			return;
 		}
 		
 		//print("starting a new tree");
@@ -154,6 +155,12 @@ public class TreeScript : MonoBehaviour
 		Assert.IsTrue(newFruit.whatPartAmI < BranchSprites.Length);
 		spriteRenderer.sprite = BranchSprites[newFruit.whatPartAmI];
 		spriteRenderer.sortingOrder = 2;
+		newFruit.obj.layer = 10;
+
+		CircleCollider2D circleCollider = newFruit.obj.AddComponent<CircleCollider2D>();
+		circleCollider.offset = new Vector2(0, spriteRenderer.sprite.bounds.size.y/2);
+		circleCollider.radius = spriteRenderer.sprite.bounds.size.x/2;
+		circleCollider.isTrigger = true;
 
         newFruit.obj.transform.parent = this.transform;
         newFruit.obj.transform.position = parent.obj.transform.position;
@@ -291,7 +298,13 @@ public class TreeScript : MonoBehaviour
 		Assert.IsTrue(newTrunk.whatPartAmI < BranchSprites.Length);
 		spriteRenderer.sprite = BranchSprites[newTrunk.whatPartAmI];
 		spriteRenderer.sortingOrder = 1;
+		newTrunk.obj.layer = 9;
 
+		BoxCollider2D boxCollider = newTrunk.obj.AddComponent<BoxCollider2D>();
+		boxCollider.offset = new Vector2(0, spriteRenderer.sprite.bounds.size.y/2);
+		boxCollider.size = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);
+		boxCollider.isTrigger = true;
+		
         newTrunk.obj.transform.parent = this.transform;
         newTrunk.obj.transform.position = this.transform.position;
 		float scale = newTrunk.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * newTrunk.growth;
@@ -347,7 +360,7 @@ public class TreeScript : MonoBehaviour
 				child.obj.transform.rotation = Quaternion.AngleAxis(child.currentAngle - 90, Vector3.forward);
 			}
 			float median = MaxLife/2;
-			float increment = (median)/5;
+			float increment = (median)/6;
 			if (PlantLifeSpan < median && PlantLifeSpan > 0)
 			{
 				if (PlantLifeSpan < (median - increment * 4))
@@ -376,7 +389,7 @@ public class TreeScript : MonoBehaviour
 		{
 			fullyGrown = true;
 		}
-	} ///COLOR FFFFFF(1000), C8C8C8(500), 969696(400), 646464(300), 323232(200), fade(100)
+	}
 	
 	void FixedUpdate()
     {
@@ -387,14 +400,14 @@ public class TreeScript : MonoBehaviour
 		if (fullyGrown)
 		{
 			PlantLifeSpan--;
-			if (CurrentlyWatered > 0)
+			if (CurrentlyWatered > 0 && PlantLifeSpan < MaxLife)
 			{
-				PlantLifeSpan = PlantLifeSpan - 10;
+				PlantLifeSpan = PlantLifeSpan + 100;
 			}
 		}
 		if (PlantLifeSpan <= 0)
 		{
-			print("Rot!");
+			//print("Rot!");
 			Destroy(gameObject);
 		}
     }
@@ -402,5 +415,31 @@ public class TreeScript : MonoBehaviour
 	public void GetWatered()
 	{
 		CurrentlyWatered = 5;
+	}
+	
+	public void GatherFruit(GameObject FruitObj)
+	{
+		Branch targetFruit = null;
+		
+		foreach(Branch branch in branches)
+		{
+			if (branch.obj == FruitObj)
+			{
+				targetFruit = branch;
+			}
+		}
+		
+		if (targetFruit != null)
+		{
+			//clear out from parent
+			targetFruit.parent.children.Remove(targetFruit);
+			
+			//shorten branch list
+			numberOfBranches--;
+			branches.Remove(targetFruit);
+			
+			//clear out self
+			Destroy(targetFruit.obj);
+		}
 	}
 }
