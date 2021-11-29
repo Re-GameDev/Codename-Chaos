@@ -5,6 +5,8 @@ using UnityEngine;
 public class BulletControllerScript : MonoBehaviour
 {
     public float FallSpeed = 20;
+	public GameObject PlantToGrow;
+	float lifetime = 300;
 	
 	//float Deceleration = 0.01f;
 	
@@ -33,6 +35,14 @@ public class BulletControllerScript : MonoBehaviour
 		}
 		
 		m_rigidbody.velocity = (WalkVelocity * rightHandRule) + (FallVelocity * upDir);
+		
+		lifetime--;
+		if (lifetime <= 0) 
+		{
+			print("I have lived too long");
+			Destroy(gameObject);
+		}
+		
 	}
 	
 	public void Attract(MagnetScript PlanetX)
@@ -51,6 +61,15 @@ public class BulletControllerScript : MonoBehaviour
 	public void OnCollisionEnter2D(Collision2D ThingHit)
 	{
 		//print("I am dying!");
+		if (PlantToGrow != null)
+		{
+			GameObject bulletShot = Instantiate(PlantToGrow, transform.position, transform.rotation);
+		}
+		else if (ThingHit.gameObject.layer == 9)
+		{
+			//print("I hit a plant");
+            ThingHit.gameObject.GetComponent<TreeScript>().GetWatered();
+		}
 		Destroy(gameObject);
 	}
 }

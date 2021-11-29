@@ -10,12 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4231425641102240698}
   - component: {fileID: 4231425641102240699}
-  - component: {fileID: 4231425641102240700}
   - component: {fileID: 4816443237867585201}
   - component: {fileID: 347578174304930077}
   - component: {fileID: 1204099424828878037}
   m_Layer: 8
-  m_Name: WaterBullet
+  m_Name: SeedBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,36 +74,17 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -1770157449473753226, guid: fe35c07016c681a4d82be13921707353, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6806ce73960b10649994fbc0275042c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 0.29, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &4231425641102240700
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231425641102240701}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cbcf337098b10084280bbdd8c6be2991, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!58 &4816443237867585201
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -155,5 +135,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FallSpeed: 20
-  PlantToGrow: {fileID: 0}
+  PlantToGrow: {fileID: 4171465738333684697, guid: b063100812b5a4a44929979f604f3ded, type: 3}
   currentAttractor: {fileID: 0}
