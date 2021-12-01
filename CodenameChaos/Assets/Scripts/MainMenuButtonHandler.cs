@@ -8,6 +8,7 @@ public class MainMenuButtonHandler : MonoBehaviour
     public int SceneIndex_3dPlatformer = 0;
     public int SceneIndex_2dRunner = 0;
     public int SceneIndex_Planet2d = 0;
+    const int SceneIndex_Rageball = 4;  // why not use const?
 
     public void On3dPlatformerButtonClick()
     {
@@ -25,5 +26,10 @@ public class MainMenuButtonHandler : MonoBehaviour
     {
         Debug.Log("Clicked on Planet 2D");
         SceneManager.LoadScene(SceneIndex_Planet2d, LoadSceneMode.Single);
+    }
+
+    public void OnRageBallButtonClick()
+    {
+        SceneManager.LoadScene( SceneIndex_Rageball );
     }
 }
