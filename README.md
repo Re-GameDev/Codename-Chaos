@@ -8,6 +8,12 @@ We are using the latest Long Term Support (LTS) version of unity which is **vers
 
 ![Unity Hub Screenshot](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityHubScreenshotForReadme.png?raw=true)
 
+# Modules
+In order to build the game to WebGL, you need to install the Web GL Module after the screen above. Anything else is optional for you to use, however it is important to inform other programmer of platform switch.
+
+![Module Selection](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/modules.png?raw=true)
+
+
 # Git Information
 
 ## Cloning the repository (and authentication/account stuffs)
