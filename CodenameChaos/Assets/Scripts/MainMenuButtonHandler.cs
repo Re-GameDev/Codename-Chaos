@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class MainMenuButtonHandler : MonoBehaviour
 {
     public int SceneIndex_3dPlatformer = 0;
-    public int SceneIndex_2dRunner = 0;
-    public int SceneIndex_Planet2d = 0;
+    public int SceneIndex_2dRunner = 0; 
+    public int SceneIndex_Planet2d = 0; 
     const int SceneIndex_Rageball = 4; 
 
     public void On3dPlatformerButtonClick()
@@ -36,7 +36,7 @@ public class MainMenuButtonHandler : MonoBehaviour
     /// Load the scene by build index
     /// </summary>
     /// <param name="sceneIndex"></param>
-    public void OnSceneLoad( int sceneIndex )
+    public void UILoadScene( int sceneIndex )
     {
         SceneManager.LoadScene( sceneIndex );
     }

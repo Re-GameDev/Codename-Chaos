@@ -13,11 +13,12 @@ namespace RageBall
             _cam = Camera.main?.transform ?? FindObjectOfType<Camera>().transform;
         }
 
-        void Update()
+        void LateUpdate()
         {
             if( _cam == null )
                 return;
-            transform.LookAt( _cam.position );
+            Vector3 inverseDir = 2 * transform.position - _cam.position;
+            transform.LookAt( inverseDir );
         }
     }
 }

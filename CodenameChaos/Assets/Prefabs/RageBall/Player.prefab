@@ -126,7 +126,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8d30027d3280d49aefb762ba2a0dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 250
+  velocity: 800
+  jumpForce: 2
+  jumpRecharge: 1
+  jumpMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &770759119739444883
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +143,7 @@ GameObject:
   - component: {fileID: 770759119739444882}
   - component: {fileID: 770759119739444887}
   - component: {fileID: 770759119739444884}
+  - component: {fileID: 8975690742886562565}
   m_Layer: 0
   m_Name: PlayerView
   m_TagString: Untagged
@@ -208,3 +214,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8975690742886562565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770759119739444883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7fa5219e5e6f79429ccedf9c53fbf86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
