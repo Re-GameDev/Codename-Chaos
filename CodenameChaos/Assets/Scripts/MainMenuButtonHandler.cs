@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +7,7 @@ public class MainMenuButtonHandler : MonoBehaviour
     public int SceneIndex_3dPlatformer = 0;
     public int SceneIndex_2dRunner = 0;
     public int SceneIndex_Planet2d = 0;
-    const int SceneIndex_Rageball = 4;  // why not use const?
+    const int SceneIndex_Rageball = 4; 
 
     public void On3dPlatformerButtonClick()
     {
@@ -31,5 +30,14 @@ public class MainMenuButtonHandler : MonoBehaviour
     public void OnRageBallButtonClick()
     {
         SceneManager.LoadScene( SceneIndex_Rageball );
+    }
+
+    /// <summary>
+    /// Load the scene by build index
+    /// </summary>
+    /// <param name="sceneIndex"></param>
+    public void OnSceneLoad( int sceneIndex )
+    {
+        SceneManager.LoadScene( sceneIndex );
     }
 }
