@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletControllerScript : MonoBehaviour
+public class FruitScript : MonoBehaviour
 {
-	public GameObject PlantToGrow;
 	public int typeID = 0;
     float FallSpeed = 50;
-	float lifetime = 500;
+	float lifetime = 1500;
+	bool canDie = false;
 	
 	//float Deceleration = 0.01f;
 	
@@ -37,34 +37,23 @@ public class BulletControllerScript : MonoBehaviour
 		m_rigidbody.velocity = (WalkVelocity * rightHandRule) + (FallVelocity * upDir);
 		
 		lifetime--;
-		if (lifetime <= 0) 
+		if (lifetime <= 0 && canDie) 
 		{
 			//print("I have lived too long");
 			Destroy(gameObject);
 		}
+		canDie = true;
 		
 	}
 	
-	public void OnTriggerEnter2D(Collider2D ThingHit)
-	{
-		//print("I am dying!");
-		if (ThingHit.gameObject.layer == 9 && typeID == 2)
-		{
-			//print("I hit a plant");
-            ThingHit.gameObject.GetComponentInParent<TreeScript>().GetWatered();
-		}
-		Destroy(gameObject);
+	public void FruitSuction(Vector2 SuctionDirection)
+	{				
+		m_rigidbody.velocity = SuctionDirection;
+		canDie = false;
 	}
 	
-	public void OnCollisionEnter2D(Collision2D ThingHit)
+	public void FruitCollection()
 	{
-		//NOTES
-		//Need animation for death
-		//print("I am dying!");
-		if (PlantToGrow != null && typeID == 1)
-		{
-			GameObject bulletShot = Instantiate(PlantToGrow, transform.position, transform.rotation);
-		}
 		Destroy(gameObject);
 	}
 }

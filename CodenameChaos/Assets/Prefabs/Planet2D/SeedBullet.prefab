@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4816443237867585201}
   - component: {fileID: 347578174304930077}
   - component: {fileID: 1204099424828878037}
+  - component: {fileID: -6687696861407411996}
   m_Layer: 8
   m_Name: SeedBullet
   m_TagString: Untagged
@@ -134,6 +135,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 642eebe763f8e7f49a2a09fb83e01551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FallSpeed: 20
   PlantToGrow: {fileID: 4171465738333684697, guid: b063100812b5a4a44929979f604f3ded, type: 3}
+  typeID: 1
+--- !u!114 &-6687696861407411996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231425641102240701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb54614b7ce19843a119dd6cac7073c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   currentAttractor: {fileID: 0}
+  CurrDistToPlanet: 0
+  inSpace: 0
