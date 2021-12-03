@@ -8,6 +8,7 @@ public class BulletControllerScript : MonoBehaviour
 	public int typeID = 0;
     float FallSpeed = 50;
 	float lifetime = 500;
+    public Transform SpriteTransform;
 	
 	//float Deceleration = 0.01f;
 	
@@ -19,6 +20,16 @@ public class BulletControllerScript : MonoBehaviour
 		m_rigidbody = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();
 	}
+
+    private void Update()
+    {
+        float headingDir = Mathf.Atan2(m_rigidbody.velocity.y, m_rigidbody.velocity.x) * Mathf.Rad2Deg;
+        float headingSpeed = m_rigidbody.velocity.magnitude;
+        headingSpeed = Mathf.Clamp(headingSpeed / 600, 0, 1);
+
+        SpriteTransform.localScale = new Vector3(Mathf.Lerp(1.0f, 10.0f, headingSpeed), SpriteTransform.localScale.y, SpriteTransform.localScale.z);
+        SpriteTransform.rotation = Quaternion.AngleAxis(headingDir, Vector3.forward);
+    }
 	
 	void FixedUpdate()
     {

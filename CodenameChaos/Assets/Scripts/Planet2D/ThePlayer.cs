@@ -157,16 +157,16 @@ public class ThePlayer : MonoBehaviour
 		}
     }
 	
-	public void OnCollisionEnter2D(Collision2D ThingHit)
-	{
-		if (ThingHit.gameObject.layer == 10)
-		{
-			if (ThingHit.gameObject.activeInHierarchy)
-			{
-				int amountGained = ThingHit.gameObject.GetComponent<FruitScript>().typeID;
-				ThingHit.gameObject.GetComponent<FruitScript>().FruitCollection();
-				if (amountGained != null) { TheAmmo.GetComponent<HUDScript>().SeedAmmoPickup(amountGained); }
-			}
-		}
-	}
+	//public void OnCollisionEnter2D(Collision2D ThingHit)
+	//{
+	//	if (ThingHit.gameObject.layer == 10)
+	//	{
+	//		if (ThingHit.gameObject.activeInHierarchy)
+	//		{
+	//			int amountGained = ThingHit.gameObject.GetComponent<FruitScript>().typeID;
+	//			ThingHit.gameObject.GetComponent<FruitScript>().FruitCollection();
+	//			TheAmmo.GetComponent<HUDScript>().SeedAmmoPickup(amountGained);
+	//		}
+	//	}
+	//}
 }

@@ -102,7 +102,7 @@ public class Gun_Script : MonoBehaviour
 			}
 		}
 		
-		if (ShootPressed)
+		if (ShootPressed || (ShootCharging && GunMode == 0))
 		{
 			ShootPressed = false;
 			Rigidbody2D thePlayerVel = playerHoldingGun.GetComponent<Rigidbody2D>();
@@ -111,7 +111,7 @@ public class Gun_Script : MonoBehaviour
 				//NOTES
 				//Need animation when ammo depleted
 				//need to allow for upgrades to how many droplets are fired per shot
-				for (int i = 0; i < 3; i++)
+				for (int i = 0; i < 1; i++)
 				{
 					GameObject bulletShot = Instantiate(WaterBullet, transform.position + (shootDirVec.normalized * 1.5f), transform.rotation);
 					Rigidbody2D bulletRigidBody = bulletShot.GetComponent<Rigidbody2D>();
@@ -150,17 +150,18 @@ public class Gun_Script : MonoBehaviour
 	}
 	
 	private void Update()
-	{
-		if (Input.GetMouseButton(0))
+    {
+        ShootCharging = false;
+        if (Input.GetMouseButton(0))
 		{
 			ShootCharging = true;
 			timeCharging++;
 			if (timeCharging > 999) {timeCharging = 999;}
 		}
-		else if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0))
 		{
 			ShootPressed = true;
-			ShootCharging = false;
 			if (timeCharging > 100 && GunMode == 1){ShootPressed = false;}
 			timeCharging = 0;
 		}
@@ -186,4 +187,15 @@ public class Gun_Script : MonoBehaviour
 			}
 		}
 	}
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        FruitScript fruit = collision.GetComponent<FruitScript>();
+        if (fruit != null)
+        {
+            int amountGained = fruit.typeID;
+            fruit.FruitCollection();
+            TheAmmo.GetComponent<HUDScript>().SeedAmmoPickup(amountGained);
+        }
+    }
 }
