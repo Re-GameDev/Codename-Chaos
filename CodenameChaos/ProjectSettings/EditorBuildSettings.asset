@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Planet2D/SampleScene.unity
     guid: c7d20423da1ff0748aa3f8251526f265
+  - enabled: 1
+    path: Assets/Scenes/RB_ring.unity
+    guid: 62ba19b5b5903cd478a20763cd7a168e
   m_configObjects: {}
