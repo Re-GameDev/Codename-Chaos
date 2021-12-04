@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 770759118661189699}
   - component: {fileID: 770759118661189696}
   - component: {fileID: 770759118661189697}
-  - component: {fileID: 770759118661189710}
+  - component: {fileID: 8310020248365473191}
+  - component: {fileID: 4981797124181692238}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -114,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &770759118661189710
+--- !u!114 &8310020248365473191
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,15 +124,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 770759118661189711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e8d30027d3280d49aefb762ba2a0dbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f92fe326396dda4ea4c1f78353ee605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealthPoints: 100
+  PlayerDeathEvent: {fileID: 11400000, guid: b72a0588558c40448a2a54b06c6d2a90, type: 2}
+--- !u!114 &4981797124181692238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770759118661189711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5e113c36ad146c41bf5b2b8e2e9c6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 800
-  jumpForce: 2
+  jumpForce: 50
   jumpRecharge: 1
   jumpMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 439
 --- !u!1 &770759119739444883
 GameObject:
   m_ObjectHideFlags: 0
