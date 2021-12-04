@@ -199,7 +199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2D Runner
+  m_text: Runner 2d Otter
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -277,11 +277,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118384308632182760}
+  - component: {fileID: 102852170854759727}
   - component: {fileID: 2118384308632182767}
   - component: {fileID: 2118384308632182766}
   - component: {fileID: 2118384308632182761}
   m_Layer: 5
-  m_Name: 2D Runner
+  m_Name: Runner 2d Otter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,6 +308,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &102852170854759727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118384308632182763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a7fe77aac4dff47a302e599a850ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene:
+    m_SceneAsset: {fileID: 102900000, guid: fd2190a70166c6e4b94c69dc18823c8c, type: 3}
+    m_SceneName: Runner2dOtter
+  DisplayOnUi: {fileID: 2118384308399017098}
 --- !u!222 &2118384308632182767
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -389,13 +406,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuButtonHandler, Assembly-CSharp
-        m_MethodName: On2dRunnerButtonClick
-        m_Mode: 1
+      - m_Target: {fileID: 102852170854759727}
+        m_TargetAssemblyTypeName: LoadsScene, Assembly-CSharp
+        m_MethodName: Now
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -410,6 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118384308640285350}
+  - component: {fileID: 4095346841626735359}
   - component: {fileID: 2118384308640285349}
   - component: {fileID: 2118384308640285348}
   - component: {fileID: 2118384308640285351}
@@ -440,6 +458,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4095346841626735359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118384308640285345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a7fe77aac4dff47a302e599a850ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene:
+    m_SceneAsset: {fileID: 102900000, guid: c7d20423da1ff0748aa3f8251526f265, type: 3}
+    m_SceneName: SampleScene
+  DisplayOnUi: {fileID: 0}
 --- !u!222 &2118384308640285349
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -522,13 +556,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuButtonHandler, Assembly-CSharp
-        m_MethodName: OnPlanet2dButtonClick
-        m_Mode: 1
+      - m_Target: {fileID: 4095346841626735359}
+        m_TargetAssemblyTypeName: LoadsScene, Assembly-CSharp
+        m_MethodName: Now
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -811,6 +845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118384309603091259}
+  - component: {fileID: 8473188398877676012}
   - component: {fileID: 2118384309603091262}
   - component: {fileID: 2118384309603091257}
   - component: {fileID: 2118384309603091256}
@@ -841,6 +876,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8473188398877676012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118384309603091258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a7fe77aac4dff47a302e599a850ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene:
+    m_SceneAsset: {fileID: 102900000, guid: 62ba19b5b5903cd478a20763cd7a168e, type: 3}
+    m_SceneName: RB_ring
+  DisplayOnUi: {fileID: 0}
 --- !u!222 &2118384309603091262
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -923,13 +974,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuButtonHandler, Assembly-CSharp
-        m_MethodName: OnRageBallButtonClick
-        m_Mode: 1
+      - m_Target: {fileID: 8473188398877676012}
+        m_TargetAssemblyTypeName: LoadsScene, Assembly-CSharp
+        m_MethodName: Now
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -944,6 +995,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2118384310197205924}
+  - component: {fileID: 3100442948770136598}
   - component: {fileID: 2118384310197205851}
   - component: {fileID: 2118384310197205850}
   - component: {fileID: 2118384310197205925}
@@ -974,6 +1026,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3100442948770136598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118384310197205927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39a7fe77aac4dff47a302e599a850ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Scene:
+    m_SceneAsset: {fileID: 102900000, guid: 7220ccaed70cbae41a7ff36677b1aa56, type: 3}
+    m_SceneName: Scene1
+  DisplayOnUi: {fileID: 0}
 --- !u!222 &2118384310197205851
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1056,13 +1124,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenuButtonHandler, Assembly-CSharp
-        m_MethodName: On3dPlatformerButtonClick
-        m_Mode: 1
+      - m_Target: {fileID: 3100442948770136598}
+        m_TargetAssemblyTypeName: LoadsScene, Assembly-CSharp
+        m_MethodName: Now
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

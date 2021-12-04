@@ -36,6 +36,7 @@ public class TreeScript : MonoBehaviour
 	public LayerMask PlanetLayer;
 	public LayerMask PlantLayer;
     public float growRadius = 10;
+	public GameObject fruitType;
 	int numberOfBranches = 0;
 	bool luckySuperPlant = false;
 	bool fullyGrown = false;
@@ -122,7 +123,7 @@ public class TreeScript : MonoBehaviour
 			{
 				//print($"the branch value is {branch.whereInList}");
 				float HangingDown = rootTrunk.currentAngle - branches[i].accumAngle;
-				AddNewFruit(branches[i], HangingDown, Random.Range(branches[i].length * 0.4f, branches[i].length * 0.6f));
+				AddNewFruit(branches[i], HangingDown, Random.Range(branches[i].length * 0.4f, 1.0f)); //branches[i].length * 0.6f
 			}
 		}
 		
@@ -150,6 +151,7 @@ public class TreeScript : MonoBehaviour
 		newFruit.children = new List<Branch>();
 		
 		newFruit.obj = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
+		//newFruit.obj = Instantiate(fruitType, newFruit.obj.transform.position, newFruit.obj.transform.rotation);
 		SpriteRenderer spriteRenderer = newFruit.obj.AddComponent<SpriteRenderer>();
 		newFruit.whatPartAmI = (int)Variant + 3;
 		Assert.IsTrue(newFruit.whatPartAmI < BranchSprites.Length);
@@ -325,7 +327,7 @@ public class TreeScript : MonoBehaviour
 		int doneGrowing = 0;
 		foreach(Branch branch in branches)
 		{
-			float growthSpeed = 0.002f;
+			float growthSpeed = 0.001f;
 			if (CurrentlyWatered > 0)
 			{
 				growthSpeed = 0.02f;
@@ -429,7 +431,7 @@ public class TreeScript : MonoBehaviour
 			}
 		}
 		
-		if (targetFruit != null)
+		if (targetFruit != null && targetFruit.growth > 0.95f)
 		{
 			//clear out from parent
 			targetFruit.parent.children.Remove(targetFruit);
@@ -437,6 +439,9 @@ public class TreeScript : MonoBehaviour
 			//shorten branch list
 			numberOfBranches--;
 			branches.Remove(targetFruit);
+			
+			GameObject newFruit = Instantiate(fruitType, targetFruit.obj.transform.position, targetFruit.obj.transform.rotation);
+			//SpriteRenderer fruitSpriteRenderer = newFruit.AddComponent<SpriteRenderer>();
 			
 			//clear out self
 			Destroy(targetFruit.obj);

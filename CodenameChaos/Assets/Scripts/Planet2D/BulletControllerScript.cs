@@ -4,21 +4,32 @@ using UnityEngine;
 
 public class BulletControllerScript : MonoBehaviour
 {
-    public float FallSpeed = 20;
 	public GameObject PlantToGrow;
-	float lifetime = 300;
+	public int typeID = 0;
+    float FallSpeed = 50;
+	float lifetime = 500;
+    public Transform SpriteTransform;
 	
 	//float Deceleration = 0.01f;
 	
 	Rigidbody2D m_rigidbody;
 	Collider2D m_collider;
-    [SerializeField] MagnetScript currentAttractor;
 	
 	private void Awake()
 	{
 		m_rigidbody = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();
 	}
+
+    private void Update()
+    {
+        float headingDir = Mathf.Atan2(m_rigidbody.velocity.y, m_rigidbody.velocity.x) * Mathf.Rad2Deg;
+        float headingSpeed = m_rigidbody.velocity.magnitude;
+        headingSpeed = Mathf.Clamp(headingSpeed / 600, 0, 1);
+
+        SpriteTransform.localScale = new Vector3(Mathf.Lerp(1.0f, 10.0f, headingSpeed), SpriteTransform.localScale.y, SpriteTransform.localScale.z);
+        SpriteTransform.rotation = Quaternion.AngleAxis(headingDir, Vector3.forward);
+    }
 	
 	void FixedUpdate()
     {
@@ -39,29 +50,16 @@ public class BulletControllerScript : MonoBehaviour
 		lifetime--;
 		if (lifetime <= 0) 
 		{
-			print("I have lived too long");
+			//print("I have lived too long");
 			Destroy(gameObject);
 		}
 		
 	}
 	
-	public void Attract(MagnetScript PlanetX)
-	{
-		Vector2 attractionDir = (Vector2)PlanetX.planetTransform.position - m_rigidbody.position;
-		float radiusOfAttraction = PlanetX.effectionRadius;
-		float DistanceOfPlanet = attractionDir.magnitude;
-		float CurrGravityStrength = 1 - (DistanceOfPlanet/radiusOfAttraction);
-		CurrGravityStrength = PlanetX.GravityStrength.Evaluate(CurrGravityStrength);
-		if (CurrGravityStrength > 0)
-		{
-			m_rigidbody.AddForce(attractionDir.normalized * -PlanetX.gravity * 100 * Time.fixedDeltaTime * CurrGravityStrength);
-		}
-	}
-	
 	public void OnTriggerEnter2D(Collider2D ThingHit)
 	{
 		//print("I am dying!");
-		if (ThingHit.gameObject.layer == 9)
+		if (ThingHit.gameObject.layer == 9 && typeID == 2)
 		{
 			//print("I hit a plant");
             ThingHit.gameObject.GetComponentInParent<TreeScript>().GetWatered();
@@ -71,8 +69,10 @@ public class BulletControllerScript : MonoBehaviour
 	
 	public void OnCollisionEnter2D(Collision2D ThingHit)
 	{
+		//NOTES
+		//Need animation for death
 		//print("I am dying!");
-		if (PlantToGrow != null)
+		if (PlantToGrow != null && typeID == 1)
 		{
 			GameObject bulletShot = Instantiate(PlantToGrow, transform.position, transform.rotation);
 		}

@@ -56,3 +56,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   growRadius: 10
+  fruitType: {fileID: 4231425641102240701, guid: d5e44d26f6ff52f42a433df592b69543, type: 3}

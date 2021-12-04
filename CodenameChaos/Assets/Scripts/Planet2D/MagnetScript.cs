@@ -5,11 +5,8 @@ using UnityEngine;
 public class MagnetScript : MonoBehaviour
 {
     public LayerMask AttractionLayer;
-    public LayerMask BulletLayer;
     public float gravity = -10;
     public float effectionRadius = 10;
-    public List<Collider2D> AttractedObjects = new List<Collider2D>();
-    public List<Collider2D> AttractedBullets = new List<Collider2D>();
 	public AnimationCurve GravityStrength;
     [HideInInspector] public Transform planetTransform;
 
@@ -17,12 +14,7 @@ public class MagnetScript : MonoBehaviour
     {
         planetTransform = GetComponent<Transform>();
     }
-
-    void Update()
-    {
-        SetAttractedObjects();
-    }
-
+    
     void FixedUpdate()
     {
         AttractObjects();
@@ -33,24 +25,20 @@ public class MagnetScript : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, effectionRadius);
     }
-
-    void SetAttractedObjects()
-    {
-        AttractedObjects = Physics2D.OverlapCircleAll(planetTransform.position, effectionRadius, AttractionLayer).ToList();
-        AttractedBullets = Physics2D.OverlapCircleAll(planetTransform.position, effectionRadius, BulletLayer).ToList();
-    }
-
+    
     void AttractObjects()
     {
+        List<Collider2D> AttractedObjects = Physics2D.OverlapCircleAll(planetTransform.position, effectionRadius, AttractionLayer).ToList();
         for (int i = 0; i < AttractedObjects.Count; i++)
         {
-            AttractedObjects[i].GetComponent<Magnetized>().Attract(this);
-        }
-        for (int i = 0; i < AttractedBullets.Count; i++)
-        {
-			if (AttractedBullets[i].gameObject.activeInHierarchy)
-			{
-				AttractedBullets[i].GetComponent<BulletControllerScript>().Attract(this);
+			if (AttractedObjects[i].gameObject.activeInHierarchy)
+            {
+                Magnetized magnetComponent = AttractedObjects[i].GetComponent<Magnetized>();
+                if (magnetComponent != null)
+                {
+                    magnetComponent.Attract(this);
+                    magnetComponent.RotateToCenter(this);
+                }
 			}
         }
     }
