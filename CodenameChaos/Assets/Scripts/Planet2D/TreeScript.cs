@@ -35,7 +35,7 @@ public class TreeScript : MonoBehaviour
 	public Sprite[] BranchSprites; //for each PlantVariant
 	public LayerMask PlanetLayer;
 	public LayerMask PlantLayer;
-    public float growRadius = 10;
+    public float growRadius = 8;
 	public GameObject fruitType;
 	int numberOfBranches = 0;
 	bool luckySuperPlant = false;

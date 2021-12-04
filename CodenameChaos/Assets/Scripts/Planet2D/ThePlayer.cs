@@ -36,6 +36,7 @@ public class ThePlayer : MonoBehaviour
 	private void Update()
 	{
 		RaycastHit2D FeetPlanted = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("Planet"));
+		RaycastHit2D FeetOnHead = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("NPC"));
 		if (FeetPlanted.collider != null)
 		{
 			doubleJumped = false;
@@ -44,6 +45,10 @@ public class ThePlayer : MonoBehaviour
 		else
 		{
 			foundFloor = false;
+		}
+		if (FeetOnHead.collider != null)
+		{
+			doubleJumped = false;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))
@@ -143,9 +148,12 @@ public class ThePlayer : MonoBehaviour
 		}
 		
 		//clamp your speeds
-		if (FallVelocity < -FallSpeed) { FallVelocity = -FallSpeed; }
-		if (WalkVelocity > WalkSpeed) { WalkVelocity = WalkSpeed; }
-		if (WalkVelocity < -WalkSpeed) { WalkVelocity = -WalkSpeed; }
+		if (!inSpace)
+		{
+			if (FallVelocity < -FallSpeed) { FallVelocity = -FallSpeed; }
+			if (WalkVelocity > WalkSpeed) { WalkVelocity = WalkSpeed; }
+			if (WalkVelocity < -WalkSpeed) { WalkVelocity = -WalkSpeed; }
+		}
 		m_rigidbody.velocity = (WalkVelocity * rightHandRule) + (FallVelocity * upDir);
 		
 		MyHSpeed = WalkVelocity;
