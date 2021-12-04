@@ -61,12 +61,7 @@ public class Gun_Script : MonoBehaviour
 		
 		if (ShootCharging)
 		{
-			if (GunMode == 0)
-			{
-				//NOTES
-				//Need animation when ammo depleted
-			}
-			else if (GunMode == 1)
+			if (GunMode == 1)
 			{
 				//NOTES
 				SuctionObjects = Physics2D.OverlapCircleAll(transform.position, SuctionRange, SeedLayer).ToList();
@@ -96,7 +91,7 @@ public class Gun_Script : MonoBehaviour
 			{
 				//NOTES
 				//future, need to push you based on how long you have charged the shot (up to 100% only)
-				chargeAmount = chargeAmount + chargeRate;
+				chargeAmount += Time.fixedDeltaTime * 10.0f;
 				if (chargeAmount > maxChargeAmount) {chargeAmount = maxChargeAmount;}
 				TheCharge.GetComponent<HUDScript>().SeedAmmoPickup(chargeRate);
 			}

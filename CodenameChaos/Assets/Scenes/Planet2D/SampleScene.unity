@@ -486,6 +486,7 @@ MonoBehaviour:
   currentAttractor: {fileID: 0}
   CurrDistToPlanet: 0
   inSpace: 0
+  ShouldRotate: 1
 --- !u!50 &382541603
 Rigidbody2D:
   serializedVersion: 4
@@ -990,8 +991,9 @@ GameObject:
   - component: {fileID: 928816355}
   - component: {fileID: 928816354}
   - component: {fileID: 928816356}
+  - component: {fileID: 928816357}
   m_Layer: 6
-  m_Name: Wally
+  m_Name: Eaarth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1107,6 +1109,20 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   planetTransform: {fileID: 0}
+--- !u!114 &928816357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 928816353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02ce182f59225634dbe15ce1e7b8b613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlanetCircleCollider: {fileID: 1810696696}
+  PlantToGrow: {fileID: 4171465738333684697, guid: b063100812b5a4a44929979f604f3ded, type: 3}
 --- !u!1 &1081572707
 GameObject:
   m_ObjectHideFlags: 0

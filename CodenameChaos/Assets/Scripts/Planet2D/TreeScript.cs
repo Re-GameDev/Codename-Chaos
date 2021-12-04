@@ -40,7 +40,7 @@ public class TreeScript : MonoBehaviour
 	int numberOfBranches = 0;
 	bool luckySuperPlant = false;
 	bool fullyGrown = false;
-    float PlantLifeSpan = 1200;
+    float PlantLifeSpan = 120;
 	float MaxLife;
 	int CurrentlyWatered = 0;
 	
@@ -401,10 +401,10 @@ public class TreeScript : MonoBehaviour
 		}
 		if (fullyGrown)
 		{
-			PlantLifeSpan--;
+			PlantLifeSpan -= Time.fixedDeltaTime;
 			if (CurrentlyWatered > 0 && PlantLifeSpan < MaxLife)
 			{
-				PlantLifeSpan = PlantLifeSpan + 100;
+				PlantLifeSpan += Time.fixedDeltaTime * 100;
 			}
 		}
 		if (PlantLifeSpan <= 0)
