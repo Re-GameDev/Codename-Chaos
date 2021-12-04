@@ -4,10 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace RageBall
 {
-    public class GameManager : GameEventListener
+    [Serializable]
+    public class GameManagerEvent : UnityEvent<GameObject>{ }
+
+    public class GameManager : MonoBehaviour
     {
         [SerializeField] GameEvent playerDeath;
         
@@ -17,6 +21,8 @@ namespace RageBall
         {
             get => _instance ?? new GameObject(nameof(GameManager)).AddComponent<GameManager>();
         }
+
+        public static bool Exists() => _instance != null;
 
         public bool waitForAllPlayers = false;
 
@@ -32,13 +38,20 @@ namespace RageBall
         [SerializeField] GameEvent roundEnd;
         [SerializeField] GameEvent newRound;
         [SerializeField] GameEvent gameOver;
+        [SerializeField] GameEvent playerJoins;
+        [SerializeField] GameEvent playerLeft;
         [SerializeField] PlayerController avatar; 
+        // [SerializeField] GameManagerEvent onPlayerJoined;
+        // [SerializeField] GameManagerEvent onPlayerLeft;
 
         GameState currentState = GameState.GameMenu;
-        // HashSet<PlayerInputHandler> players = new HashSet<PlayerInputHandler>();
-        [SerializeField] List<PlayerInputHandler> players = new List<PlayerInputHandler>(); // for testing purposes.
 
 
+
+        /*
+            Hold players reference until a new round starts
+        */
+        HashSet<PlayerInputHandler> players = new HashSet<PlayerInputHandler>();
 
         int playerAlive = 0;
 
@@ -56,6 +69,7 @@ namespace RageBall
 
         void OnSceneLoaded( Scene scene, LoadSceneMode mode )
         {
+            Debug.Log("Scene loaded!");
             if( players.Count > 0 )
                 StartGame();
         }
@@ -75,15 +89,24 @@ namespace RageBall
 
         public void OnPlayerJoin( PlayerInputHandler handler )
         {
+            playerJoins?.Invoke();
             players.Add( handler );
             if( currentState == GameState.GameMenu )
             {
                 StartGame();
             }
+            else if ( currentState == GameState.Preround )
+            {
+                var spawnPoints = SpawnManager.instance.GetSpawnPoints();
+                int pos = players.Count % spawnPoints.Count;
+                Spawner spawn = spawnPoints[pos];
+                RespawnPlayer( handler, spawn.transform.position, spawn.transform.rotation );
+            }
         }
 
         public void OnPlayerLeft( PlayerInput player )
         {
+            playerLeft?.Invoke();
             if( player.TryGetComponent<PlayerInputHandler>(out PlayerInputHandler handler ))
             {
                 handler.OnPlayerDisconnected();
@@ -93,6 +116,7 @@ namespace RageBall
 
         public void OnPlayerLeft( PlayerInputHandler handler )
         {
+            playerLeft?.Invoke();
             handler.OnPlayerDisconnected();
             players.Remove( handler );
         }
@@ -112,14 +136,19 @@ namespace RageBall
         public void RespawnPlayer( PlayerInputHandler player, Vector3 position, Quaternion rotation )
         {
             PlayerController _avatarController = Instantiate( avatar, position, rotation );
-            Debug.Log("Spawning player", _avatarController);
             player.AssignActiveController( _avatarController );
         }
 
-        public override void RaiseEvent()
+        // public override void RaiseEvent()
+        // {
+        //     // in this case here, a player has died...
+        //     playerAlive--;
+        // }
+
+        public void PlayerDied()
         {
-            // in this case here, a player has died...
-            playerAlive--;
+            if( currentState == GameState.InGame )
+                playerAlive--;
         }
 
         /// <summary>
@@ -173,11 +202,11 @@ namespace RageBall
                 roundEnd?.Invoke();
             }
 
-            if( playerAlive == 1 )
-            {
-                currentState = GameState.Intermission;
-                roundEnd?.Invoke();
-            }
+            // if( playerAlive == 1 )
+            // {
+            //     currentState = GameState.Intermission;
+            //     roundEnd?.Invoke();
+            // }
         }
 
         void Intermission()

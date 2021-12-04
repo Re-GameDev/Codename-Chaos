@@ -9,23 +9,23 @@ namespace RageBall
     [DisallowMultipleComponent]
     public abstract class PlayerController : NetworkBehaviour
     {
-        public virtual Vector2 move { get; set; } = Vector2.zero;
-        public virtual Vector2 look { get; set; } = Vector2.zero;
+        public Vector2 move { get; set; } = Vector2.zero;
+        public Vector2 look { get; set; } = Vector2.zero;
 
         /// <summary>
         /// How fast should the user accelerate
         /// </summary>
         /// <value></value>
-        public virtual float velocity { get; set; } = 5f;
+        public float velocity = 5f;
 
         /// <summary>
         /// How fast should the user look around
         /// </summary>
         /// <value></value>
-        public virtual float sensitivity { get; set; } = 5f;
+        public float sensitivity = 5f;
 
-        public virtual float mainTrigger { get; set; } = 0f;
-        public virtual float altTrigger { get; set; } = 0f;
+        public float mainTrigger { get; set; } = 0f;
+        public float altTrigger { get; set; } = 0f;
 
         public virtual void Movement( InputValue value ) => move = value.Get<Vector2>() * velocity;
 

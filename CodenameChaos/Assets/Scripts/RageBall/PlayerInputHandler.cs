@@ -14,6 +14,15 @@ namespace RageBall
         void Start()
         {
             GameManager.Instance.OnPlayerJoin( this );
+            DontDestroyOnLoad(gameObject);
+        }
+
+        void OnDestroy()
+        {
+            if( GameManager.Exists() )
+            {
+                GameManager.Instance.OnPlayerLeft( this );
+            }
         }
 
         public void AssignActiveController( PlayerController control )
@@ -34,13 +43,25 @@ namespace RageBall
 
         #region Input handlers
 
-        void OnMovement( InputValue value ) => _activePlayerController?.Movement( value );
+        void OnMovement( InputValue value ) 
+        {
+            _activePlayerController?.Movement( value );
+        }
 
-        void OnJump( InputValue value ) => _activePlayerController?.Jump( value );
+        void OnJump( InputValue value ) 
+        {
+            _activePlayerController?.Jump( value );
+        }
 
-        void OnCharge( InputValue value ) => _activePlayerController?.MainTrigger( value );
+        void OnCharge( InputValue value )
+        {
+            _activePlayerController?.MainTrigger( value );
+        }
 
-        void OnBrake( InputValue value ) => _activePlayerController?.AltTrigger( value );
+        void OnBrake( InputValue value ) 
+        {
+            _activePlayerController?.AltTrigger( value );
+        }
 
         #endregion
     }   

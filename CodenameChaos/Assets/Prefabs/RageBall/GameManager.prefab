@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3788571358602075759
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3788571358602075757}
+  - component: {fileID: 3788571358602075756}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 2800000, guid: a9c8b9fa8aeda4bbea8fcb43e32cc958, type: 3}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3788571358602075757
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788571358602075759}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.90426517, y: 2.8484974, z: -10.561897}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3788571358602075756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788571358602075759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb9624f5b408cf4bb5fab2b47303f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDeath: {fileID: 11400000, guid: b72a0588558c40448a2a54b06c6d2a90, type: 2}
+  waitForAllPlayers: 0
+  preroundTimer: 5
+  countdown: 5
+  gameDuration: 600
+  endGameTimer: 10
+  roundStart: {fileID: 11400000, guid: 11d7eebe4832f5746b10fcd47d986785, type: 2}
+  roundEnd: {fileID: 11400000, guid: d9e9a29d3acfd5544834dee5a9c065e9, type: 2}
+  newRound: {fileID: 11400000, guid: 005c89e9c155a0945af8f7ab3267aca2, type: 2}
+  gameOver: {fileID: 11400000, guid: 7006b58783ab74c42975460bb018af7f, type: 2}
+  playerJoins: {fileID: 11400000, guid: 922f7b20a99842641ab421072630f793, type: 2}
+  playerLeft: {fileID: 11400000, guid: 809b4cce027bf7a4ba50ecd379230467, type: 2}
+  avatar: {fileID: 4981797124181692238, guid: b770c4404c3b00046b62ad390f829e67, type: 3}

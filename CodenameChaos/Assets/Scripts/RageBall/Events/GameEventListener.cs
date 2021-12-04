@@ -4,15 +4,15 @@ using System;
 
 namespace RageBall
 {
-    // wonder why I couldn't just make this a abstract class? 
-    public abstract class GameEventListener : MonoBehaviour 
+    public class GameEventListener : MonoBehaviour 
     {
         [SerializeField] GameEvent gameEvent;
+        [SerializeField] UnityEvent unityEvent;
 
-        void Awake() => gameEvent?.Register( this );
+        void Awake() => gameEvent.Register( this );
 
-        void OnDestroy() => gameEvent?.Deregister( this );
+        void OnDestroy() => gameEvent.Deregister( this );
 
-        public abstract void RaiseEvent();
+        public virtual void RaiseEvent() => unityEvent.Invoke();
     }
 }

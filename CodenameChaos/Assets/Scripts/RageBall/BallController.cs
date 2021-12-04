@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace RageBall
@@ -9,13 +10,16 @@ namespace RageBall
     public class BallController : PlayerController
     {
         public virtual bool isGround { get; set; } = false;
-        [SerializeField] float velocity = 1f;
+        // [SerializeField] float velocity = 1f;
         [SerializeField] float jumpForce = 2f;
         [SerializeField] float jumpRecharge = 1f;
         [SerializeField] LayerMask jumpMask;
         Rigidbody _rigidbody;
-        bool canJumpAgain = true;  
-        
+        bool canJumpAgain = true;
+        bool isStunned = false;
+
+        [SerializeField] UnityEvent onStun = new UnityEvent();
+        [SerializeField] UnityEvent onRecovery = new UnityEvent(); 
         
         void Start() => _rigidbody = GetComponent<Rigidbody>();
 
@@ -39,6 +43,14 @@ namespace RageBall
         }
 
         void CanJumpAgain() => canJumpAgain = true;
+
+        // wonder how I can do the speedboost?
+        public override void MainTrigger(InputValue value)
+        {
+            float t = value.Get<float>();
+            Debug.Log(t);
+            // move.y = 
+        }
 
         void FixedUpdate()
         {
