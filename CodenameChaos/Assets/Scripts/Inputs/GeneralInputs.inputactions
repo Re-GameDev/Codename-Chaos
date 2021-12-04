@@ -1,0 +1,44 @@
+{
+    "name": "GeneralInputs",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "b7e196f0-5588-4a02-bb70-a154cd402ddc",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "9123f8a5-8142-418e-9db7-3f5cf2a2cacc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "179bd7e7-ed75-41da-bfd9-63083c51d2ac",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81cb2853-75f5-4d6d-807f-2249597b4f15",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

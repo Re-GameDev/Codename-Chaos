@@ -10,6 +10,7 @@ namespace RageBall
         public delegate void HealthEventHandler( object sender );
         public event HealthEventHandler OnHealthChanged;
         public event HealthEventHandler OnHealthDepleted;
+        public GameEvent PlayerDeathEvent;
 
         void OnEnable()
         {
@@ -21,7 +22,10 @@ namespace RageBall
             points -= damage;
             points = Mathf.Max( points, 0 );
             if( points == 0 )
+            {
                 OnHealthDepleted?.Invoke(this);
+                PlayerDeathEvent?.Invoke();
+            }
             else
                 OnHealthChanged?.Invoke(this);
         }
