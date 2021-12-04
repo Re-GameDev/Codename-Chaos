@@ -48,6 +48,11 @@ Shader "Unlit/Planet2D_Background"
             {
                 // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
+
+				col.r = i.uv.x;
+				col.g = i.uv.y;
+				col.b = 0;
+
                 // apply fog
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
