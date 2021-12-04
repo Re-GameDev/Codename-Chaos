@@ -185,7 +185,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1408
   gravity: -12
-  effectionRadius: 70
+  effectionRadius: 100
   GravityStrength:
     serializedVersion: 2
     m_Curve:
