@@ -37,7 +37,7 @@ public class ThePlayer : MonoBehaviour
 	{
 		RaycastHit2D FeetPlanted = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("Planet"));
 		RaycastHit2D FeetOnHead = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("NPC"));
-		if (FeetPlanted.collider != null || FeetOnHead.collider != null)
+		if (FeetPlanted.collider != null)
 		{
 			doubleJumped = false;
 			foundFloor = true;
@@ -45,6 +45,10 @@ public class ThePlayer : MonoBehaviour
 		else
 		{
 			foundFloor = false;
+		}
+		if (FeetOnHead.collider != null)
+		{
+			doubleJumped = false;
 		}
 		
 		if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space))

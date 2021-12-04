@@ -39,9 +39,14 @@ public class EaarthEventScript : MonoBehaviour
 		if (timeToSpawnPlant <= 0)
 		{
 			timeToSpawnPlant = Random.Range(30.0f, 120.0f);
-			float spawnAngle = Random.Range(0.0f, 360.0f);
-			Vector3 spawnPos = new Vector3(Mathf.Cos(spawnAngle)*radiusOfPlanet, Mathf.Sin(spawnAngle)*radiusOfPlanet, 0);
-			Instantiate(PlantToGrow, spawnPos, transform.rotation);
+			int numToSpawn = Random.Range(0, 3);
+			
+			for (int i = 0; i < numToSpawn; i++)
+			{
+				float spawnAngle = Random.Range(0.0f, 360.0f);
+				Vector3 spawnPos = new Vector3(Mathf.Cos(spawnAngle)*radiusOfPlanet, Mathf.Sin(spawnAngle)*radiusOfPlanet, 0);
+				Instantiate(PlantToGrow, spawnPos, transform.rotation);
+			}
 		}
 		else
 		{
