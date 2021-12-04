@@ -1,66 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace RageBall
 {
-    [RequireComponent(typeof(Rigidbody)), DisallowMultipleComponent]
-    public class PlayerController : MonoBehaviour
+    [DisallowMultipleComponent]
+    public abstract class PlayerController : NetworkBehaviour
     {
-        [SerializeField] float velocity = 1f;
-        [SerializeField] float jumpForce = 2f;
-        [SerializeField] float jumpRecharge = 1f;
-        [SerializeField] LayerMask jumpMask;
-        Rigidbody _rigidbody;
-        bool _isGround = false;
-        float x = 0f;
-        float y = 0f;
+        public virtual Vector2 move { get; set; } = Vector2.zero;
+        public virtual Vector2 look { get; set; } = Vector2.zero;
 
-        bool canJumpAgain = true;
+        /// <summary>
+        /// How fast should the user accelerate
+        /// </summary>
+        /// <value></value>
+        public virtual float velocity { get; set; } = 5f;
 
-        void Start()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
+        /// <summary>
+        /// How fast should the user look around
+        /// </summary>
+        /// <value></value>
+        public virtual float sensitivity { get; set; } = 5f;
 
-        void OnEnable()
-        {
-            canJumpAgain = true;
-        }
+        public virtual float mainTrigger { get; set; } = 0f;
+        public virtual float altTrigger { get; set; } = 0f;
 
-        void Update()
-        {
-            x = Input.GetAxis("Horizontal") * velocity;
-            y = Input.GetAxis("Vertical") * velocity;
-            if( _isGround && Input.GetButtonDown("Jump") )
-            {
-                Jump();
-                _isGround = false;
-                canJumpAgain = false;
-                Invoke(nameof( CanJumpAgain ), jumpRecharge);
-            }
-        }
+        public virtual void Movement( InputValue value ) => move = value.Get<Vector2>() * velocity;
 
-        void Jump()
-        {
-            _rigidbody.AddForce( -Physics.gravity * jumpForce, ForceMode.Impulse );
-        }
+        public virtual void Look( InputValue value ) => look = value.Get<Vector2>() * sensitivity;
 
-        void CanJumpAgain()
-        {
-            canJumpAgain = true;
-        }
+        public virtual void MainTrigger( InputValue value ) => mainTrigger = value.Get<float>();
 
-        void FixedUpdate()
-        {
-            Vector3 vel = Vector3.zero;
-            vel += Vector3.right * y 
-                + Vector3.back * x;
-            vel = vel * Time.deltaTime; // it still uses fixedDeltaTime under the hood...
-            _rigidbody.AddTorque( vel, ForceMode.Acceleration );
+        public virtual void AltTrigger( InputValue value ) => altTrigger = value.Get<float>();
 
-            if( canJumpAgain )
-                _isGround = Physics.SphereCast( transform.position, 1f, Physics.gravity, out RaycastHit hit, 1f, jumpMask);
-        }
+        public virtual void Jump( InputValue value ) { }
+
+        public virtual void OnPlayerDisconnectControl() { }
+
+        public virtual void OnPlayerConnectControl() { }
     }
 }
