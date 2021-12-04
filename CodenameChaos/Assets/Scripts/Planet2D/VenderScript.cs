@@ -8,11 +8,13 @@ public class VenderScript : MonoBehaviour
 	bool sellIconVisible;
 	public GameObject playerSeedCount;
 	GameObject theVenderIcon;
+	GameObject theVenderSpring;
 
     void Awake()
     {
         sellIconVisible = false;
 		theVenderIcon = this.transform.GetChild(0).gameObject;
+		theVenderSpring = this.transform.GetChild(1).gameObject;
     }
     
     void Update()
@@ -65,6 +67,7 @@ public class VenderScript : MonoBehaviour
 			if (seedCount >= 15)
 			{
 				print("Good Purchase!");
+				theVenderSpring.SetActive(true);
 				playerSeedCount.GetComponent<HUDScript>().SeedShot(15);
 			}
 			else

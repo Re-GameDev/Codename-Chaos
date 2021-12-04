@@ -17,7 +17,7 @@ public class CloudScript : MonoBehaviour
     {
         //get info and set sprites
 		MySprite = GetComponent<SpriteRenderer>();
-		mySpeed = Random.Range(-0.05f,0.05f);
+		mySpeed = Random.Range(-0.06f,0.06f);
     }
 	
     void FixedUpdate()
