@@ -144,9 +144,12 @@ public class ThePlayer : MonoBehaviour
 		}
 		
 		//clamp your speeds
-		if (FallVelocity < -FallSpeed) { FallVelocity = -FallSpeed; }
-		if (WalkVelocity > WalkSpeed) { WalkVelocity = WalkSpeed; }
-		if (WalkVelocity < -WalkSpeed) { WalkVelocity = -WalkSpeed; }
+		if (!inSpace)
+		{
+			if (FallVelocity < -FallSpeed) { FallVelocity = -FallSpeed; }
+			if (WalkVelocity > WalkSpeed) { WalkVelocity = WalkSpeed; }
+			if (WalkVelocity < -WalkSpeed) { WalkVelocity = -WalkSpeed; }
+		}
 		m_rigidbody.velocity = (WalkVelocity * rightHandRule) + (FallVelocity * upDir);
 		
 		MyHSpeed = WalkVelocity;

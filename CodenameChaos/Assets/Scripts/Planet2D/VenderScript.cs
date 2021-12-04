@@ -6,6 +6,7 @@ public class VenderScript : MonoBehaviour
 {
     public LayerMask PlayerLayer;
 	bool sellIconVisible;
+	public GameObject playerSeedCount;
 	GameObject theVenderIcon;
 
     void Awake()
@@ -24,6 +25,11 @@ public class VenderScript : MonoBehaviour
 		{
 			theVenderIcon.SetActive(false);
 		}
+		
+		if (Input.GetKeyDown(KeyCode.E) && sellIconVisible)
+		{
+			BuyAThing();
+		}
     }
     
     /*void FixedUpdate()
@@ -33,21 +39,38 @@ public class VenderScript : MonoBehaviour
 	
 	private void OnTriggerEnter2D(Collider2D collision)
     {
-        ThePlayer fruit = collision.GetComponent<ThePlayer>();
-        if (fruit != null)
+        ThePlayer MainPlayer = collision.GetComponent<ThePlayer>();
+        if (MainPlayer != null)
         {
-            print("what would you like to buy?");
+            print("What would you like to buy?");
 			sellIconVisible = true;
         }
     }
 	
 	private void OnTriggerExit2D(Collider2D collision)
     {
-        ThePlayer fruit = collision.GetComponent<ThePlayer>();
-        if (fruit != null)
+        ThePlayer MainPlayer = collision.GetComponent<ThePlayer>();
+        if (MainPlayer != null)
         {
             print("Goodbye for now!");
 			sellIconVisible = false;
+        }
+    }
+	
+	private void BuyAThing()
+    {
+        if (playerSeedCount != null)
+        {
+			float seedCount = playerSeedCount.GetComponent<HUDScript>().DisplayValue;
+			if (seedCount >= 15)
+			{
+				print("Good Purchase!");
+				playerSeedCount.GetComponent<HUDScript>().SeedShot(15);
+			}
+			else
+			{
+				print("Need more seeds!");
+			}
         }
     }
 }
