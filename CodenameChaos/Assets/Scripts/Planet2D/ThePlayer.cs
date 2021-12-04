@@ -36,7 +36,8 @@ public class ThePlayer : MonoBehaviour
 	private void Update()
 	{
 		RaycastHit2D FeetPlanted = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("Planet"));
-		if (FeetPlanted.collider != null)
+		RaycastHit2D FeetOnHead = Physics2D.Raycast(transform.position, new Vector2(-m_transform.up.x, -m_transform.up.y), 1.5f, LayerMask.GetMask("NPC"));
+		if (FeetPlanted.collider != null || FeetOnHead.collider != null)
 		{
 			doubleJumped = false;
 			foundFloor = true;

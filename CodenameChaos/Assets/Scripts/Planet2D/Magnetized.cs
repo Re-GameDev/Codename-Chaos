@@ -7,6 +7,7 @@ public class Magnetized : MonoBehaviour
 	public float CurrDistToPlanet = 0;
 	[HideInInspector] public bool inSpace = false;
     public bool ShouldRotate = true;
+    public bool Shouldfall = true;
 	float inSpaceTimer = 0; //seconds
 	
 	Transform m_transform;
@@ -47,16 +48,19 @@ public class Magnetized : MonoBehaviour
 	public void Attract(MagnetScript Planet)
     {
         currentAttractor = Planet;
-
-        Vector2 attractionDir = (Vector2)Planet.planetTransform.position - m_rigidbody.position;
-		float radiusOfAttraction = Planet.effectionRadius;
-		float DistanceOfPlanet = attractionDir.magnitude;
-		float CurrGravityStrength = 1 - (DistanceOfPlanet/radiusOfAttraction);
-		CurrDistToPlanet = CurrGravityStrength;
-		CurrGravityStrength = Planet.GravityStrength.Evaluate(CurrGravityStrength);
-		if (CurrGravityStrength > 0)
-		{
-			m_rigidbody.AddForce(attractionDir.normalized * -Planet.gravity * 100 * Time.fixedDeltaTime * CurrGravityStrength);
+		
+		if (Shouldfall)
+        {
+			Vector2 attractionDir = (Vector2)Planet.planetTransform.position - m_rigidbody.position;
+			float radiusOfAttraction = Planet.effectionRadius;
+			float DistanceOfPlanet = attractionDir.magnitude;
+			float CurrGravityStrength = 1 - (DistanceOfPlanet/radiusOfAttraction);
+			CurrDistToPlanet = CurrGravityStrength;
+			CurrGravityStrength = Planet.GravityStrength.Evaluate(CurrGravityStrength);
+			if (CurrGravityStrength > 0)
+			{
+				m_rigidbody.AddForce(attractionDir.normalized * -Planet.gravity * 100 * Time.fixedDeltaTime * CurrGravityStrength);
+			}
 		}
 	}
 	
