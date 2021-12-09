@@ -226,6 +226,7 @@ MonoBehaviour:
   PlanetCircleCollider: {fileID: 3058393565443084472}
   PlantToGrow: {fileID: 4171465738333684697, guid: b063100812b5a4a44929979f604f3ded, type: 3}
   CloudToSpawn: {fileID: 5766978130035658276, guid: e86c29e5901daea47a987ff628a79578, type: 3}
+  EvilSeedsToSpawn: {fileID: 4231425641102240701, guid: 87d6b1cf2e4930643abee4385754c10c, type: 3}
 --- !u!1 &3058393565195644777
 GameObject:
   m_ObjectHideFlags: 0

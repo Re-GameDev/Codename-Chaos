@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Variant: 0
+  WhichPlant: 0
   BranchSprites:
   - {fileID: 21300000, guid: d445eb1c99ec5c044b6a534943a11991, type: 3}
   - {fileID: 21300000, guid: 704ffaa35594ee640b244c4052bd8440, type: 3}
   - {fileID: 21300000, guid: 6cbe4259d2e208a42bfdf5c2f69d96be, type: 3}
   - {fileID: 21300000, guid: f07eb71705de731488a08ad96adec2ee, type: 3}
+  - {fileID: 21300000, guid: edabb406dfc6aed439f597e01d6112a8, type: 3}
   PlanetLayer:
     serializedVersion: 2
     m_Bits: 64

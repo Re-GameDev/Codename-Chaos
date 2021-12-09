@@ -23,30 +23,90 @@ public class TreeScript : MonoBehaviour
 		public int howFarIveCome;
 	}
 	
-	public enum PlantVariant //Tree, Rice, Cactus, Mushroom, Kelp, Palmtree, Bush, Sunflower, Count
+	public enum PlantPart //Tree, Rice, Cactus, Mushroom, Kelp, Palmtree, Bush, Sunflower, Count
 	{
-		TreeTrunk, TreeBranch, TreeLeaf, TreeFruit, Count
-	}		
+		TreeTrunk, TreeBranch, TreeLeaf, TreeFruit, ThornsTrunk, Count
+	}
+	
+	public enum PlantType
+	{
+		Tree, Thorns, Count
+	}
+	
+	enum ColLayer
+	{
+		Default, TransparentFX, IgnoreRaycast, blank, Water, UI, Planet, Player, Projectile, Plant, Fruit, Gun, Vender, NPC, Count
+	}
 	
 	Branch rootTrunk;
 	List<Branch> branches = new List<Branch>();
 	
-	public PlantVariant Variant = PlantVariant.TreeTrunk;
-	public Sprite[] BranchSprites; //for each PlantVariant
+	public PlantPart Variant = PlantPart.TreeTrunk;
+	public PlantType WhichPlant = PlantType.Tree;
+	public Sprite[] BranchSprites; //for each PlantPart
 	public LayerMask PlanetLayer;
 	public LayerMask PlantLayer;
     public float growRadius = 8;
 	public GameObject fruitType;
+	public GameObject SeedBullet;
 	int numberOfBranches = 0;
 	bool luckySuperPlant = false;
 	bool fullyGrown = false;
+	bool timeOfDying = false;
     float PlantLifeSpan = 120;
+    float timerTicker = 0;
 	float MaxLife;
 	int CurrentlyWatered = 0;
+	float rootAngle = 0;
+	Vector3 gravityPos = new Vector3(0, 0, 0);
 	
 	private void Awake()
 	{
 		MaxLife = PlantLifeSpan;
+		
+		rotateTowardGravity();
+	
+		shouldIBeAbleToGrow();
+		
+		if (WhichPlant == PlantType.Tree)
+		{
+			growTree();
+		}
+		else if (WhichPlant == PlantType.Thorns)
+		{
+			growThorns();
+		}
+		
+	}
+
+	private void shouldIBeAbleToGrow()
+	{
+		if (WhichPlant != PlantType.Thorns)
+		{
+			List<Collider2D> PlantsInRange = Physics2D.OverlapCircleAll(transform.position, growRadius, PlantLayer).ToList();
+			
+			if (PlantsInRange.Count > 0)
+			{
+				//print($"found {PlantsInRange.Count} plants nearby so I cannot grow!");
+				Destroy(gameObject);
+				return;
+			}
+		}
+		else
+		{
+			List<Collider2D> PlantsInRange = Physics2D.OverlapCircleAll(transform.position, growRadius/3, PlantLayer).ToList();
+			
+			if (PlantsInRange.Count > 0)
+			{
+				//print($"found {PlantsInRange.Count} plants nearby so I cannot grow!");
+				Destroy(gameObject);
+				return;
+			}
+		}
+	}
+	
+	private void rotateTowardGravity()
+	{
 		List<Collider2D> closePlanets = Physics2D.OverlapCircleAll(transform.position, 100f, PlanetLayer).ToList();
         //print($"Found {closePlanets.Count} planet(s) nearby!");
 		float closestPlanetDist = 0;
@@ -60,24 +120,27 @@ public class TreeScript : MonoBehaviour
 				closestPlanetDist = planetDist;
 			}
 		}
-		
-        float rootAngle = 0;
+        
 		if (closestPlanet != null)
 		{
+			gravityPos = closestPlanet.gameObject.transform.position;
             rootAngle = Mathf.Atan2(transform.position.y - closestPlanet.gameObject.transform.position.y, transform.position.x - closestPlanet.gameObject.transform.position.x) * Mathf.Rad2Deg;
-            //print($"Planet is at ({closestPlanet.transform.position.x}, {closestPlanet.transform.position.x}) we are at ({transform.position.x}, {transform.position.y}) angle is {rootAngle}");
-        }
-		
-	
-		List<Collider2D> PlantsInRange = Physics2D.OverlapCircleAll(transform.position, growRadius, PlantLayer).ToList();
+            //Vector2 distanceVector = (Vector2)closestPlanet.gameObject.transform.position - (Vector2)transform.position;
+            //rootAngle = Mathf.Atan2(distanceVector.y, distanceVector.x) * Mathf.Rad2Deg;
+			transform.rotation = Quaternion.AngleAxis(rootAngle - 90, Vector3.forward);
 
-		if (PlantsInRange.Count > 0)
-		{
-			//print($"found {PlantsInRange.Count} plants nearby so I cannot grow!");
-			Destroy(gameObject);
-			return;
-		}
-		
+            //print($"Planet is at ({closestPlanet.transform.position.x}, {closestPlanet.transform.position.y}) we are at ({transform.position.x}, {transform.position.y}) angle is {rootAngle}");
+        }
+	}
+	
+	void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, growRadius);
+    }
+
+	private void growTree()
+	{
 		//print("starting a new tree");
         int numBranches = Random.Range(5, 15);
 		if (Random.Range(0.0f,100.0f) > 95.0f)
@@ -90,18 +153,18 @@ public class TreeScript : MonoBehaviour
 		//Creating the Base for the plant
 		if (luckySuperPlant)
 		{
-			rootTrunk = AddTrunk(null, rootAngle, Random.Range(5.0f, 7.0f));
+			rootTrunk = AddBranch(null, rootAngle, Random.Range(5.0f, 7.0f), PlantPart.TreeTrunk, 0, ColLayer.Plant, true);
 			
 		}
 		else
 		{
-			rootTrunk = AddTrunk(null, rootAngle, Random.Range(4.0f, 5.0f));
+			rootTrunk = AddBranch(null, rootAngle, Random.Range(4.0f, 5.0f), PlantPart.TreeTrunk, 0, ColLayer.Plant, true);
 		}
 
 		//print("adding branches");
 		for (int i = 0; i < numBranches; i++)
 		{
-			AddRandomBranch();
+			AddRandomBranch(PlantPart.TreeBranch, -1);
 		}
 		
 		//print("Leafing it up");
@@ -111,7 +174,7 @@ public class TreeScript : MonoBehaviour
 			if (branches[i].children.Count == 0)
 			{
 				//print($"the branch value is {branch.whereInList}");
-				AddNewLeaf(branches[i], Random.Range(-20.0f,20.0f), Random.Range(branches[i].length * 0.6f, branches[i].length * 0.8f));
+				AddBranch(branches[i], Random.Range(-20.0f,20.0f), Random.Range(branches[i].length * 0.6f, branches[i].length * 0.8f), PlantPart.TreeLeaf, 10, ColLayer.Plant, false);
 			}
 		}
 		
@@ -123,103 +186,41 @@ public class TreeScript : MonoBehaviour
 			{
 				//print($"the branch value is {branch.whereInList}");
 				float HangingDown = rootTrunk.currentAngle - branches[i].accumAngle;
-				AddNewFruit(branches[i], HangingDown, Random.Range(branches[i].length * 0.4f, 1.0f)); //branches[i].length * 0.6f
+				AddBranch(branches[i], HangingDown, Random.Range(branches[i].length * 0.4f, 1.0f), PlantPart.TreeFruit, 10, ColLayer.Fruit, true);
 			}
 		}
-		
 	}
 
-	void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, growRadius);
-    }
-
-	private Branch AddNewFruit(Branch parent, float rotation, float length)
+	private void growThorns()
 	{
-        if (parent != null) { Assert.IsNotNull(parent.obj); }
-		Branch newFruit = new Branch();
-		newFruit.whereInList = numberOfBranches;
-		newFruit.parent = parent;
-		newFruit.seed = null;
-		newFruit.length = length;
-		newFruit.randSeed = Random.Range(0.0f, 1.0f);
-		newFruit.angle = rotation;
-        newFruit.accumAngle = (parent?.accumAngle ?? 0) + rotation;
-		newFruit.currentAngle = newFruit.angle;
-		newFruit.growth = 0;
-		newFruit.children = new List<Branch>();
+		//print("starting a new tree");
+        int numBranches = Random.Range(3, 10);
+		if (Random.Range(0.0f,100.0f) > 95.0f)
+		{
+			numBranches = Random.Range(10, 30);
+			luckySuperPlant = true;
+			print($"super lucky number {luckySuperPlant}!");
+		}
 		
-		newFruit.obj = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
-		//newFruit.obj = Instantiate(fruitType, newFruit.obj.transform.position, newFruit.obj.transform.rotation);
-		SpriteRenderer spriteRenderer = newFruit.obj.AddComponent<SpriteRenderer>();
-		newFruit.whatPartAmI = (int)Variant + 3;
-		Assert.IsTrue(newFruit.whatPartAmI < BranchSprites.Length);
-		spriteRenderer.sprite = BranchSprites[newFruit.whatPartAmI];
-		spriteRenderer.sortingOrder = 2;
-		newFruit.obj.layer = 10;
+		//Creating the Base for the plant
+		if (luckySuperPlant)
+		{
+			rootTrunk = AddBranch(null, rootAngle, Random.Range(2.0f, 4.0f), PlantPart.ThornsTrunk, 0, ColLayer.Plant, true);
+			
+		}
+		else
+		{
+			rootTrunk = AddBranch(null, rootAngle, Random.Range(1.0f, 2.0f), PlantPart.ThornsTrunk, 0, ColLayer.Plant, true);
+		}
 
-		CircleCollider2D circleCollider = newFruit.obj.AddComponent<CircleCollider2D>();
-		circleCollider.offset = new Vector2(0, spriteRenderer.sprite.bounds.size.y/2);
-		circleCollider.radius = spriteRenderer.sprite.bounds.size.x/2;
-		circleCollider.isTrigger = true;
-
-        newFruit.obj.transform.parent = this.transform;
-        newFruit.obj.transform.position = parent.obj.transform.position;
-		float scale = newFruit.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * newFruit.growth;
-		newFruit.obj.transform.localScale = new Vector3(scale, scale, scale);
-		newFruit.obj.transform.rotation = Quaternion.AngleAxis(newFruit.angle - 90, Vector3.forward);
-		
-		parent.children.Add(newFruit);
-		newFruit.howFarIveCome = parent.howFarIveCome + 1; 
-		spriteRenderer.sortingOrder = newFruit.howFarIveCome + 10;
-		
-		branches.Add(newFruit); 
-		
-		numberOfBranches++;
-		
-		return newFruit;
-	}
-
-	private Branch AddNewLeaf(Branch parent, float rotation, float length)
-	{
-        if (parent != null) { Assert.IsNotNull(parent.obj); }
-		Branch newLeaf = new Branch();
-		newLeaf.whereInList = numberOfBranches;
-		newLeaf.parent = parent;
-		newLeaf.seed = null;
-		newLeaf.length = length;
-		newLeaf.randSeed = Random.Range(0.0f, 1.0f);
-		newLeaf.angle = rotation;
-        newLeaf.accumAngle = (parent?.accumAngle ?? 0) + rotation;
-		newLeaf.currentAngle = newLeaf.angle;
-		newLeaf.growth = 0;
-		newLeaf.children = new List<Branch>();
-		
-		newLeaf.obj = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
-		SpriteRenderer spriteRenderer = newLeaf.obj.AddComponent<SpriteRenderer>();
-		newLeaf.whatPartAmI = (int)Variant + 2;
-		Assert.IsTrue(newLeaf.whatPartAmI < BranchSprites.Length);
-		spriteRenderer.sprite = BranchSprites[newLeaf.whatPartAmI];
-
-        newLeaf.obj.transform.parent = this.transform;
-        newLeaf.obj.transform.position = parent.obj.transform.position;
-		float scale = newLeaf.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * newLeaf.growth;
-		newLeaf.obj.transform.localScale = new Vector3(scale, scale, scale);
-		newLeaf.obj.transform.rotation = Quaternion.AngleAxis(newLeaf.angle - 90, Vector3.forward);
-		
-		parent.children.Add(newLeaf); 
-		newLeaf.howFarIveCome = parent.howFarIveCome + 1;
-		spriteRenderer.sortingOrder = newLeaf.howFarIveCome + 10;
-		
-		branches.Add(newLeaf); 
-		
-		numberOfBranches++;
-		
-		return newLeaf;
+		//print("adding branches");
+		for (int i = 0; i < numBranches; i++)
+		{
+			AddRandomBranch(PlantPart.ThornsTrunk, 0);
+		}
 	}
 	
-	private void AddRandomBranch()
+	private void AddRandomBranch(PlantPart spriteChoice, int shrinkAmount)
 	{
 		int branchIndex = Random.Range(0, branches.Count);
         float parentAngle = branches[branchIndex].accumAngle;
@@ -237,12 +238,12 @@ public class TreeScript : MonoBehaviour
 		//print($"submitting {lowerRand} to {upperRand} result {newAngle}");
 		if (newAngle > 180.0f) { newAngle = newAngle - 360.0f;}
 		if (newAngle < -180.0f) { newAngle = 360.0f - newAngle;}
-		float smallestSize = (branches[branchIndex].length - 1);
+		float smallestSize = (branches[branchIndex].length + shrinkAmount);
 		if (smallestSize < 1) {smallestSize = 1;}
-        AddBranch(branches[branchIndex], newAngle, Random.Range(smallestSize, branches[branchIndex].length));
+        AddBranch(branches[branchIndex], newAngle, Random.Range(smallestSize, branches[branchIndex].length), spriteChoice, 0, ColLayer.Plant, false);
 	}
 	
-	private Branch AddBranch(Branch parent, float rotation, float length)
+	private Branch AddBranch(Branch parent, float rotation, float length, PlantPart spriteChoice, int PlantLayerMod, ColLayer CollisionLayer, bool hasCollider)
 	{
 		if (parent != null) { Assert.IsNotNull(parent.obj); }
 		Branch newBranch = new Branch();
@@ -259,9 +260,17 @@ public class TreeScript : MonoBehaviour
 		
 		newBranch.obj = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
 		SpriteRenderer spriteRenderer = newBranch.obj.AddComponent<SpriteRenderer>();
-		newBranch.whatPartAmI = (int)Variant + 1;
+		newBranch.whatPartAmI = (int)Variant + (int)spriteChoice;  //difference
 		Assert.IsTrue(newBranch.whatPartAmI < BranchSprites.Length);
 		spriteRenderer.sprite = BranchSprites[newBranch.whatPartAmI];
+		
+		if (hasCollider)
+		{
+			BoxCollider2D boxCollider = newBranch.obj.AddComponent<BoxCollider2D>();
+			boxCollider.offset = new Vector2(0, spriteRenderer.sprite.bounds.size.y/2);
+			boxCollider.size = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);
+			boxCollider.isTrigger = true;
+		}
 
         newBranch.obj.transform.parent = this.transform;
         newBranch.obj.transform.position = parent?.obj.transform.position ?? this.transform.position;
@@ -269,9 +278,10 @@ public class TreeScript : MonoBehaviour
 		newBranch.obj.transform.localScale = new Vector3(scale, scale, scale);
 		newBranch.obj.transform.rotation = Quaternion.AngleAxis(newBranch.angle - 90, Vector3.forward);
 		
-		parent.children.Add(newBranch);
-		newBranch.howFarIveCome = parent.howFarIveCome + 1;
-		spriteRenderer.sortingOrder = newBranch.howFarIveCome;
+		if (parent != null) {parent.children.Add(newBranch);}
+		newBranch.howFarIveCome = (parent?.howFarIveCome ?? 0) + 1;
+		spriteRenderer.sortingOrder = newBranch.howFarIveCome + PlantLayerMod; //difference
+		newBranch.obj.layer = (int)CollisionLayer; //difference
 		
 		branches.Add(newBranch); 
 		
@@ -280,93 +290,75 @@ public class TreeScript : MonoBehaviour
 		return newBranch;
 	}
 	
-	private Branch AddTrunk(Branch parent, float rotation, float length)
-	{
-		Branch newTrunk = new Branch();
-		newTrunk.whereInList = numberOfBranches;
-		newTrunk.parent = parent;
-		newTrunk.seed = null;
-		newTrunk.length = length;
-		newTrunk.randSeed = Random.Range(0.0f, 1.0f);
-		newTrunk.angle = rotation;
-        newTrunk.accumAngle = 0 + rotation;
-		newTrunk.currentAngle = newTrunk.angle;
-		newTrunk.growth = 0;
-		newTrunk.children = new List<Branch>();
-		
-		newTrunk.obj = new GameObject($"{((parent != null) ? (parent.obj.name + "_") : "")}Branch{parent?.children.Count ?? 0}");
-		SpriteRenderer spriteRenderer = newTrunk.obj.AddComponent<SpriteRenderer>();
-		newTrunk.whatPartAmI = (int)Variant;
-		Assert.IsTrue(newTrunk.whatPartAmI < BranchSprites.Length);
-		spriteRenderer.sprite = BranchSprites[newTrunk.whatPartAmI];
-		spriteRenderer.sortingOrder = 1;
-		newTrunk.obj.layer = 9;
-
-		BoxCollider2D boxCollider = newTrunk.obj.AddComponent<BoxCollider2D>();
-		boxCollider.offset = new Vector2(0, spriteRenderer.sprite.bounds.size.y/2);
-		boxCollider.size = new Vector2(spriteRenderer.sprite.bounds.size.x, spriteRenderer.sprite.bounds.size.y);
-		boxCollider.isTrigger = true;
-		
-        newTrunk.obj.transform.parent = this.transform;
-        newTrunk.obj.transform.position = this.transform.position;
-		float scale = newTrunk.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * newTrunk.growth;
-		newTrunk.obj.transform.localScale = new Vector3(scale, scale, scale);
-		newTrunk.obj.transform.rotation = Quaternion.AngleAxis(newTrunk.angle - 90, Vector3.forward);
-		 
-		newTrunk.howFarIveCome = 0; 
-		
-		branches.Add(newTrunk);
-		
-		numberOfBranches++;
-		
-		return newTrunk;
-	}
-	
 	void Update()
 	{
 		int doneGrowing = 0;
+		int doneShrinking = 0;
 		foreach(Branch branch in branches)
 		{
-			float growthSpeed = 0.001f;
-			if (CurrentlyWatered > 0)
+			if (!timeOfDying)
 			{
-				growthSpeed = 0.02f;
+				float growthSpeed = 0.001f;
+				if (WhichPlant == PlantType.Thorns)
+				{
+					growthSpeed = 0.005f;
+				}
+				else if (CurrentlyWatered > 0)
+				{
+					growthSpeed = 0.02f;
+				}
+				
+				if (WhichPlant == PlantType.Thorns && CurrentlyWatered > 0)
+				{
+					if (branch.growth > 0.10f)
+					{
+						branch.growth -= (growthSpeed / branch.length);
+					}
+					else if (branch.growth < 0.10f)
+					{
+						doneShrinking++;
+					}
+				}
+				else if (branch.growth < 1 && (branch.parent == null || branch.parent.growth > 0.95f))
+				{
+					branch.growth += (growthSpeed / branch.length);
+				}
+				else if (branch.growth > 1)
+				{
+					branch.growth = 1;
+				}
+				else if (branch.growth == 1)
+				{
+					doneGrowing++;
+				}
+				
+				if (branch.parent == null)
+				{
+					float swayAmount = Mathf.Sin(Time.time * Mathf.PI * 2 / (2 + 1 * branch.randSeed) + branch.randSeed * Mathf.PI * 2) * 2;
+					branch.currentAngle = branch.angle + swayAmount;
+					branch.obj.transform.rotation = Quaternion.AngleAxis(branch.currentAngle - 90, Vector3.forward);
+				}
+				foreach(Branch child in branch.children)
+				{
+					if(child.whatPartAmI == (int)PlantPart.TreeFruit) {child.obj.transform.position = branch.obj.transform.position;}
+					else {child.obj.transform.position = branch.obj.transform.position + (branch.obj.transform.up * branch.length * branch.growth);}
+					float swayAmount = Mathf.Sin(Time.time * Mathf.PI * 2 / (5 + 4 * child.randSeed) + child.randSeed * Mathf.PI * 2) * 4;
+					child.currentAngle = branch.currentAngle + child.angle + swayAmount;
+					child.obj.transform.rotation = Quaternion.AngleAxis(child.currentAngle - 90, Vector3.forward);
+				}
 			}
-			if (branch.growth < 1 && (branch.parent == null || branch.parent.growth > 0.95f))
-			{
-				branch.growth += (growthSpeed / branch.length);
-			}
-			else if (branch.growth > 1)
-			{
-				branch.growth = 1;
-			}
-			else if (branch.growth == 1)
-			{
-				doneGrowing++;
-			}
+			
 			SpriteRenderer spriteRenderer = branch.obj.GetComponent<SpriteRenderer>();
 			float scale = branch.length/(spriteRenderer.sprite.bounds.size.y - 0.3f) * branch.growth;
 			branch.obj.transform.localScale = new Vector3(scale, scale, scale);
-			if (branch.parent == null)
-			{
-				float swayAmount = Mathf.Sin(Time.time * Mathf.PI * 2 / (2 + 1 * branch.randSeed) + branch.randSeed * Mathf.PI * 2) * 2;
-				branch.currentAngle = branch.angle + swayAmount;
-				branch.obj.transform.rotation = Quaternion.AngleAxis(branch.currentAngle - 90, Vector3.forward);
-			}
-			foreach(Branch child in branch.children)
-			{
-				if(child.whatPartAmI == (int)PlantVariant.TreeFruit) {child.obj.transform.position = branch.obj.transform.position;}
-				else {child.obj.transform.position = branch.obj.transform.position + (branch.obj.transform.up * branch.length * branch.growth);}
-				float swayAmount = Mathf.Sin(Time.time * Mathf.PI * 2 / (5 + 4 * child.randSeed) + child.randSeed * Mathf.PI * 2) * 4;
-				child.currentAngle = branch.currentAngle + child.angle + swayAmount;
-				child.obj.transform.rotation = Quaternion.AngleAxis(child.currentAngle - 90, Vector3.forward);
-			}
+			
 			float median = MaxLife/2;
 			float increment = (median)/6;
 			if (PlantLifeSpan < median && PlantLifeSpan > 0)
 			{
 				if (PlantLifeSpan < (median - increment * 4))
 				{
+					deathTriggered();
 					spriteRenderer.color = new Color(0.5f,0.5f,0.5f,PlantLifeSpan/increment);
 				}
 				else if (PlantLifeSpan < (median - increment * 3))
@@ -387,10 +379,22 @@ public class TreeScript : MonoBehaviour
 				}
 			}
 		}
+		
 		if (branches.Count == doneGrowing)
 		{
 			fullyGrown = true;
 		}
+		
+		if (branches.Count == doneShrinking && WhichPlant == PlantType.Thorns && CurrentlyWatered > 0 && !timeOfDying)
+		{
+			deathTriggered();
+			if (PlantLifeSpan > (MaxLife / 6)) { PlantLifeSpan = (MaxLife / 6); }
+		}
+	}
+	
+	public void deathTriggered()
+	{
+		timeOfDying = true;
 	}
 	
 	void FixedUpdate()
@@ -399,14 +403,34 @@ public class TreeScript : MonoBehaviour
 		{
 			CurrentlyWatered--;
 		}
-		if (fullyGrown)
+		
+		if (timeOfDying)
 		{
-			PlantLifeSpan -= Time.fixedDeltaTime;
-			if (CurrentlyWatered > 0 && PlantLifeSpan < MaxLife)
+			if (PlantLifeSpan > (MaxLife / 6)) { PlantLifeSpan = (MaxLife / 6); }
+			PlantLifeSpan -= Time.fixedDeltaTime * 5;
+		}
+		else
+		{
+			if (fullyGrown && WhichPlant != PlantType.Thorns)
 			{
-				PlantLifeSpan += Time.fixedDeltaTime * 100;
+				if (CurrentlyWatered > 0 && PlantLifeSpan < MaxLife)
+				{
+					PlantLifeSpan += Time.fixedDeltaTime * 100;
+				}
+				else
+				{
+					PlantLifeSpan -= Time.fixedDeltaTime;
+				}
+			}
+		
+			timerTicker += Time.fixedDeltaTime;
+			if (WhichPlant == PlantType.Thorns && timerTicker > 10.0f)
+			{
+				KillAndGrow();
+				timerTicker = 0;
 			}
 		}
+		
 		if (PlantLifeSpan <= 0)
 		{
 			//print("Rot!");
@@ -446,5 +470,36 @@ public class TreeScript : MonoBehaviour
 			//clear out self
 			Destroy(targetFruit.obj);
 		}
+	}
+	
+	private void KillAndGrow()
+	{
+		List<Collider2D> PlantsInRange = Physics2D.OverlapCircleAll(transform.position, growRadius, PlantLayer).ToList();
+		
+		foreach(Collider2D plantFound in PlantsInRange)
+		{
+			if (plantFound != null)
+			{
+				PlantType otherPlant = plantFound.gameObject.GetComponentInParent<TreeScript>().WhichPlant;
+				if (otherPlant != PlantType.Thorns)
+				{
+					plantFound.gameObject.GetComponentInParent<TreeScript>().deathTriggered();
+				}
+			}
+		}		
+		
+		Vector3 upDir = transform.position - gravityPos;
+		//upDir = upDir.normalized;
+		Vector3 rightDir = new Vector3(upDir.y, -upDir.x, 0);
+		Vector3 leftDir = (upDir - rightDir);
+		rightDir = (upDir + rightDir);
+		float ShootAngleR = Mathf.Atan2(rightDir.y, rightDir.x) * Mathf.Rad2Deg;
+		float ShootAngleL = Mathf.Atan2(leftDir.y, leftDir.x) * Mathf.Rad2Deg;
+		GameObject bulletShotR = Instantiate(SeedBullet, transform.position + (upDir.normalized * 1.0f), transform.rotation);
+		GameObject bulletShotL = Instantiate(SeedBullet, transform.position + (upDir.normalized * 1.0f), transform.rotation);
+		Rigidbody2D bulletRigidBodyR = bulletShotR.GetComponent<Rigidbody2D>();
+		Rigidbody2D bulletRigidBodyL = bulletShotL.GetComponent<Rigidbody2D>();
+		bulletRigidBodyR.velocity = new Vector2(Mathf.Cos(ShootAngleR * Mathf.Deg2Rad),Mathf.Sin(ShootAngleR * Mathf.Deg2Rad)) * Random.Range(5.0f, 10.0f);
+		bulletRigidBodyL.velocity = new Vector2(Mathf.Cos(ShootAngleL * Mathf.Deg2Rad),Mathf.Sin(ShootAngleL * Mathf.Deg2Rad)) * Random.Range(5.0f, 10.0f);
 	}
 }

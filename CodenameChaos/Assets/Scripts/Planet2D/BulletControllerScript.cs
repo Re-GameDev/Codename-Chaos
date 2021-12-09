@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class BulletControllerScript : MonoBehaviour
 {
+	public enum BulletType
+	{
+		Nothing, Seed, Water, EvilSeed, Count
+	}
+	
 	public GameObject PlantToGrow;
-	public int typeID = 0;
+	public GameObject EvilPlantToGrow;
+	public BulletType typeID = BulletType.Nothing;
     float FallSpeed = 50;
 	float lifetime = 500;
     public Transform SpriteTransform;
@@ -26,8 +32,11 @@ public class BulletControllerScript : MonoBehaviour
         float headingDir = Mathf.Atan2(m_rigidbody.velocity.y, m_rigidbody.velocity.x) * Mathf.Rad2Deg;
         float headingSpeed = m_rigidbody.velocity.magnitude;
         headingSpeed = Mathf.Clamp(headingSpeed / 600, 0, 1);
-
-        SpriteTransform.localScale = new Vector3(Mathf.Lerp(1.0f, 10.0f, headingSpeed), SpriteTransform.localScale.y, SpriteTransform.localScale.z);
+		
+		if (typeID == BulletType.Water)
+		{
+			SpriteTransform.localScale = new Vector3(Mathf.Lerp(1.0f, 10.0f, headingSpeed), SpriteTransform.localScale.y, SpriteTransform.localScale.z);
+		}
         SpriteTransform.rotation = Quaternion.AngleAxis(headingDir, Vector3.forward);
     }
 	
@@ -59,12 +68,12 @@ public class BulletControllerScript : MonoBehaviour
 	public void OnTriggerEnter2D(Collider2D ThingHit)
 	{
 		//print("I am dying!");
-		if (ThingHit.gameObject.layer == 9 && typeID == 2)
+		if (ThingHit.gameObject.layer == 9 && typeID == BulletType.Water)
 		{
 			//print("I hit a plant");
             ThingHit.gameObject.GetComponentInParent<TreeScript>().GetWatered();
+			Destroy(gameObject);
 		}
-		Destroy(gameObject);
 	}
 	
 	public void OnCollisionEnter2D(Collision2D ThingHit)
@@ -72,9 +81,13 @@ public class BulletControllerScript : MonoBehaviour
 		//NOTES
 		//Need animation for death
 		//print("I am dying!");
-		if (PlantToGrow != null && typeID == 1)
+		if (PlantToGrow != null && typeID == BulletType.Seed)
 		{
 			GameObject bulletShot = Instantiate(PlantToGrow, transform.position, transform.rotation);
+		}
+		if (EvilPlantToGrow != null && typeID == BulletType.EvilSeed)
+		{
+			GameObject bulletShot = Instantiate(EvilPlantToGrow, transform.position, transform.rotation);
 		}
 		Destroy(gameObject);
 	}
