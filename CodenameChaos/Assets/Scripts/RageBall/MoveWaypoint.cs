@@ -50,6 +50,7 @@ namespace RageBall
         {
             if( _target == null )
                 return;
+                
             this.transform.position = Vector3.SmoothDamp( transform.position, _target.position, ref velocity, smoothDamp );
         }
     }

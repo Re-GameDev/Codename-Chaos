@@ -45,7 +45,7 @@ public class LoadsScene : MonoBehaviour
         if (false == string.IsNullOrEmpty(Scene))
         {
             // add new OnClick event
-            if (button.onClick.GetPersistentEventCount() == 0)
+            if (button.onClick?.GetPersistentEventCount() == 0)
             {
                 UnityEventTools.AddPersistentListener(button.onClick, Now);
             }

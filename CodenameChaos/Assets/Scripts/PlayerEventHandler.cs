@@ -24,14 +24,8 @@ namespace RageBall
             }    
         }
 
-        private void HandlePlayerLeft(PlayerInput obj)
-        {
-            GameManager.Instance.OnPlayerLeft( obj );
-        }
+        private void HandlePlayerLeft(PlayerInput obj) => GameManager.Instance.OnPlayerLeft( obj );
 
-        private void HandlePlayerJoined(PlayerInput obj)
-        {
-            GameManager.Instance.OnPlayerJoin( obj );
-        }
+        private void HandlePlayerJoined(PlayerInput obj) => GameManager.Instance.OnPlayerJoin( obj );
     }
 }
