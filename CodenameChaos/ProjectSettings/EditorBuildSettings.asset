@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RB_ring.unity
     guid: 62ba19b5b5903cd478a20763cd7a168e
+  - enabled: 1
+    path: Assets/Scenes/OtterBox.unity
+    guid: 2e3110612ebc91d498f13369f6e6f0e6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ad7081657667312429d0fc2bbdae0182, type: 2}
