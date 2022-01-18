@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,13 +16,31 @@ namespace RageBall
         [SerializeField] float jumpRecharge = 1f;
         [SerializeField] LayerMask jumpMask;
         Rigidbody _rigidbody;
+        Health _health;
         bool canJumpAgain = true;
-        bool isStunned = false;
+        // bool isStunned = false;
 
         [SerializeField] UnityEvent onStun = new UnityEvent();
         [SerializeField] UnityEvent onRecovery = new UnityEvent(); 
         
-        void Start() => _rigidbody = GetComponent<Rigidbody>();
+        void Start() 
+        {
+            _rigidbody = GetComponent<Rigidbody>();
+            if( TryGetComponent<Health>(out Health health ))
+            {
+                _health = health;
+                _health.OnHealthDepleted += HandleHealthDepleted;
+            }
+            OnSpawn();
+        }
+
+        public override void OnDestroy()
+        {
+            if( _health != null )
+                _health.OnHealthDepleted -= HandleHealthDepleted;
+        }
+
+        private void HandleHealthDepleted(object sender) => OnDeath();
 
         void OnEnable() => canJumpAgain = true;
 
@@ -48,7 +67,6 @@ namespace RageBall
         public override void MainTrigger(InputValue value)
         {
             float t = value.Get<float>();
-            Debug.Log(t);
             // move.y = 
         }
 

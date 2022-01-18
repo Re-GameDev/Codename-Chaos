@@ -11,6 +11,9 @@
 /CodenameChaos/[Ll]ogs/
 /CodenameChaos/[Mm]emoryCaptures/
 
+# Ignore UserSettings directory
+/CodenameChaos/UserSettings
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/CodenameChaos/[Aa]ssets/**/*.meta
 

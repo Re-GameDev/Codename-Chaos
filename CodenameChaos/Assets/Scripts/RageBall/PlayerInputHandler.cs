@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ namespace RageBall
     public class PlayerInputHandler : MonoBehaviour
     {
         PlayerController _activePlayerController;
+        public event Action onPlayerDeath;
+        public event Action onPlayerSpawn;
+        public bool IsAlive() => _activePlayerController != null;
+
+#region unity event
 
         void Start()
         {
@@ -20,49 +26,59 @@ namespace RageBall
         void OnDestroy()
         {
             if( GameManager.Exists() )
-            {
                 GameManager.Instance.OnPlayerLeft( this );
-            }
         }
 
-        public void AssignActiveController( PlayerController control )
+#endregion
+
+#region private implementation
+        void SubscribeEvent( PlayerController control )
         {
-            // we can do something like destroy or disconnect
-            if( _activePlayerController != null )
-                _activePlayerController.OnPlayerDisconnectControl();
-                
+            UnsubscribeEvent();
             _activePlayerController = control;
             _activePlayerController.OnPlayerConnectControl();
+            _activePlayerController.onPlayerDeath += HandlePlayerDeath;
+            _activePlayerController.onPlayerSpawn += HandlePlayerSpawn;
         }
 
-        public void OnPlayerDisconnected()
+        void UnsubscribeEvent()
         {
-            if( _activePlayerController != null )
-                _activePlayerController.OnPlayerDisconnectControl();
+            if( _activePlayerController == null ) return;
+            _activePlayerController.onPlayerDeath -= HandlePlayerDeath;
+            _activePlayerController.onPlayerSpawn -= HandlePlayerSpawn;
+            _activePlayerController.OnPlayerDisconnectControl();
+            _activePlayerController = null;
         }
 
-        #region Input handlers
+#endregion
 
-        void OnMovement( InputValue value ) 
+#region handlers
+
+        void HandlePlayerDeath()
         {
-            _activePlayerController?.Movement( value );
+            UnsubscribeEvent();
+            onPlayerDeath?.Invoke();
         }
 
-        void OnJump( InputValue value ) 
-        {
-            _activePlayerController?.Jump( value );
-        }
+        void HandlePlayerSpawn() => onPlayerSpawn?.Invoke();
+        
+#endregion
 
-        void OnCharge( InputValue value )
-        {
-            _activePlayerController?.MainTrigger( value );
-        }
+#region public implementation
 
-        void OnBrake( InputValue value ) 
-        {
-            _activePlayerController?.AltTrigger( value );
-        }
+        public void AssignActiveController( PlayerController control ) => SubscribeEvent( control );
+        public void OnPlayerDisconnected() => UnsubscribeEvent();
 
-        #endregion
+#endregion
+
+#region Input handlers
+
+        void OnMovement( InputValue value ) => _activePlayerController?.Movement( value );
+        void OnJump( InputValue value ) => _activePlayerController?.Jump( value );
+        void OnCharge( InputValue value ) => _activePlayerController?.MainTrigger( value );
+        void OnBrake( InputValue value ) => _activePlayerController?.AltTrigger( value );
+
+#endregion
+
     }   
 }
