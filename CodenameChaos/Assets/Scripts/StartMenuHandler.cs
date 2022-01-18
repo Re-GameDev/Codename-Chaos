@@ -36,6 +36,8 @@ public class StartMenuHandler : MonoBehaviour
         {
             StartMenuOpen = false;
             Time.timeScale = oldTimeScale;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             SceneManager.LoadScene(0, LoadSceneMode.Single);
             
         }
