@@ -18,6 +18,9 @@ public class SC_FPSController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
+    bool stopUpdate = false;
+    Vector3 warpLoc;
+
     [HideInInspector]
     public bool canMove = true;
 
@@ -32,6 +35,16 @@ public class SC_FPSController : MonoBehaviour
 
     void Update()
     {
+
+        if (stopUpdate)
+        {
+            GetComponent<CharacterController>().enabled = false;
+            transform.position = warpLoc;
+            stopUpdate = false;
+            GetComponent<CharacterController>().enabled = true;
+            return;
+        }
+
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
@@ -70,5 +83,11 @@ public class SC_FPSController : MonoBehaviour
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
+    }
+
+    public void WarpPlayer(Vector3 vec)
+    {
+        warpLoc = vec;
+        stopUpdate = true;
     }
 }
