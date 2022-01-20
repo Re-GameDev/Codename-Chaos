@@ -44,6 +44,12 @@ public class LoadsScene : MonoBehaviour
     {
         if (false == string.IsNullOrEmpty(Scene))
         {
+
+            if (button == null)
+            {
+                return;
+            }
+
             // add new OnClick event
             if (button.onClick?.GetPersistentEventCount() == 0)
             {
