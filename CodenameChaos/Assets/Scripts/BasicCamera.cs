@@ -7,17 +7,14 @@ public class BasicCamera : MonoBehaviour
 {
     public Transform PlayerTransform = null;
 
-    private Transform transform;
     private Vector3 initialOffset = Vector3.zero;
 
     // Start is called before the first frame update
     void Start()
     {
-        this.transform = GetComponent<Transform>();
-        Assert.IsNotNull(this.transform);
         if (PlayerTransform != null)
         {
-            this.initialOffset = this.transform.position - PlayerTransform.position;
+            this.initialOffset = transform.position - PlayerTransform.position;
         }
         else
         {
@@ -30,7 +27,7 @@ public class BasicCamera : MonoBehaviour
     {
         if (PlayerTransform != null)
         {
-            this.transform.position = PlayerTransform.position + this.initialOffset;
+            transform.position = PlayerTransform.position + this.initialOffset;
         }
     }
 }

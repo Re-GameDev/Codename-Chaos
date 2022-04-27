@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+#if UNITY_EDITOR //
 public class UnityExt_OnWillCreateAsset : UnityEditor.AssetModificationProcessor
 {
 	static void OnWillCreateAsset(string assetName)
@@ -25,3 +26,4 @@ public class UnityExt_OnWillCreateAsset : UnityEditor.AssetModificationProcessor
 		File.WriteAllText(assetFilePath, fileContents);
 	}
 }
+#endif

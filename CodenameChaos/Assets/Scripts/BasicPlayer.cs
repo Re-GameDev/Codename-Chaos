@@ -10,7 +10,7 @@ public class BasicPlayer : MonoBehaviour
     public float SlopeLimit = 45; //degrees
 
     private Rigidbody body;
-    private CapsuleCollider collider;
+    private CapsuleCollider capsuleCollider;
 
     private bool isGrounded = false;
     private bool doJump = false;
@@ -24,16 +24,16 @@ public class BasicPlayer : MonoBehaviour
     {
         body = this.GetComponent<Rigidbody>();
         Assert.IsNotNull(body);
-        collider = this.GetComponent<CapsuleCollider>();
-        Assert.IsNotNull(collider);
+        capsuleCollider = this.GetComponent<CapsuleCollider>();
+        Assert.IsNotNull(capsuleCollider);
     } 
 
     private void CheckGrounded()
     {
         this.isGrounded = false;
-        float capsuleHeight = Mathf.Max(collider.radius * 2, collider.height);
-        Vector3 capsuleBottom = transform.TransformPoint(collider.center + (Vector3.down * (capsuleHeight / 2)));
-        float radius = transform.TransformVector(collider.radius, 0, 0).magnitude;
+        float capsuleHeight = Mathf.Max(capsuleCollider.radius * 2, capsuleCollider.height);
+        Vector3 capsuleBottom = transform.TransformPoint(capsuleCollider.center + (Vector3.down * (capsuleHeight / 2)));
+        float radius = transform.TransformVector(capsuleCollider.radius, 0, 0).magnitude;
 
         Ray ray = new Ray(capsuleBottom + transform.up * 0.01f, -transform.up);
         RaycastHit hit;

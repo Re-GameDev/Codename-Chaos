@@ -42,7 +42,7 @@ public class LoadsScene : MonoBehaviour
 #if UNITY_EDITOR
     void OnValidate()
     {
-        if (false == string.IsNullOrEmpty(Scene))
+        if (false == string.IsNullOrEmpty(Scene) && button != null)
         {
             // add new OnClick event
             if (button.onClick?.GetPersistentEventCount() == 0)
