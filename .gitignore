@@ -14,6 +14,10 @@
 # Ignore UserSettings directory
 /CodenameChaos/UserSettings
 
+# Ignore everything but the README.md in the RawAssets folder
+/RawAssets/*
+!RawAssets/README.md
+
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/CodenameChaos/[Aa]ssets/**/*.meta
 

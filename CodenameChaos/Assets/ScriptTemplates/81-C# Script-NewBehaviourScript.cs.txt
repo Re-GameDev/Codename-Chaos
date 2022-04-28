@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-	#ROOTNAMESPACEBEGIN#
+#ROOTNAMESPACEBEGIN#
 public class #SCRIPTNAME# : MonoBehaviour
 {
 	void Awake()
@@ -21,6 +21,8 @@ public class #SCRIPTNAME# : MonoBehaviour
 
 	void Update()
 	{
+		// Please use Time.deltaTime for anything that should be paused while the start menu is open (or check if Time.timeScale > 0)
+		// Use Time.unscaledDeltaTime for things that should be framerate independant but should continue happening even when the game is paused
 		#NOTRIM#
 	}
 

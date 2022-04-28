@@ -5,7 +5,13 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-#if UNITY_EDITOR //
+// This script allows us to use a custom template for new behavior scripts that
+// auto fills the author name (PC username) and creation date.
+// You can add more auto-filling features here but if you want to change the template
+// itself you will need to modify the file in the ScriptTemplates folder
+//  - Taylor Robbins
+
+#if UNITY_EDITOR
 public class UnityExt_OnWillCreateAsset : UnityEditor.AssetModificationProcessor
 {
 	static void OnWillCreateAsset(string assetName)
