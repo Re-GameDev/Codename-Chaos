@@ -7,51 +7,52 @@ namespace RageBall
     [DisallowMultipleComponent]
     public class MoveWaypoint : MonoBehaviour
     {
-        [SerializeField] float smoothDamp = 1f;
-        [SerializeField] List<Transform> waypoints = new List<Transform>();
-        [SerializeField] bool showDebug = false;
-        Transform _target = null;
-        Vector3 velocity = Vector3.zero;
-        int position;
-        
-        void Start()
+        [SerializeField] private float smoothDamp = 1f;
+        [SerializeField] private List<Transform> waypoints = new List<Transform>();
+        [SerializeField] private bool showDebug = false;
+
+        private Transform _target;
+        private Vector3 _velocity = Vector3.zero;
+        private int _position;
+
+        private void Start()
         {
-            position = 0;
-            if( waypoints.Count == 0 )
-                this.enabled = false;    
+            _position = 0;
+            if (waypoints.Count == 0)
+                this.enabled = false;
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
-            if( !showDebug || waypoints.Count == 0 )  
+            if (!showDebug || waypoints.Count == 0)
                 return;
 
-            Gizmos.DrawWireCube( waypoints[0].position, Vector3.one );
-            for( int i = 1, c = waypoints.Count; i<c; ++i )
+            Gizmos.DrawWireCube(waypoints[0].position, Vector3.one);
+            for (int i = 1, c = waypoints.Count; i < c; ++i)
             {
-                Gizmos.DrawWireCube( waypoints[i].position, Vector3.one );
-                Gizmos.DrawLine( waypoints[i-1].position, waypoints[i].position );
+                Gizmos.DrawWireCube(waypoints[i].position, Vector3.one);
+                Gizmos.DrawLine(waypoints[i - 1].position, waypoints[i].position);
             }
         }
 
         public void MoveNextWaypoint()
         {
-            position = Mathf.Min( position, waypoints.Count - 1 );
-            _target = waypoints[position];
+            _position = Mathf.Min(++_position, waypoints.Count - 1);
+            _target = waypoints[_position];
         }
 
         public void MovePreviousWaypoint()
         {
-            position = Mathf.Max( position, 0 );
-            _target = waypoints[position];
+            _position = Mathf.Max(--_position, 0);
+            _target = waypoints[_position];
         }
 
-        void FixedUpdate()
+        private void LateUpdate()
         {
-            if( _target == null )
+            if (_target == null)
                 return;
-                
-            this.transform.position = Vector3.SmoothDamp( transform.position, _target.position, ref velocity, smoothDamp );
+            this.transform.position =
+                Vector3.SmoothDamp(transform.position, _target.position, ref _velocity, smoothDamp);
         }
     }
 }
