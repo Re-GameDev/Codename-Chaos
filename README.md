@@ -3,6 +3,12 @@ This is a group project that anyone and everyone in the Redmond/Eastside Game De
 
 To get added as a contributor you can contact Ben or Sam and also add your name here https://drive.google.com/drive/folders/1LEx9TKWAAbRbXt6AeKqv11VsZsjzYdRE?usp=sharing
 
+There are 2 projects in this repository, a Unity project, and a Game Maker one. Feel free to use whichever project you are most comfortable with. Within each project there are multiples scenes/rooms which often contain completely different game styles. Feel free to make a new scene/room and work on whatever you want. Ask Taylor Robbins for information about best practices for adding a Scene/Room (making sure it gets a button on the main menu, making sure it's in the correct folder, etc.)
+
+Unity                                                                                                     | Game Maker
+:--------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------:
+![Unity Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityProject.png?raw=true) | ![Game Maker Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/GameMakerProject.png?raw=true)
+
 # Unity Information
 We are using the latest Long Term Support (LTS) version of unity which is **version 2020.3.22f1**.
 
@@ -13,6 +19,10 @@ In order to build the game to WebGL, you need to install the Web GL Module after
 
 ![Module Selection](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/modules.png?raw=true)
 
+# Game Maker Information
+We are using Game Maker Studio 2 v2022.3.0.625 with runtime v2022.3.0.497. Please make sure you've downloaded the correct runtime version and don't convert the project to other versions.
+
+![Game Maker Runtime Release Notes Screenshot](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/GameMakerRuntimeReleaseNotesScreenshot.png?raw=true)
 
 # Git Information
 
