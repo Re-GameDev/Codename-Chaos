@@ -39,10 +39,10 @@ We are using Game Maker Studio 2 v2022.3.0.625 with runtime v2022.3.0.497. Pleas
 10. If all goes well this should have created a folder called CodenameChaos in the folder you chose. Go ahead and open the folder in File Explorer and find the Unity project inside.
 
 # Publishing a WebGL Build
-- Push a build targetting WebGL into the folder: `<root>/Build/`
+- Push a build targetting WebGL into the folder: `<root>/Build/` (or `<root>/GmBuild` for Game Maker)
 - Only one build can be hosted at a time, so delete the contents of the folder before copying in a new build.
 - The build is autohosted, but it takes a couple minutes to go live.
-- The URL of the hosted build is: https://re-gamedev.github.io/Codename-Chaos/
+- The URL of the hosted build is: https://re-gamedev.github.io/Codename-Chaos/Build for Unity and https://re-gamedev.github.io/Codename-Chaos/GmBuild/ for Game Maker
 
 # Discord
 This repo is connected to our Discord server, and will post to the #💻codename-chaos-commits channel
