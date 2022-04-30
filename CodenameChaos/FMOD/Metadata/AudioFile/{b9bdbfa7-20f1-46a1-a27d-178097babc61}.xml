@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{b9bdbfa7-20f1-46a1-a27d-178097babc61}">
+		<property name="assetPath">
+			<value>ES_Boots Plastic Tile - SFX Producer.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>16.463999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{15e21866-d16f-4aed-9865-1b3f2a756331}</destination>
+		</relationship>
+	</object>
+</objects>

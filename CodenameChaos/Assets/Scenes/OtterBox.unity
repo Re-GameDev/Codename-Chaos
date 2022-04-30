@@ -9577,8 +9577,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1243885728}
   - component: {fileID: 1243885726}
-  - component: {fileID: 1243885727}
   - component: {fileID: 1243885729}
+  - component: {fileID: 1243885727}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -9629,14 +9629,20 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1243885727
-AudioListener:
+--- !u!114 &1243885727
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243885725}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
+  ListenerNumber: -1
 --- !u!4 &1243885728
 Transform:
   m_ObjectHideFlags: 0
@@ -11517,6 +11523,7 @@ GameObject:
   - component: {fileID: 1612240829}
   - component: {fileID: 1612240830}
   - component: {fileID: 1612240831}
+  - component: {fileID: 1612240832}
   m_Layer: 0
   m_Name: FPSPlayer
   m_TagString: Player
@@ -11578,6 +11585,36 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1612240832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612240828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1364418733
+      Data2: 1222533434
+      Data3: -1901695598
+      Data4: 671449791
+    Path: event:/Walking1
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1637844011 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8513859187771203891, guid: 0cf2ce6ea78a0cc428378edcbe55561c, type: 3}

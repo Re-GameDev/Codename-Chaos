@@ -15,6 +15,7 @@ public class SC_FPSController : MonoBehaviour
     public float lookXLimit = 45.0f;
 
     CharacterController characterController;
+    FMODUnity.StudioEventEmitter walkingEmitter;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
 
@@ -27,6 +28,7 @@ public class SC_FPSController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        walkingEmitter = GetComponent<FMODUnity.StudioEventEmitter>();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -54,6 +56,22 @@ public class SC_FPSController : MonoBehaviour
         float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        walkingEmitter.SetParameter("IsRunning", isRunning ? 1 : 0);
+        if (moveDirection.magnitude > 0.1f && characterController.isGrounded)
+        {
+            if (!walkingEmitter.IsPlaying())
+            {
+                walkingEmitter.Play();
+            }
+        }
+        else
+        {
+            if (walkingEmitter.IsPlaying())
+            {
+                walkingEmitter.Stop();
+            }
+        }
 
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {

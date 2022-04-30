@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 984800429199885819}
   - component: {fileID: 1393011543732272506}
   - component: {fileID: 4229321251483832766}
+  - component: {fileID: 8025366448643168479}
   m_Layer: 5
   m_Name: MainMenuSceneButtonPrefab
   m_TagString: Untagged
@@ -53,8 +54,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Scene:
-    m_SceneAsset: {fileID: 0}
-    m_SceneName: 
+    _sceneAsset: {fileID: 0}
+    _sceneName: 
 --- !u!222 &984800429199885819
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -149,6 +150,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8025366448643168479}
+        m_TargetAssemblyTypeName: FireFmodAudioEvent, Assembly-CSharp
+        m_MethodName: FireAudioEvent
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: event:/SceneButtonSelected
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8025366448643168479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989549582430010658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bca45d1efeee44489574cc0d986bfa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4416881418902731786
 GameObject:
   m_ObjectHideFlags: 0

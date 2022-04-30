@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{33d45b7a-f52c-4eb7-bc5d-100460c3e816}">
+		<property name="assetPath">
+			<value>paper_slide.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.36571428571428571</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{15e21866-d16f-4aed-9865-1b3f2a756331}</destination>
+		</relationship>
+	</object>
+</objects>
