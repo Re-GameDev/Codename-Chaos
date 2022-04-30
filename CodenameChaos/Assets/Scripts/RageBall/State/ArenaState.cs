@@ -1,17 +1,20 @@
 // Creation Date: January 10 2022
 // Author(s): Jordan Bejar
 
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace RageBall
 {
     public class ArenaState : GameState
     {
-		int remainingPlayers = 0;
+		private int _remainingPlayers = 0;
+		[SerializeField] private PlayerController playerController;
 
         public override void OnEnter()
 		{
-			var players = GameManager.Instance.GetPlayers();			
+			var players = GameManager.GetPlayers();			
 			base.OnEnter();
 			foreach( var player in players )
 			{
@@ -19,14 +22,28 @@ namespace RageBall
 				player.onPlayerSpawn += HandlePlayerSpawn;
 			}
 
-			if( remainingPlayers == 0 )
-				OnNextState();
+			SpawnPlayers(players);
+
+			// if( remainingPlayers == 0 )
+			// 	OnNextState();
 		}
-		
-		public override void OnExit()
+
+        private void SpawnPlayers(HashSet<PlayerInputHandler> players)
+        {
+	        var spawners = SpawnManager.instance.GetSpawnPoints();
+	        var i = 0;
+	        foreach (var player in players)
+	        {
+		        var controller = Instantiate(playerController, spawners[i].transform.position, spawners[i].transform.rotation);
+		        player.AssignActiveController(controller);
+		        i = ++i % (spawners.Count - 1);
+	        }
+        }
+
+        public override void OnExit()
 		{
-			var players = GameManager.Instance.GetPlayers();
-			remainingPlayers = players.Count(x => x.IsAlive());
+			var players = GameManager.GetPlayers();
+			_remainingPlayers = players.Count(x => x.IsAlive());
 			foreach( var player in players )
 			{
 				player.onPlayerDeath -= HandlePlayerDeath;
@@ -37,11 +54,11 @@ namespace RageBall
 
         private void HandlePlayerDeath() 
 		{
-			--remainingPlayers;
-			if( remainingPlayers == 1 )
+			--_remainingPlayers;
+			if( _remainingPlayers == 1 )
 				OnNextState();
 		} 
 
-        private void HandlePlayerSpawn() => ++remainingPlayers;
+        private void HandlePlayerSpawn() => ++_remainingPlayers;
     }
 }

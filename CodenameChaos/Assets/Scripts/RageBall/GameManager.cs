@@ -11,115 +11,104 @@ namespace RageBall
     [Serializable]
     public class GameManagerEvent : UnityEvent<GameObject>{ }
 
-    public class GameManager : MonoBehaviour
+    public class GameManager //: Singleton<GameManager>
     {
-        [SerializeField] StateMachine gameStateMachine;
-        private static GameManager _instance;
-        public static GameManager Instance
-        {
-            get => _instance ?? new GameObject(nameof(GameManager)).AddComponent<GameManager>();
-        }
-
-        public static bool Exists() => _instance != null;
-        public bool waitForAllPlayers = false;
-        [SerializeField] GameEvent playerJoins;
-        [SerializeField] GameEvent playerLeft;
-        [SerializeField] PlayerController avatar; 
+        public static StateMachine GameStateMachine { get; set; }
+        public static byte MaxPlayers = 4;
+        public static event Action PlayerJoins;
+        public static event Action PlayerLeft;
 
         /*
             Hold players reference until a new round starts
         */
-        HashSet<PlayerInputHandler> players = new HashSet<PlayerInputHandler>();
+        private static readonly HashSet<PlayerInputHandler> Players = new HashSet<PlayerInputHandler>();
 
-        int playerAlive = 0;
-
-        void Awake()
+        public GameManager()
         {
-            if( _instance != null )
-            {
-                DestroyImmediate( gameObject );
-                return;
-            }
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            GameStateMachine = new StateMachine();
+        }
 
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
+        ~GameManager()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         void Start()
         {
             StartGameStateMachine();
+            
+            // for this sake, let's spawn four AI. We'll make client join after keyboard was detected. we would consume control of one ai.
+            for( var i = 0; i < MaxPlayers; ++i )
+            {
+                var ai = new AIInputHandler();
+                Players.Add( ai );
+            }
         }
 
-        void OnSceneLoaded( Scene scene, LoadSceneMode mode )
+        private void OnSceneLoaded( Scene scene, LoadSceneMode mode )
         {
             // in case we do have a game state machine available in the level, then use that to play the game.
-            gameStateMachine = FindObjectOfType<StateMachine>();
             StartGameStateMachine();
         }
 
-        void StartGameStateMachine()
+        private static void StartGameStateMachine()
         {
-            if( gameStateMachine == null )
+            if( GameStateMachine == null )
                 return;
-            gameStateMachine.Initialize();
+            GameStateMachine.Initialize();
         }
 
-        public HashSet<PlayerInputHandler> GetPlayers() => players;
+        public static HashSet<PlayerInputHandler> GetPlayers() => Players;
 
-        public void OnPlayerJoin( PlayerInput player )
+        public static void OnPlayerJoin( PlayerInput player )
         {
-            if( player.TryGetComponent<PlayerInputHandler>( out PlayerInputHandler handler ))
-                players.Add( handler );
+            if( player.TryGetComponent<PlayerInputHandler>( out var handler ))
+                Players.Add( handler );
         }
 
-        public void OnPlayerJoin( PlayerInputHandler handler )
+        public static void OnPlayerJoin( PlayerInputHandler handler )
         {
-            playerJoins?.Invoke();
-            players.Add( handler );
-            // else if ( currentState == GameState.Preround )
-            // {
-            //     var spawnPoints = SpawnManager.instance.GetSpawnPoints();
-            //     int pos = players.Count % spawnPoints.Count;
-            //     Spawner spawn = spawnPoints[pos];
-            //     RespawnPlayer( handler, spawn.transform.position, spawn.transform.rotation );
-            // }
+            PlayerJoins?.Invoke();
+            Players.Add( handler );
         }
 
-        public void OnPlayerLeft( PlayerInput player )
+        public static void OnPlayerLeft( PlayerInput player )
         {
-            playerLeft?.Invoke();
+            PlayerLeft?.Invoke();
             if( player.TryGetComponent<PlayerInputHandler>(out PlayerInputHandler handler ))
             {
                 handler.OnPlayerDisconnected();
-                players.Remove( handler );
+                Players.Remove( handler );
             }
         }
 
-        public void OnPlayerLeft( PlayerInputHandler handler )
+        public static void OnPlayerLeft( PlayerInputHandler handler )
         {
-            playerLeft?.Invoke();
+            PlayerLeft?.Invoke();
             handler.OnPlayerDisconnected();
-            players.Remove( handler );
+            Players.Remove( handler );
         }
-
-        public void SpawnPlayers()
-        {
-            // Spawner[] spawners = FindObjectsOfType<Spawner>();
-            List<Spawner> spawners = SpawnManager.instance.GetSpawnPoints();
-            int i = 0;
-            playerAlive = players.Count;
-            foreach( PlayerInputHandler player in players )
-            {
-                RespawnPlayer( player, spawners[i].transform.position, spawners[i].transform.rotation );
-                i = ++i % ( spawners.Count - 1 );
-            }
-        }
-
-        public void RespawnPlayer( PlayerInputHandler player, Vector3 position, Quaternion rotation )
-        {
-            PlayerController _avatarController = Instantiate( avatar, position, rotation );
-            player.AssignActiveController( _avatarController );
-        }
+        
+        // I think we need to delegate this to a different class?
+        // public void SpawnPlayers()
+        // {
+        //     // Spawner[] spawners = FindObjectsOfType<Spawner>();
+        //     var spawners = SpawnManager.instance.GetSpawnPoints();
+        //     var i = 0;
+        //     foreach( var player in Players )
+        //     {
+        //         RespawnPlayer( player, spawners[i].transform.position, spawners[i].transform.rotation );
+        //         i = ++i % ( spawners.Count - 1 );
+        //     }
+        // }
+        
+        // hmm?
+        // public void RespawnPlayer( PlayerInputHandler player, Vector3 position, Quaternion rotation )
+        // {
+        //     var _avatarController = Instantiate( avatar, position, rotation );
+        //     player.AssignActiveController( _avatarController );
+        // }
     }
 }
 

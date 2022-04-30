@@ -8,7 +8,7 @@ using UnityEngine.Events;
 namespace RageBall
 {
 	[Serializable]
-	public class GameStateEvent : UnityEvent<object> { }
+	public class GameStateEvent : UnityEvent<GameState> { }
 
 	public class GameState : State
 	{

@@ -1,77 +1,72 @@
 // Creation Date: January 10 2022
 // Author(s): Jordan Bejar
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace RageBall
 {
-	public class StateMachine : MonoBehaviour
-	{
-		[SerializeField] List<State> gameStates = new List<State>();
-		State _currentState;
+    public class StateMachine : MonoBehaviour
+    {
+        [SerializeField] private List<State> gameStates = new List<State>();
+        private State _currentState;
+        public State GetCurrentState() => _currentState;
 
-		bool CanExecute()
-		{
-			bool containElements = gameStates.Count > 0;
-			if( !containElements )
-				Debug.Log("No states assigned! Disabling!");
-			return containElements;
-		}
+        private bool CanExecute()
+        {
+            var containElements = gameStates.Count > 0;
+            if (!containElements)
+                Debug.Log("No states assigned! Disabling!");
+            return containElements;
+        }
 
-		void Awake()
-		{
-			if( !CanExecute() )
-				this.enabled = false;
-		}
+        private void Awake()
+        {
+            if (!CanExecute())
+                enabled = false;
+            else
+            {
+                GameManager.GameStateMachine = this;
+                Initialize();
+            }
+        }
 
-		void Update()
-		{
-			if( _currentState == null )
-				return;
+        private void Update()
+        {
+            if (!_currentState)
+                return;
+            _currentState.Execute();
+        }
 
-			_currentState.Execute();	
-		} 
+        public void Initialize()
+        {
+            if ( _currentState != null )
+            {
+                Debug.LogWarning("State Machine has already initialized!");
+                return;
+            }
 
-		public void Initialize()
-		{ 
-			if( _currentState != null )
-			{
-				Debug.LogWarning("State Machine has already initialized!");
-				return;
-			} 
+            if (CanExecute())
+                SetState(gameStates[0]);
+        }
 
-			if( CanExecute() )
-				SetState( gameStates[0] );
-		}
+        /// <summary>
+        /// Set next state to invoke
+        /// </summary>
+        /// <param name="state"></param>
+        public void SetState(State state)
+        {
+            // Invoke On Exit call()
+            _currentState?.OnExit();
 
-		/// <summary>
-		/// Return the current active state
-		/// </summary>
-		/// <returns></returns>
-		public State GetCurrentState() => this._currentState;
+            // Initialize new state information
+            state?.Init(this, _currentState);
 
-		/// <summary>
-		/// Set next state to invoke
-		/// </summary>
-		/// <param name="state"></param>
-		public void SetState( State state )
-		{
-			// Invoke On Exit call()
-			if( _currentState != null )
-				_currentState.OnExit();
-			
-			// Initialize new state information
-			state.Init( this, _currentState );
-			
-			// set our current state for execution
-			_currentState = state;
-			
-			// invoke On Enter call()
-			if( _currentState != null )
-				_currentState.OnEnter();
-		}
-	}
+            // set our current state for execution
+            _currentState = state;
+
+            // invoke On Enter call()
+            _currentState?.OnEnter();
+        }
+    }
 }

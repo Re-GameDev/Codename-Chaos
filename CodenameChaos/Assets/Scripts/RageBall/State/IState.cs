@@ -7,7 +7,7 @@ namespace RageBall
 {
 	public interface IState
 	{
-		void Init(StateMachine owner, State previousState = null );
+		void Init( StateMachine owner, State previousState = null );
 		void OnEnter();
 		void Execute();
 		void OnExit();
