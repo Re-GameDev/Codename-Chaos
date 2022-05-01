@@ -1,7 +1,6 @@
 /// @desc Init vars
 event_inherited();
 
-self.displayStr = "";
 self.targetRoom = noone;
 
 // Dont change this. This is used to handle changes to our self variables made in the instance

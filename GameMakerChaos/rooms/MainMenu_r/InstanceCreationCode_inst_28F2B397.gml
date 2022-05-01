@@ -1,2 +1,2 @@
-self.targetRoom = Test_r;
+self.targetRoom = GamePick_r;
 self.displayStr = "Play";
