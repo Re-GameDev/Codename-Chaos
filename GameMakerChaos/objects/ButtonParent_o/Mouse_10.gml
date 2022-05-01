@@ -1,6 +1,10 @@
 /// @desc Change to hover sprite
 
-self.isHovered = true;
+if (!self.isHovered)
+{
+	self.isHovered = true;
+	PlaySoundEffect(UiClick1_a);
+}
 
 if (!self.isPressed)
 {

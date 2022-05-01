@@ -1,2 +1,2 @@
 self.targetRoom = MainMenu_r;
-self.displayStr = "Back";
+self.displayStr = "Back (Esc)";

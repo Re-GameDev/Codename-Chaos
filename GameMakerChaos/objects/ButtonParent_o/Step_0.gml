@@ -1,5 +1,11 @@
 /// @desc Handle being clicked on
 
+if (self.isHovered)
+{
+	window_set_cursor(cr_handpoint);
+	global.cursorSet = true;
+}
+
 //NOTE: We delay the event firing for 1 frame so we can render the clicked sprite before things change
 //      For example if the button takes us to another room, it's more satisfying if we see the button we
 //      clicked go down for at least 1 frame before loading/transitioning to that room
@@ -14,6 +20,7 @@ if (mouse_check_button_pressed(mb_left) && self.isHovered)
 	self.isPressed = true;
 	image_index = 2;
 	self.doEventNextFrame = true;
+	PlaySoundEffect(UiClick2_a);
 }
 
 if (self.isPressed && !(mouse_check_button(mb_left) && self.isHovered))
