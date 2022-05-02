@@ -15,6 +15,7 @@ else
 		{
 			show_debug_message("Going to room " + string(self.targetRoomNumber) + " at (" + string(targetRoomEntrance.gridPos.x) + ", " + string(targetRoomEntrance.gridPos.y) + ")");
 			dude.gridSpace.MoveInstanceTo(GetBdGridSpace(targetRoomEntrance.gridPos));
+			ClearAllPortals();
 		}
 		else
 		{

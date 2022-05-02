@@ -24,6 +24,11 @@ function HandleEnteredCheat(cheatStr)
 		show_debug_message((global.debugModeEnabled ? "Disabling" : "Enabling") + " debug mode!");
 		global.debugModeEnabled = !global.debugModeEnabled;
 	}
+	else if (cheatStr == "PORTAL")
+	{
+		show_debug_message((global.hasPortalGun ? "Taking away" : "Giving") + " portal gun!");
+		global.hasPortalGun = !global.hasPortalGun;
+	}
 	else if (room == BlockDude_r && string_length(cheatStr) == 3)
 	{
 		var allRoomAreas = FindAllInstancesOf(RoomArea_o);
@@ -36,6 +41,7 @@ function HandleEnteredCheat(cheatStr)
 				{
 					show_debug_message("Going to room " + string(allRoomAreas[rIndex].roomNumber) + " at (" + string(allRoomAreas[rIndex].entranceDoor.gridPos.x) + ", " + string(allRoomAreas[rIndex].entranceDoor.gridPos.y) + ")");
 					dude.gridSpace.MoveInstanceTo(GetBdGridSpace(allRoomAreas[rIndex].entranceDoor.gridPos));
+					ClearAllPortals();
 				}
 				else
 				{

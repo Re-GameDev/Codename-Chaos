@@ -48,16 +48,35 @@ if (global.debugModeEnabled)
 			0, drawColor,
 			0.5
 		);
-
-		draw_set_font(DebugFont_f);
-		draw_text(10, 10,
-			"Press HOME to skip level\n" +
+		
+		var displayStr = "Press HOME to skip level\n" +
 			"MIDDLE CLICK to place and RIGHT CLICK to delete\n" +
 			"(" + string(mouseGridPos.x) + ", " + string(mouseGridPos.y) + ")\n" +
 			"(" + string(mouseScreenPos.x) + ", " + string(mouseScreenPos.y) + ")\n" +
-			string(mouseGridSpace) + "\n" +
-			((mouseGridSpace != 0 && mouseGridSpace.instance != noone) ? ("(" + string(mouseGridSpace.instance.gridPos.x) + ", " + string(mouseGridSpace.instance.gridPos.y) + ")") : "")
-		);
+			string(mouseGridSpace);
+		if (mouseGridSpace != 0)
+		{
+			if (mouseGridSpace.instance != noone)
+			{
+				displayStr += "\n(" + string(mouseGridSpace.instance.gridPos.x) + ", " + string(mouseGridSpace.instance.gridPos.y) + ")";
+			}
+			for (var dIndex = 0; dIndex < 4; dIndex++)
+			{
+				var side = DirFromIndex(dIndex);
+				var portal = mouseGridSpace.GetPortalOnSide(side);
+				if (portal != 0 && portal.instance != noone)
+				{
+					displayStr += "\n" + GetDirStr(side) + " portal: " + string(portal.instance) + " other: " + string(portal.otherInstance);
+				}
+			}
+			if (mouseGridSpace.IsDude())
+			{
+				displayStr += "\nDude Orange: " + string(mouseGridSpace.instance.orangePortal) + " Blue: " + string(mouseGridSpace.instance.bluePortal);
+			}
+		}
+		
+		draw_set_font(DebugFont_f);
+		draw_text(10, 10, displayStr);
 	}
 }
 

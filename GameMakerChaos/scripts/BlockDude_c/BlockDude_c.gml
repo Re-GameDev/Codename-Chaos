@@ -1,9 +1,27 @@
 
+function BdPortal(_instance, _otherInstance, _gridPos, _side) constructor
+{
+	instance = _instance;
+	otherInstance = _otherInstance;
+	gridPos = _gridPos;
+	side = _side;
+	
+	static Copy = function()
+	{
+		var result = new BdPortal(self.instance, self.otherInstance, self.gridPos, self.side);
+		return result;
+	}
+}
+
 function BdGridSpace(_instance, _gridPos) constructor
 {
 	instance = _instance;
 	gridPos = _gridPos;
 	objectId = noone;
+	portalLeft = 0;
+	portalRight = 0;
+	portalUp = 0;
+	portalDown = 0;
 	if (instance != noone)
 	{
 		objectId = instance.object_index;
@@ -11,7 +29,12 @@ function BdGridSpace(_instance, _gridPos) constructor
 	
 	static Copy = function()
 	{
-		return new BdGridSpace(self.instance, self.gridPos);
+		var result = new BdGridSpace(self.instance, self.gridPos);
+		result.portalLeft = self.portalLeft;
+		result.portalRight = self.portalRight;
+		result.portalUp = self.portalUp;
+		result.portalDown = self.portalDown;
+		return result;
 	}
 	
 	static IsSolid = function()
@@ -30,15 +53,33 @@ function BdGridSpace(_instance, _gridPos) constructor
 	{
 		return (instance != noone && objectId == Brick_o);
 	}
-	static Clear = function()
+	static ClearPortalOnSide = function(side)
 	{
-		if (instance != noone)
+		switch (side)
 		{
-			instance_destroy(instance);
-			instance = noone;
-			objectId = noone;
+			case Dir.Left:  if (self.portalLeft  != 0) { instance_destroy(self.portalLeft.instance);  self.portalLeft  = 0; } break;
+			case Dir.Right: if (self.portalRight != 0) { instance_destroy(self.portalRight.instance); self.portalRight = 0; } break;
+			case Dir.Up:    if (self.portalUp    != 0) { instance_destroy(self.portalUp.instance);    self.portalUp    = 0; } break;
+			case Dir.Down:  if (self.portalDown  != 0) { instance_destroy(self.portalDown.instance);  self.portalDown  = 0; } break;
 		}
 	}
+	static Clear = function(clearPortals = false)
+	{
+		if (self.instance != noone)
+		{
+			instance_destroy(self.instance);
+			self.instance = noone;
+			self.objectId = noone;
+		}
+		if (clearPortals)
+		{
+			self.ClearPortalOnSide(Dir.Left);
+			self.ClearPortalOnSide(Dir.Right);
+			self.ClearPortalOnSide(Dir.Up);
+			self.ClearPortalOnSide(Dir.Down);
+		}
+	}
+	
 	static PopOut = function()
 	{
 		var result = self.instance;
@@ -63,6 +104,24 @@ function BdGridSpace(_instance, _gridPos) constructor
 			instance.y = self.gridPos.y * global.bdTileSize.y;
 		}
 	}
+	static SetPortalOnSide = function(portalInstance, otherInstance, side)
+	{
+		self.ClearPortalOnSide(side);
+		if (portalInstance == noone) { return; }
+		portalInstance.gridSpace = self;
+		portalInstance.gridPos = self.gridPos;
+		portalInstance.inDir = side;
+		portalInstance.otherInstance = otherInstance;
+		var newBdPortal = new BdPortal(portalInstance, otherInstance, self.gridPos, side);
+		switch (side)
+		{
+			case Dir.Left:  self.portalLeft  = newBdPortal; break;
+			case Dir.Right: self.portalRight = newBdPortal; break;
+			case Dir.Up:    self.portalUp    = newBdPortal; break;
+			case Dir.Down:  self.portalDown  = newBdPortal; break;
+		}
+		return newBdPortal;
+	}
 	static MoveInstanceTo = function(otherGridSpace)
 	{
 		otherGridSpace.Clear();
@@ -70,11 +129,71 @@ function BdGridSpace(_instance, _gridPos) constructor
 		self.instance = noone;
 		self.objectId = noone;
 	}
+	static GetPortalOnSide = function(sideDir)
+	{
+		switch (sideDir)
+		{
+			case Dir.Left:  return self.portalLeft;
+			case Dir.Right: return self.portalRight;
+			case Dir.Up:    return self.portalUp;
+			case Dir.Down:  return self.portalDown;
+			default: return noone;
+		}
+	}
+	static GetGridPosInDir = function(dir)
+	{
+		var portal = self.GetPortalOnSide(dir);
+		if (portal != 0 && portal.otherInstance != noone)
+		{
+			return portal.otherInstance.gridPos;
+		}
+		else
+		{
+			return Vec2Add(self.gridPos, Vec2FromDir(dir));
+		}
+	}
+	static GetDirAfterMovingInDir = function(dir)
+	{
+		var portal = self.GetPortalOnSide(dir);
+		if (portal != 0 && portal.otherInstance != noone)
+		{
+			return DirOpposite(portal.otherInstance.inDir);
+		}
+		else
+		{
+			return dir;
+		}
+	}
+	static GetGridSpaceInDir = function(dir)
+	{
+		var targetPos = self.GetGridPosInDir(dir);
+		return GetBdGridSpace(targetPos);
+	}
+	static ConnectPortalOnSide = function(side, otherBdPortal)
+	{
+		var portal = self.GetPortalOnSide(side);
+		if (portal != 0 && portal.instance != noone)
+		{
+			if (otherBdPortal != 0 && otherBdPortal.instance != noone)
+			{
+				portal.otherInstance = otherBdPortal.instance;
+				portal.instance.otherInstance = otherBdPortal.instance;
+				otherBdPortal.otherInstance = portal.instance;
+				otherBdPortal.instance.otherInstance = portal.instance;
+			}
+			else
+			{
+				portal.otherInstance = noone;
+				portal.instance.otherInstance = noone;
+			}
+		}
+	}
 }
 
 function SetupBlockDudeGlobals()
 {
 	global.bdGrid = [];
+	global.hasPortalGun = false;
 	global.bdTileSize = new Vec2(sprite_get_width(Brick_s), sprite_get_height(Brick_s));
 	global.bdGridSize = new Vec2(floor(room_width / global.bdTileSize.x), floor(room_height / global.bdTileSize.y));
 	for (var yPos = 0; yPos < global.bdGridSize.y; yPos++)
@@ -217,6 +336,29 @@ function SerializeBdGridArea(gridAreaTopLeft, gridAreaSize)
 	return result;
 }
 
+function ClearAllPortals()
+{
+	var allPortals = FindAllInstancesOf(Portal_o);
+	for (var pIndex = 0; pIndex < array_length(allPortals); pIndex++)
+	{
+		if (allPortals[pIndex].gridSpace != 0)
+		{
+			allPortals[pIndex].gridSpace.ClearPortalOnSide(allPortals[pIndex].inDir);
+		}
+		else
+		{
+			instance_destroy(allPortals[pIndex]);
+		}
+	}
+	
+	var dude = instance_find(BlockDude_o, 0);
+	if (dude != noone)
+	{
+		dude.orangePortal = noone;
+		dude.bluePortal = noone;
+	}
+}
+
 function ApplySerializationToBdGridArea(serialization, gridAreaTopLeft, gridAreaSize)
 {
 	//Clear the blocks on the grid and find the dude
@@ -237,6 +379,7 @@ function ApplySerializationToBdGridArea(serialization, gridAreaTopLeft, gridArea
 			}
 		}
 	}
+	ClearAllPortals();
 	
 	var serializationContainsDude = (FindSubstring(serialization, "d") >= 0 || FindSubstring(serialization, "D") >= 0);
 	
