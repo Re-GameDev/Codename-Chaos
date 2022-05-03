@@ -2502,8 +2502,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Games",
-    "path": "folders/Rooms/Games.yy",
+    "name": "SingleRoomGames",
+    "path": "folders/Rooms/SingleRoomGames.yy",
   },
   "resourceVersion": "1.0",
   "name": "BlockDude_r",

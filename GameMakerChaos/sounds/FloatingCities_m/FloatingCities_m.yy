@@ -15,7 +15,7 @@
   "duration": 184.058777,
   "parent": {
     "name": "Music",
-    "path": "folders/Sounds/Music.yy",
+    "path": "folders/Music.yy",
   },
   "resourceVersion": "1.0",
   "name": "FloatingCities_m",

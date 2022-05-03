@@ -1,0 +1,2 @@
+self.facingDir = Dir.Down;
+

@@ -3,7 +3,8 @@
 if (keyboard_check_pressed(vk_escape) && !global.enteringCheatCode)
 {
 	//TODO: Remove BlockDude_r once it has a start menu
-	if (room == Options_r || room == GamePick_r || room == BlockDude_r)
+	//TODO: Remove RpgMap1_r once it has a start menu
+	if (room == Options_r || room == GamePick_r || room == BlockDude_r || room == RpgMap1_r)
 	{
 		room_goto(MainMenu_r);
 	}
