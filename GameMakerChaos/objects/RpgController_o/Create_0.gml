@@ -1,0 +1,4 @@
+/// @desc Init globals
+
+SetupRpgGlobals();
+

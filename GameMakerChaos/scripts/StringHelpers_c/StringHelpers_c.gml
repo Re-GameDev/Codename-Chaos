@@ -1,4 +1,10 @@
 
+//Simply a wrapper because string_char_at first index is 1 but we usually work with 0 based indices
+function StringCharAt(str, charIndex)
+{
+	return string_char_at(str, charIndex+1);
+}
+
 function FindSubstring(str, substr)
 {
 	var strLength = string_length(str);
@@ -8,7 +14,7 @@ function FindSubstring(str, substr)
 		var allMatched = true;
 		for (var cIndex2 = 0; cIndex2 < substrLength; cIndex2++)
 		{
-			if (string_char_at(str, cIndex) != string_char_at(substr, cIndex2))
+			if (StringCharAt(str, cIndex+cIndex2) != StringCharAt(substr, cIndex2))
 			{
 				allMatched = false;
 				break;
@@ -20,12 +26,6 @@ function FindSubstring(str, substr)
 		}
 	}
 	return -1;
-}
-
-//Simply a wrapper because string_char_at first index is 1 but we usually work with 0 based indices
-function StringCharAt(str, charIndex)
-{
-	return string_char_at(str, charIndex+1);
 }
 
 function StringPart(str, startIndex, length)
