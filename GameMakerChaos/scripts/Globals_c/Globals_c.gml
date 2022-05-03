@@ -14,6 +14,8 @@ function InitGlobalVars()
 	global.currentMusicId = noone;
 	global.enteringCheatCode = false;
 	global.debugModeEnabled = false;
+	
+	InitButtonPromptGlobals();
 }
 
 function HandleEnteredCheat(cheatStr)

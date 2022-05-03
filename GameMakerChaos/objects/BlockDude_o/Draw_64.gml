@@ -15,8 +15,43 @@ if (currentRoomArea != noone && currentRoomArea.cheatCode != "")
 
 if (!global.enteringCheatCode && !global.debugModeEnabled)
 {
-	draw_set_font(DebugFont_f);
-	draw_set_color(c_black);
-	draw_text(5, 5, "Press INSERT to enter code\nPress R to reset");
+	DrawTextWithButtonPrompts(
+		DebugFont_f,
+		new Vec2(5, 10),
+		c_black,
+		2.0,
+		"{Insert} Code",
+		true,
+		VerticalAlign.Center
+	);
+	DrawTextWithButtonPrompts(
+		DebugFont_f,
+		new Vec2(5, 42),
+		c_black,
+		2.0,
+		"{R} Reset",
+		true,
+		VerticalAlign.Center
+	);
+}
+
+DrawTextWithButtonPrompts(
+	DebugFont_f,
+	new Vec2(5, window_get_height() - 32),
+	c_black,
+	2.0,
+	"{Down} Pickup   {Up} Climb" +
+	(global.hasPortalGun ? "   {Z} Blue   {X} Orange" : ""),
+	true,
+	VerticalAlign.Center
+);
+
+if (global.hasPortalGun)
+{
+	
+}
+else
+{
+	
 }
 

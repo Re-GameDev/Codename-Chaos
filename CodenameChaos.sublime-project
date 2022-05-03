@@ -5,13 +5,22 @@
 			"path": ".",
 			"folder_exclude_patterns":
 			[
+				"Build/",
+				"GmBuild/",
 				"CodenameChaos/.vs",
+				"CodenameChaos/.vscode",
+				"CodenameChaos/FMOD",
 				"CodenameChaos/Build_Local",
 				"CodenameChaos/Library",
 				"CodenameChaos/Logs",
 				"CodenameChaos/obj",
 				"CodenameChaos/Temp",
 				"CodenameChaos/UserSettings",
+				"GameMakerChaos/datafiles",
+				"GameMakerChaos/fonts",
+				"GameMakerChaos/options",
+				"GameMakerChaos/sprites",
+				"GameMakerChaos/tilesets",
 			],
 			"file_exclude_patterns":
 			[
@@ -24,6 +33,10 @@
 				"*.prefab",
 				"*.unity",
 				"*.asset",
+				"*.old.*",
+				"*.zip",
+				"*.yy",
+				"*.yyp",
 			],
 		}
 	]

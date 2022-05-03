@@ -102,7 +102,10 @@ if (self.gridSpace != 0)
 		if (canMove)
 		{
 			show_debug_message("Moving left to x " + string(self.gridPos.x - 1));
-			self.gridSpace.MoveInstanceTo(gridSpaceLeft);
+			if (!gridSpaceLeft.gridPos.Equals(self.gridPos))
+			{
+				self.gridSpace.MoveInstanceTo(gridSpaceLeft);
+			}
 			self.isFacingLeft = (gridSpaceLeftDir == Dir.Left);
 		}
 		else
@@ -129,7 +132,10 @@ if (self.gridSpace != 0)
 		if (canMove)
 		{
 			show_debug_message("Moving right to x " + string(self.gridPos.x + 1));
-			self.gridSpace.MoveInstanceTo(gridSpaceRight);
+			if (!gridSpaceRight.gridPos.Equals(self.gridPos))
+			{
+				self.gridSpace.MoveInstanceTo(gridSpaceRight);
+			}
 			self.isFacingLeft = (gridSpaceRightDir == Dir.Left);
 		}
 		else
@@ -157,7 +163,10 @@ if (self.gridSpace != 0)
 		if (canMove)
 		{
 			show_debug_message("Moving up to y " + string(self.gridPos.y + 1));
-			self.gridSpace.MoveInstanceTo(gridSpaceUpForward);
+			if (!gridSpaceUpForward.gridPos.Equals(self.gridPos))
+			{
+				self.gridSpace.MoveInstanceTo(gridSpaceUpForward);
+			}
 			self.isFacingLeft = (gridSpaceUpForwardDir == Dir.Left);
 		}
 		else
