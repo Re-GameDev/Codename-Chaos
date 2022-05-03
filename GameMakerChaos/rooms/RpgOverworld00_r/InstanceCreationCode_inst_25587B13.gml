@@ -1,0 +1,1 @@
+FillWith(RpgCoin_o, 38);

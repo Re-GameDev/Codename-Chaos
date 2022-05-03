@@ -1,0 +1,1 @@
+FillWith(RpgLamp_o);

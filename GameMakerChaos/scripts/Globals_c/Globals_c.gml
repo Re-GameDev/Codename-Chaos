@@ -20,6 +20,8 @@ function InitGlobalVars()
 
 function HandleEnteredCheat(cheatStr)
 {
+	var isRpgRoom = (FindSubstring(string_lower(room_get_name(room)), "rpg") >= 0);
+	
 	if (cheatStr == "DEBUG")
 	{
 		//TODO: Display this message the player somehow
@@ -51,6 +53,11 @@ function HandleEnteredCheat(cheatStr)
 				}
 			}
 		}
+	}
+	else if (cheatStr == "NOCLIP" && isRpgRoom)
+	{
+		show_debug_message((global.noclipEnabled ? "Disabling" : "Enabling") + " noclip!");
+		global.noclipEnabled = !global.noclipEnabled;
 	}
 	else
 	{

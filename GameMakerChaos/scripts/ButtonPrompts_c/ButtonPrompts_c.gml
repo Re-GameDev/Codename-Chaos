@@ -145,7 +145,7 @@ function GetButtonPromptInfoByString(promptStr)
 }
 
 //NOTE: This function doesn't support line breaks properly right now
-function DrawTextWithButtonPrompts(font, startPos, color, promptsScale, formatStr, animated = true, align = VerticalAlign.Bottom, colorPrompts = false)
+function DrawTextWithButtonPrompts(font, startPos, color, promptsScale, formatStr, animated = true, align = VerticalAlign.Center, colorPrompts = false)
 {
 	var formatStrLength = string_length(formatStr);
 	var stringParts = [];

@@ -29,8 +29,8 @@
   "properties": [],
   "overriddenProperties": [],
   "parent": {
-    "name": "Rpg",
-    "path": "folders/Objects/Rpg.yy",
+    "name": "Items",
+    "path": "folders/Objects/Rpg/Items.yy",
   },
   "resourceVersion": "1.0",
   "name": "RpgKey_o",

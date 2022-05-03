@@ -1,21 +1,35 @@
 /// @desc Chest Opened
 event_inherited();
 
-//TODO: Once we have a dialogue system, we should use that instead of show_message_async
 if (self.heldItem != noone && self.heldCount > 0)
 {
+	var dialogueStr = "";
 	if (self.heldCount == 1)
 	{
-		show_message_async("Collected " + self.heldItem.displayIndefArticle + " " + self.heldItem.displayName + "!");
+		dialogueStr = "Collected " + self.heldItem.displayIndefArticle + " " + self.heldItem.displayName + "!";
+		
 	}
 	else
 	{
-		show_message_async("Collected " + string(self.heldCount) + " " + self.heldItem.displayNamePlural + "!");
+		dialogueStr = "Collected " + string(self.heldCount) + " " + self.heldItem.displayNamePlural + "!";
 	}
+	var dialogue = ShowDialogue(dialogueStr);
+	dialogue.leftSprite = self.heldItem.sprite_index;
+	dialogue.leftSpriteScale = sprite_get_height(self.heldItem.sprite_index) / floor(dialogue.GetSize().y - dialogue.padding*dialogue.backScale);
+	
+	if (self.heldItem.object_index == RpgCoin_o)
+	{
+		global.numCoins += self.heldCount;
+	}
+	
+	ChestCollected(self.id);
+	
+	instance_destroy(self.heldItem);
 	instance_destroy();
 }
 else
 {
-	show_message_async("The chest was empty...");
+	if (self.heldItem != noone) { instance_destroy(self.heldItem); }
+	ShowDialogue("The chest was empty...");
 }
 
