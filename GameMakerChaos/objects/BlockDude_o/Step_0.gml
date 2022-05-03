@@ -52,16 +52,28 @@ if (self.gridSpace != 0)
 	// #==============#
 	if (keyboard_check_pressed(vk_down))
 	{
-		var gridSpaceInFront = self.gridSpace.GetGridSpaceInDir(self.isFacingLeft ? Dir.Left : Dir.Right);
-		if (gridSpaceInFront != 0)
+		var gridSpaceUp = self.gridSpace.GetGridSpaceInDir(Dir.Up);
+		var gridSpaceForward = self.gridSpace.GetGridSpaceInDir(self.isFacingLeft ? Dir.Left : Dir.Right);
+		if (gridSpaceUp != 0)
 		{
-			var gridSpaceInFrontUp = gridSpaceInFront.GetGridSpaceInDir(Dir.Up);
+			var gridSpaceUpForward = gridSpaceUp.GetGridSpaceInDir(self.isFacingLeft ? Dir.Left : Dir.Right);
 			if (self.heldBlock != noone)
 			{
-				if (gridSpaceInFrontUp != 0 && !gridSpaceInFrontUp.IsSolid())
+				//Try drop block
+				if (gridSpaceUpForward != 0 && !gridSpaceUpForward.IsSolid() && !gridSpaceUpForward.IsDude())
 				{
 					self.heldBlock.isPickedUp = false;
-					gridSpaceInFrontUp.SetInstance(self.heldBlock);
+					gridSpaceUpForward.SetInstance(self.heldBlock);
+					with (self.heldBlock)
+					{
+						event_perform(ev_other, ev_user1);
+					}
+					self.heldBlock = noone;
+				}
+				else if (!gridSpaceForward.IsSolid() && !gridSpaceForward.IsDude())
+				{
+					self.heldBlock.isPickedUp = false;
+					gridSpaceForward.SetInstance(self.heldBlock);
 					with (self.heldBlock)
 					{
 						event_perform(ev_other, ev_user1);
@@ -71,14 +83,11 @@ if (self.gridSpace != 0)
 			}
 			else
 			{
-				if (gridSpaceInFront.IsBlock())
+				//Try pickup block
+				if (gridSpaceForward.IsBlock() && gridSpaceUp != 0 && !gridSpaceUp.IsSolid() && !gridSpaceUp.IsDude())
 				{
-					var gridSpaceUp = self.gridSpace.GetGridSpaceInDir(Dir.Up);
-					if (gridSpaceUp != 0 && !gridSpaceUp.IsSolid())
-					{
-						self.heldBlock = gridSpaceInFront.PopOut();
-						self.heldBlock.isPickedUp = true;
-					}
+					self.heldBlock = gridSpaceForward.PopOut();
+					self.heldBlock.isPickedUp = true;
 				}
 			}
 		}
