@@ -54,14 +54,15 @@ function HandleEnteredCheat(cheatStr)
 			}
 		}
 	}
-	else if (cheatStr == "NOCLIP" && isRpgRoom)
-	{
-		show_debug_message((global.noclipEnabled ? "Disabling" : "Enabling") + " noclip!");
-		global.noclipEnabled = !global.noclipEnabled;
-	}
 	else
 	{
-		show_debug_message("Unkown cheat");
+		var isUnknown = true;
+		var rpgController = instance_find(RpgController_o, 0);
+		if (rpgController != noone && RpgHandleEnteredCheat(cheatStr))
+		{
+			isUnknown = false;
+		}
+		if (isUnknown) { show_debug_message("Unkown cheat"); }
 	}
 }
 

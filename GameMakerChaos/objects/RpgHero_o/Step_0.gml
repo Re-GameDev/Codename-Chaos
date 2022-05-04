@@ -9,6 +9,7 @@ if (!global.showingDialogue)
 	// Handle Player Input
 	var movementDir = new Vec2(0, 0);
 	var movementSpeed = (keyboard_check(vk_shift) ? 1.60 : 1.0);
+	movementSpeed *= 1 + GetActiveBuffSum("move_speed");
 	if (keyboard_check(vk_right)) { movementDir.x += 1; facingDir = Dir.Right; }
 	if (keyboard_check(vk_left))  { movementDir.x -= 1; facingDir = Dir.Left;  }
 	if (keyboard_check(vk_down))  { movementDir.y += 1; facingDir = Dir.Down;  }

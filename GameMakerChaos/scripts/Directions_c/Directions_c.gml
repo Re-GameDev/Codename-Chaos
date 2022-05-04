@@ -240,6 +240,19 @@ function DirFromIndex(ind)
 	}
 }
 
+function DirFromVec2(vec)
+{
+	if (vec.x == 0 && vec.y == 0) { return Dir.Down; }
+	if (abs(vec.x) > abs(vec.y))
+	{
+		return (vec.x > 0) ? Dir.Right : Dir.Left;
+	}
+	else
+	{
+		return (vec.y > 0) ? Dir.Down : Dir.Up;
+	}
+}
+
 function GetDirStr(dir)
 {
 	switch (dir)

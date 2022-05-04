@@ -69,8 +69,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Rpg",
-    "path": "folders/Sprites/Rpg.yy",
+    "name": "Items",
+    "path": "folders/Sprites/Rpg/Items.yy",
   },
   "resourceVersion": "1.0",
   "name": "RpgCoin_s",
