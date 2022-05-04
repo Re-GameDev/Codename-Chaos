@@ -59,6 +59,14 @@ if (!global.showingDialogue)
 						ourPos.y -= overlapNegY;
 					}
 				}
+				
+				if (allSolids[sIndex].collisionCallbackInstance != noone)
+				{
+					with (allSolids[sIndex].collisionCallbackInstance)
+					{
+						event_perform(ev_other, ev_user0); //collision callback
+					}
+				}
 			}
 		}
 	}

@@ -1,1 +1,1 @@
-FillWith(RpgSkullKey_o);
+FillWith(RpgLamp_o);

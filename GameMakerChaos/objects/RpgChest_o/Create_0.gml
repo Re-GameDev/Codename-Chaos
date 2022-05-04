@@ -13,7 +13,7 @@ function FillWith(itemObject, count = 1)
 
 self.collisionObj = instance_create_layer(x, y, "Collision", RpgSolidParent_o);
 
-if (HasChestBeenCollected(self.id))
+if (HasInstanceBeenCollected(self.id))
 {
 	instance_destroy();
 }

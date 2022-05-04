@@ -21,8 +21,12 @@ if (self.heldItem != noone && self.heldCount > 0)
 	{
 		global.numCoins += self.heldCount;
 	}
+	else if (self.heldItem.object_index == RpgLamp_o)
+	{
+		global.hasLantern = true;
+	}
 	
-	ChestCollected(self.id);
+	InstanceCollected(self.id);
 	
 	instance_destroy(self.heldItem);
 	instance_destroy();

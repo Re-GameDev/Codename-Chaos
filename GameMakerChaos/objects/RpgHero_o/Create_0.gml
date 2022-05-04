@@ -10,3 +10,5 @@ if (self.controller == noone)
 self.facingDir = Dir.Down;
 self.onPedestals = false;
 
+self.light = instance_create_layer(x, y, "Player", RpgLight_o);
+

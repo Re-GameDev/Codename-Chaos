@@ -3,11 +3,12 @@ function SetupRpgGlobals()
 {
 	global.tileSize = 16;
 	global.noclipEnabled = false;
+	global.hasLantern = false;
 	global.numCoins = 0;
 	global.targetDoorNum = -1;
 	global.showingDialogue = false;
 	global.currentDialogue = noone;
-	global.collectedChestIds = [];
+	global.collectedInstances = [];
 	global.npcs = [];
 	global.activeBuffs = [];
 }
@@ -49,15 +50,29 @@ function ShowDialogue(text)
 	return global.currentDialogue.data;
 }
 
-function ChestCollected(chestId)
+// +==============================================================================+
+// |                              Permanent Changes                               |
+// +==============================================================================+
+function RoomInstance(_roomId, _instanceId) constructor
 {
-	array_push(global.collectedChestIds, chestId);
-}
-function HasChestBeenCollected(chestId)
-{
-	for (var cIndex = 0; cIndex < array_length(global.collectedChestIds); cIndex++)
+	roomId = _roomId;
+	instanceId = _instanceId;
+	
+	static Copy = function()
 	{
-		if (global.collectedChestIds[cIndex] == chestId) { return true; }
+		return new RoomInstance(self.roomId, self.instanceId);
+	}
+}
+
+function InstanceCollected(instanceId)
+{
+	array_push(global.collectedInstances, new RoomInstance(room, instanceId));
+}
+function HasInstanceBeenCollected(instanceId)
+{
+	for (var iIndex = 0; iIndex < array_length(global.collectedInstances); iIndex++)
+	{
+		if (global.collectedInstances[iIndex].roomId == room && global.collectedInstances[iIndex].instanceId == instanceId) { return true; }
 	}
 	return false;
 }
