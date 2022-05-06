@@ -3,11 +3,11 @@ This is a group project that anyone and everyone in the Redmond/Eastside Game De
 
 To get added as a contributor you can contact Ben or Sam and also add your name here https://drive.google.com/drive/folders/1LEx9TKWAAbRbXt6AeKqv11VsZsjzYdRE?usp=sharing
 
-There are 2 projects in this repository, a Unity project, and a Game Maker one. Feel free to use whichever project you are most comfortable with. Within each project there are multiples scenes/rooms which often contain completely different game styles. Feel free to make a new scene/room and work on whatever you want. Ask Taylor Robbins for information about best practices for adding a Scene/Room (making sure it gets a button on the main menu, making sure it's in the correct folder, etc.)
+There are 3 projects in this repository, a Unity project, a Godot project, and a Game Maker project. Feel free to use whichever project you are most comfortable with. Within each project there are multiples scenes/rooms which often contain completely different game styles. Feel free to make a new scene/room and work on whatever you want. Ask Taylor Robbins for information about best practices for adding a Scene/Room (making sure it gets a button on the main menu, making sure it's in the correct folder, etc.)
 
-Unity                                                                                                     | Game Maker
-:--------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------:
-![Unity Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityProject.png?raw=true) | ![Game Maker Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/GameMakerProject.png?raw=true)
+Unity                                                                                                     | Game Maker                                                                                                         | Godot
+:--------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------:|:------------------
+![Unity Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/UnityProject.png?raw=true) | ![Game Maker Project](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/GameMakerProject.png?raw=true) | No Picture Yet...
 
 # Unity Information
 We are using the latest Long Term Support (LTS) version of unity which is **version 2020.3.22f1**.
@@ -23,6 +23,9 @@ In order to build the game to WebGL, you need to install the Web GL Module after
 We are using Game Maker Studio 2 v2022.3.0.625 with runtime v2022.3.0.497. Please make sure you've downloaded the correct runtime version and don't convert the project to other versions.
 
 ![Game Maker Runtime Release Notes Screenshot](https://github.com/Re-GameDev/Codename-Chaos/blob/main/Random/GameMakerRuntimeReleaseNotesScreenshot.png?raw=true)
+
+# Godot Information
+The Godot project is still getting setup. We will update this README when we have more things established...
 
 # Git Information
 
@@ -45,7 +48,7 @@ We are using Game Maker Studio 2 v2022.3.0.625 with runtime v2022.3.0.497. Pleas
 - The URL of the hosted build is: https://re-gamedev.github.io/Codename-Chaos/Build for Unity and https://re-gamedev.github.io/Codename-Chaos/GmBuild/ for Game Maker
 
 # Discord
-This repo is connected to our Discord server, and will post to the #💻codename-chaos-commits channel
+This repo is connected to our Discord server, and will post to the #💻codename-chaos-commits channel whenever commits are pushed to it.
 
 # Space Otter
 
