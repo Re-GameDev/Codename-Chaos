@@ -4,17 +4,23 @@ var lights
 var dark_black_material = preload("res://Scenes/Hallway/materials/dark_black.tres")
 var bright_white_material = preload("res://Scenes/Hallway/materials/dark_black.tres")
 
+var sc
 func _ready():
+	sc = get_tree().get_root().get_node("Hallway")
 	lights = get_children()
 
+func openArcadeDoors():
+	sc.openArcadeDoors()
+
 func hallwayToggle(isOn):
-	var root = get_tree().get_root() 
+	var root = get_tree().get_root()
 	root.get_node("Hallway/hallway/arch1/OmniLight").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch2/OmniLight2").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch3/OmniLight3").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch4/OmniLight4").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch5/OmniLight5").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch6/OmniLight6").set_visible(isOn)
+	root.get_node("Hallway/Text/Text/OmniLight").set_visible(isOn)
 
 func allLightsOff():
 	for light in get_children():
@@ -22,7 +28,6 @@ func allLightsOff():
 
 func lightsOn(lst):
 	for index in lst:
-		print(index)
 		lights[index].toggle(true)
 
 func lightsOff(lst):
@@ -90,23 +95,7 @@ func _on_Area6_body_exited(body):
 func _on_Area7_body_entered(body):
 	if body.name == "Player":
 		allLightsOff()
-		lightsOn([6, 7, 8])
-
-func _on_Area7_body_exited(body):
-	pass
-
-func _on_Area8_body_entered(body):
-	if body.name == "Player":
-		allLightsOff()
-		lightsOn([7, 8, 9])
+		lightsOn([6, 7])
 
 func _on_Area8_body_exited(body):
 	pass # Replace with function body.
-
-func _on_Area9_body_entered(body):
-	if body.name == "Player":
-		allLightsOff()
-		lightsOn([8, 9])
-
-func _on_Area9_body_exited(body):
-	pass

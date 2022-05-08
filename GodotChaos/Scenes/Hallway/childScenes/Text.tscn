@@ -3,20 +3,17 @@
 [ext_resource path="res://Scenes/Hallway/childScenes/text.gd" type="Script" id=1]
 [ext_resource path="res://VarelaRound-Regular.ttf" type="DynamicFontData" id=2]
 
-[sub_resource type="ViewportTexture" id=1]
-viewport_path = NodePath("Viewport")
-
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 76
 font_data = ExtResource( 2 )
 
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Viewport")
+
 [node name="Text" type="Spatial"]
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-texture = SubResource( 1 )
-
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 215, 282 )
+size = Vector2( 206, 282 )
 transparent_bg = true
 render_target_v_flip = true
 script = ExtResource( 1 )
@@ -25,7 +22,10 @@ script = ExtResource( 1 )
 modulate = Color( 1, 0, 0.266667, 1 )
 margin_right = 40.0
 margin_bottom = 14.0
-custom_fonts/font = SubResource( 2 )
-text = "Want 
-some 
+custom_fonts/font = SubResource( 3 )
+text = "Want
+some
 cake?"
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = SubResource( 2 )
