@@ -45,7 +45,10 @@ The Godot project is still getting setup. We will update this README when we hav
 - Push a build targetting WebGL into the folder: `<root>/Build/` (or `<root>/GmBuild` for Game Maker)
 - Only one build can be hosted at a time, so delete the contents of the folder before copying in a new build.
 - The build is autohosted, but it takes a couple minutes to go live.
-- The URL of the hosted build is: https://re-gamedev.github.io/Codename-Chaos/Build for Unity and https://re-gamedev.github.io/Codename-Chaos/GmBuild/ for Game Maker
+- The URL of the hosted build is: 
+  - Unity: https://re-gamedev.github.io/Codename-Chaos/Build 
+  - Game Maker: https://re-gamedev.github.io/Codename-Chaos/GmBuild/
+  - Godot: https://re-gamedev.github.io/Codename-Chaos/GodotBuild/
 
 # Discord
 This repo is connected to our Discord server, and will post to the #💻codename-chaos-commits channel whenever commits are pushed to it.
