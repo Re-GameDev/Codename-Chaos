@@ -1,4 +1,4 @@
-[gd_scene load_steps=172 format=2]
+[gd_scene load_steps=176 format=2]
 
 [ext_resource path="res://Scenes/Hallway/player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Hallway/materials/hot_red.tres" type="Material" id=2]
@@ -964,6 +964,9 @@ surfaces/0 = {
 "vertex_count": 24
 }
 
+[sub_resource type="ConvexPolygonShape" id=162]
+points = PoolVector3Array( -59, -1, 7, -59, -1, 7, -59, -1, 7, -59, 10, 7, -59, 10, 7, -59, 10, 7, -59, -1, 6, -59, -1, 6, -59, -1, 6, -59, 10, 6, -59, 10, 6, -59, 10, 6, -28, -1, 7, -28, -1, 7, -28, -1, 7, -28, 10, 7, -28, 10, 7, -28, 10, 7, -28, -1, 6, -28, -1, 6, -28, -1, 6, -28, 10, 6, -28, 10, 6, -28, 10, 6 )
+
 [sub_resource type="ArrayMesh" id=109]
 surfaces/0 = {
 "aabb": AABB( -59, -1, 6, 1, 11, 41 ),
@@ -976,6 +979,9 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 24
 }
+
+[sub_resource type="ConvexPolygonShape" id=163]
+points = PoolVector3Array( -59, -1, 47, -59, -1, 47, -59, -1, 47, -59, 10, 47, -59, 10, 47, -59, 10, 47, -59, -1, 6, -59, -1, 6, -59, -1, 6, -59, 10, 6, -59, 10, 6, -59, 10, 6, -58, -1, 47, -58, -1, 47, -58, -1, 47, -58, 10, 47, -58, 10, 47, -58, 10, 47, -58, -1, 6, -58, -1, 6, -58, -1, 6, -58, 10, 6, -58, 10, 6, -58, 10, 6 )
 
 [sub_resource type="ArrayMesh" id=110]
 surfaces/0 = {
@@ -990,6 +996,9 @@ surfaces/0 = {
 "vertex_count": 24
 }
 
+[sub_resource type="ConvexPolygonShape" id=164]
+points = PoolVector3Array( -60, -1, 7, -60, -1, 7, -60, -1, 7, -60, 10, 7, -60, 10, 7, -60, 10, 7, -60, -1, 6, -60, -1, 6, -60, -1, 6, -60, 10, 6, -60, 10, 6, -60, 10, 6, -29, -1, 7, -29, -1, 7, -29, -1, 7, -29, 10, 7, -29, 10, 7, -29, 10, 7, -29, -1, 6, -29, -1, 6, -29, -1, 6, -29, 10, 6, -29, 10, 6, -29, 10, 6 )
+
 [sub_resource type="ArrayMesh" id=111]
 surfaces/0 = {
 "aabb": AABB( -60, -1, -22, 1, 11, 29 ),
@@ -1002,6 +1011,9 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 24
 }
+
+[sub_resource type="ConvexPolygonShape" id=165]
+points = PoolVector3Array( -60, -1, 7, -60, -1, 7, -60, -1, 7, -60, 10, 7, -60, 10, 7, -60, 10, 7, -60, -1, -22, -60, -1, -22, -60, -1, -22, -60, 10, -22, -60, 10, -22, -60, 10, -22, -59, -1, 7, -59, -1, 7, -59, -1, 7, -59, 10, 7, -59, 10, 7, -59, 10, 7, -59, -1, -22, -59, -1, -22, -59, -1, -22, -59, 10, -22, -59, 10, -22, -59, 10, -22 )
 
 [sub_resource type="ArrayMesh" id=112]
 surfaces/0 = {
@@ -2260,20 +2272,40 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 23 )
 mesh = SubResource( 108 )
 material/0 = null
 
+[node name="StaticBody" type="StaticBody" parent="Arcade/Cube051"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Arcade/Cube051/StaticBody"]
+shape = SubResource( 162 )
+
 [node name="Cube052" type="MeshInstance" parent="Arcade"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 69, 0, 24 )
 mesh = SubResource( 109 )
 material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Arcade/Cube052"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Arcade/Cube052/StaticBody"]
+shape = SubResource( 163 )
 
 [node name="Cube053" type="MeshInstance" parent="Arcade"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 64 )
 mesh = SubResource( 110 )
 material/0 = null
 
+[node name="StaticBody" type="StaticBody" parent="Arcade/Cube053"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Arcade/Cube053/StaticBody"]
+shape = SubResource( 164 )
+
 [node name="Cube054" type="MeshInstance" parent="Arcade"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 63 )
 mesh = SubResource( 111 )
 material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Arcade/Cube054"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Arcade/Cube054/StaticBody"]
+shape = SubResource( 165 )
 
 [node name="Cube059" type="MeshInstance" parent="Arcade"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 6, 6 )
