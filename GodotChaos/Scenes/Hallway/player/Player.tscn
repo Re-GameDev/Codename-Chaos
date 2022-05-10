@@ -17,3 +17,4 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.392134, 0 )
 
 [node name="Camera" type="Camera" parent="Pivot"]
 current = true
+far = 110.0
