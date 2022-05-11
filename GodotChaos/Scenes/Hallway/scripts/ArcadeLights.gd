@@ -39,7 +39,7 @@ func _on_Area0_body_entered(body):
 		allLightsOff()
 		lightsOn([0, 1])
 
-func _on_Area0_body_exited(body):
+func _on_Area0_body_exited(_body):
 	pass
 		
 func _on_Area1_body_entered(body):
@@ -47,7 +47,7 @@ func _on_Area1_body_entered(body):
 		allLightsOff()
 		lightsOn([0, 1, 2])
 		
-func _on_Area1_body_exited(body):
+func _on_Area1_body_exited(_body):
 	pass
 
 func _on_Area2_body_entered(body):
@@ -56,7 +56,7 @@ func _on_Area2_body_entered(body):
 		hallwayToggle(true)
 		lightsOn([1, 2, 3])
 
-func _on_Area2_body_exited(body):
+func _on_Area2_body_exited(_body):
 	pass
 
 func _on_Area3_body_entered(body):
@@ -65,7 +65,7 @@ func _on_Area3_body_entered(body):
 		hallwayToggle(false)
 		lightsOn([2, 3, 4])
 
-func _on_Area3_body_exited(body):
+func _on_Area3_body_exited(_body):
 	pass
 
 func _on_Area4_body_entered(body):
@@ -73,7 +73,7 @@ func _on_Area4_body_entered(body):
 		allLightsOff()
 		lightsOn([3, 4, 5])
 
-func _on_Area4_body_exited(body):
+func _on_Area4_body_exited(_body):
 	pass
 
 func _on_Area5_body_entered(body):
@@ -81,7 +81,7 @@ func _on_Area5_body_entered(body):
 		allLightsOff()
 		lightsOn([4, 5, 6])
 
-func _on_Area5_body_exited(body):
+func _on_Area5_body_exited(_body):
 	pass
 
 func _on_Area6_body_entered(body):
@@ -89,7 +89,7 @@ func _on_Area6_body_entered(body):
 		allLightsOff()
 		lightsOn([5, 6, 7])
 
-func _on_Area6_body_exited(body):
+func _on_Area6_body_exited(_body):
 	pass # Replace with function body.
 
 func _on_Area7_body_entered(body):
@@ -97,5 +97,11 @@ func _on_Area7_body_entered(body):
 		allLightsOff()
 		lightsOn([6, 7])
 
-func _on_Area8_body_exited(body):
+func _on_Area7_body_exited(_body):
+	pass
+
+func _on_Area8_body_entered(_body):
+	pass
+
+func _on_Area8_body_exited(_body):
 	pass # Replace with function body.

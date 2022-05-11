@@ -1,5 +1,5 @@
 tool
 extends Viewport
 
-func _process(delta):
+func _process(_delta):
 	size = $Label.rect_size
