@@ -42,6 +42,7 @@ func _process(delta):
 	#
 	else:
 	#
+		sawResetting = false;
 		var playerVelocity = player.get("velocity");
 		var isWalking = (playerVelocity.length() > 0.1);
 		var runPercent = player.get_run_percent()
