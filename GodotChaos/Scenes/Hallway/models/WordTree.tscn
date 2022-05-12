@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Hallway/models/WordTree.obj" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Hallway/materials/grass.tres" type="Material" id=2]
+[ext_resource path="res://Scenes/Hallway/materials/wood.tres" type="Material" id=3]
+
+[sub_resource type="CapsuleShape" id=1]
+height = 11.3678
+
+[node name="WordTree" instance=ExtResource( 1 )]
+transform = Transform( 0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0 )
+
+[node name="TrunkAndBranches_Cylinder" parent="." index="1"]
+material/0 = ExtResource( 3 )
+
+[node name="Leaves1_Icosphere" parent="." index="2"]
+material/0 = ExtResource( 2 )
+
+[node name="Leaves3_Icosphere001" parent="." index="3"]
+material/0 = ExtResource( 2 )
+
+[node name="Leaves2_Icosphere002" parent="." index="4"]
+material/0 = ExtResource( 2 )
+
+[node name="StaticBody" type="StaticBody" parent="." index="5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6.16013, 0 )
+shape = SubResource( 1 )

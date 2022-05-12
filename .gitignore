@@ -72,6 +72,18 @@ crashlytics-build.properties
 # Sublime Text
 *.sublime-workspace
 
+# Godot Gitignore from https://github.com/github/gitignore/blob/main/Godot.gitignore
+/GodotChaos/.import/
+/GodotChaos/export.cfg
+/GodotChaos/export_presets.cfg
+
+# Imported translations (automatically generated from CSV files)
+/GodotChaos/*.translation
+
+# Mono-specific ignores
+/GodotChaos/.mono/
+/GodotChaos/data_*/
+
 # +--------------------------------------------------------------+
 # |                    FMOD Recommended Lines                    |
 # +--------------------------------------------------------------+

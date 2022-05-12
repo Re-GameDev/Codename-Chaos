@@ -102,6 +102,5 @@ func _on_Area7_body_exited(_body):
 
 func _on_Area8_body_entered(_body):
 	pass
-
 func _on_Area8_body_exited(_body):
 	pass # Replace with function body.
