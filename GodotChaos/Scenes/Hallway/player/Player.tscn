@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Hallway/player/movement.gd" type="Script" id=1]
-[ext_resource path="res://Scenes/Hallway/models/DumbHand_R.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Hallway/models/BasicHand_L.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Hallway/scripts/HandsController.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Hallway/models/DumbHand_L.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Hallway/models/BasicHand_R.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -26,26 +26,26 @@ far = 110.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.000134021, 0 )
 script = ExtResource( 3 )
 
-[node name="RightHand" parent="Pivot/HandsController" instance=ExtResource( 2 )]
-transform = Transform( -0.187484, -0.0142627, 0.0681626, -0.0323586, 0.191186, -0.0489991, -0.0616644, -0.0569611, -0.181529, 0.111, -0.293, -0.067 )
+[node name="RightHand" parent="Pivot/HandsController" instance=ExtResource( 4 )]
+transform = Transform( 0.029518, 0.0511267, 0.137894, -0.129904, 0.075, -1.34487e-08, -0.068947, -0.11942, 0.059036, 0.3, -0.541, -0.113 )
 
 [node name="RightHandPos1" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( 0.0393573, 0.0681688, 0.183859, -0.173205, 0.1, 0, -0.0919293, -0.159226, 0.0787146, 0.3, -0.541, -0.113 )
+transform = Transform( 0.029518, 0.0511267, 0.137894, -0.129904, 0.075, -1.34487e-08, -0.068947, -0.11942, 0.059036, 0.3, -0.541, -0.113 )
 
 [node name="RightHandPos2" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( 0.0270522, 0.0396993, 0.194145, -0.122082, 0.157683, -0.0152324, -0.15609, -0.116448, 0.0455612, 0.32612, -0.316, -0.215 )
+transform = Transform( 0.0202892, 0.0297744, 0.145608, -0.0915616, 0.118262, -0.0114243, -0.117068, -0.0873357, 0.0341709, 0.32612, -0.316, -0.215 )
 
 [node name="RightHandPos3" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( -0.187484, -0.0142606, 0.0681636, -0.0323572, 0.191186, -0.0490006, -0.0616654, -0.0569622, -0.181529, 0.111, -0.293, -0.067 )
+transform = Transform( -0.140613, -0.0106955, 0.0511226, -0.0242679, 0.143389, -0.0367504, -0.0462491, -0.0427216, -0.136147, 0.111, -0.293, -0.067 )
 
-[node name="LeftHand" parent="Pivot/HandsController" instance=ExtResource( 4 )]
-transform = Transform( 0.19368, 0.0323946, 0.037928, -0.0387658, 0.193459, 0.0327237, -0.0313872, -0.0390413, 0.193625, -0.087, -0.326, -0.05 )
+[node name="LeftHand" parent="Pivot/HandsController" instance=ExtResource( 2 )]
+transform = Transform( -0.0297308, -0.0514953, 0.137711, -0.129904, 0.075, -8.90304e-09, -0.0688555, -0.119261, -0.0594617, -0.3, -0.541, -0.113 )
 
 [node name="LeftHandPos1" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( -0.0396411, -0.0686604, 0.183615, -0.173205, 0.1, 0, -0.0918073, -0.159015, -0.0792822, -0.3, -0.541, -0.113 )
+transform = Transform( -0.0297308, -0.0514953, 0.137711, -0.129904, 0.075, -8.90304e-09, -0.0688555, -0.119261, -0.0594617, -0.3, -0.541, -0.113 )
 
 [node name="LeftHandPos2" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( -0.0451403, -0.0161922, 0.194165, -0.122082, 0.157683, -0.0152324, -0.151849, -0.121959, -0.0454732, -0.326, -0.316, -0.215 )
+transform = Transform( -0.0338553, -0.0121441, 0.145624, -0.0915617, 0.118262, -0.0114244, -0.113887, -0.0914691, -0.0341049, -0.326, -0.316, -0.215 )
 
 [node name="LeftHandPos3" type="Spatial" parent="Pivot/HandsController"]
-transform = Transform( 0.19368, 0.0323946, 0.037928, -0.0387657, 0.193459, 0.0327237, -0.0313872, -0.0390413, 0.193625, -0.087, -0.326, -0.05 )
+transform = Transform( 0.14526, 0.0242959, 0.028446, -0.0290743, 0.145094, 0.0245428, -0.0235404, -0.029281, 0.145219, -0.087, -0.326, -0.05 )

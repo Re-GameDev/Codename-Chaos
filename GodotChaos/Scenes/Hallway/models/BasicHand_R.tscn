@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/Hallway/materials/hand_skin.tres" type="Material" id=1]
+[ext_resource path="res://Scenes/Hallway/materials/hand_knuckles.tres" type="Material" id=2]
+[ext_resource path="res://Scenes/Hallway/models/BasicHand_R.obj" type="PackedScene" id=3]
+
+[node name="BasicHand_R" instance=ExtResource( 3 )]
+
+[node name="MeshInstance" parent="." index="0"]
+material/0 = ExtResource( 1 )
+material/1 = ExtResource( 2 )
+material/2 = ExtResource( 1 )
+material/3 = ExtResource( 2 )
+material/4 = ExtResource( 1 )
+material/5 = ExtResource( 2 )
+material/6 = ExtResource( 1 )
+material/7 = ExtResource( 2 )
+material/8 = ExtResource( 1 )
+material/9 = ExtResource( 2 )
+material/10 = ExtResource( 1 )
+material/11 = ExtResource( 1 )
