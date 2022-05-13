@@ -18,6 +18,10 @@ config/name="Codename Chaos"
 run/main_scene="res://Scenes/MainMenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+DebugDraw="*res://Scripts/DebugDraw.gd"
+
 [display]
 
 window/size/width=1280

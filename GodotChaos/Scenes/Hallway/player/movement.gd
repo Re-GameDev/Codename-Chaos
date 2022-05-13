@@ -70,7 +70,7 @@ func _physics_process(delta):
 		reset_timer += delta / reset_anim_duration
 		if (reset_timer >= 1.0):
 			self.transform = reset_transform
-			var arcade_lights_node = get_parent().find_node("ArcadeLights")
+			var arcade_lights_node = get_parent().find_node("Arcade").find_node("Lights")
 			arcade_lights_node.hallwayToggle(true)
 			arcade_lights_node.allLightsOff()
 			reset_timer = 1.0
