@@ -23,10 +23,11 @@ var textNodes = [];
 
 func _ready():
 #
-	textModel = ResourceLoader.load("Scenes/Hallway/models/Text1.obj").instance(PackedScene.GEN_EDIT_STATE_DISABLED);
+	textModel = ResourceLoader.load("Models/Text1.obj").instance(PackedScene.GEN_EDIT_STATE_DISABLED);
 	textModel.transform = self.transform;
 	Text = Text.replace("\\n", "\n");
 	#print(textModel);
+	$PlaceholderMesh.hide();
 	CreateText();
 #
 
@@ -59,7 +60,7 @@ func CreateText():
 #
 	if (textNodes.size() > 0): DestroyText();
 	var textPos = Vector3(0, 0, 0);
-	var stepVector = self.transform.basis.y;
+	var stepVector = Vector3(1, 0, 0); #self.transform.basis.y;
 	for cIndex in Text.length():
 	#
 		var character = Text.ord_at(cIndex);

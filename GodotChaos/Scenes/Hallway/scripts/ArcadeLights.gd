@@ -19,8 +19,8 @@ func hallwayToggle(isOn):
 	root.get_node("Hallway/hallway/arch3/OmniLight3").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch4/OmniLight4").set_visible(isOn)
 	root.get_node("Hallway/hallway/arch5/OmniLight5").set_visible(isOn)
-	root.get_node("Hallway/hallway/arch6/OmniLight6").set_visible(isOn)
-	root.get_node("Hallway/Text/Text/OmniLight").set_visible(isOn)
+	root.get_node("Hallway/hallway/arch6/BlueLight").set_visible(isOn)
+	root.get_node("Hallway/hallway/arch6/RedLight").set_visible(isOn)
 
 func allLightsOff():
 	for light in get_children():
