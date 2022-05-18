@@ -32,6 +32,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+pathToScene = "res://Scenes/Hallway/hallway.tscn"
 
 [node name="Label" type="Label" parent="Button"]
 modulate = Color( 0.662745, 0.898039, 0.733333, 1 )
@@ -56,6 +57,7 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+pathToScene = "res://Scenes/Grocery/grocery.tscn"
 
 [node name="Label" type="Label" parent="Button2"]
 modulate = Color( 0.662745, 0.898039, 0.733333, 1 )
