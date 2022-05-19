@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/Maze/Art/tile_grid.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Maze/Art/tile.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/Maze/Art/player.png" type="Texture" id=3]
 [ext_resource path="res://Scenes/Maze/scripts/move.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Maze/scripts/maze.gd" type="Script" id=5]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tile_grid.png 0"
@@ -37,7 +38,61 @@
 0/shapes = [  ]
 0/z_index = 0
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 32, 32 )
+
+[sub_resource type="GDScript" id=5]
+script/source = "extends Node2D
+
+var gc
+
+func _ready():
+	gc = get_tree().get_root().get_node(\"maze\")
+
+func _on_Area2D_body_entered(body):
+	print(body)
+	if body.name == \"player\":
+		gc.coinCollected()
+		visible = false
+		queue_free()
+"
+
+[sub_resource type="CircleShape2D" id=3]
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Node2D
+
+var gc
+
+func _ready():
+	gc = get_tree().get_root().get_node(\"maze\")
+
+func _on_Area2D_body_entered(body):
+	print(body)
+	if body.name == \"player\":
+		gc.coinCollected()
+		visible = false
+		queue_free()
+"
+
+[sub_resource type="GDScript" id=7]
+script/source = "extends Node2D
+
+var gc
+
+func _ready():
+	gc = get_tree().get_root().get_node(\"maze\")
+
+func _on_Area2D_body_entered(body):
+	print(body)
+	if body.name == \"player\":
+		gc.coinCollected()
+		visible = false
+		queue_free()
+"
+
 [node name="maze" type="Node"]
+script = ExtResource( 5 )
 
 [node name="Black" type="TileMap" parent="."]
 modulate = Color( 0.2, 0.2, 0.2, 1 )
@@ -57,3 +112,56 @@ wallMapNode = NodePath("../Wall")
 
 [node name="Sprite" type="Sprite" parent="player"]
 texture = ExtResource( 3 )
+
+[node name="player" type="KinematicBody2D" parent="player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player/player"]
+shape = SubResource( 4 )
+
+[node name="Coin" type="Node2D" parent="."]
+position = Vector2( 608, 96 )
+script = SubResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Coin"]
+modulate = Color( 0.862745, 0.85098, 0, 1 )
+rotation = 0.785398
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="Coin"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coin/Area2D"]
+shape = SubResource( 3 )
+
+[node name="Coin2" type="Node2D" parent="."]
+position = Vector2( 96, 352 )
+script = SubResource( 6 )
+
+[node name="Sprite" type="Sprite" parent="Coin2"]
+modulate = Color( 0.862745, 0.85098, 0, 1 )
+rotation = 0.785398
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="Coin2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coin2/Area2D"]
+shape = SubResource( 3 )
+
+[node name="Coin3" type="Node2D" parent="."]
+position = Vector2( 1184, 352 )
+script = SubResource( 7 )
+
+[node name="Sprite" type="Sprite" parent="Coin3"]
+modulate = Color( 0.862745, 0.85098, 0, 1 )
+rotation = 0.785398
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="Coin3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Coin3/Area2D"]
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Coin/Area2D" to="Coin" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Coin2/Area2D" to="Coin2" method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Coin3/Area2D" to="Coin3" method="_on_Area2D_body_entered"]
